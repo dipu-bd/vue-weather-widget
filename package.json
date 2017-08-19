@@ -1,8 +1,10 @@
 {
   "name": "vue-weather-forecast",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Weather forecast widget for Vuejs using DarkSky api",
-  "main": "index.js",
+  "main": "dist/js/vue-weather-widget.js",
+  "jsnext:main": "src/index.js",
+  "unpkg": "dist/js/vue-weather-widget.min.js",
   "files": [
     "src",
     "dist"
@@ -21,11 +23,18 @@
   },
   "keywords": [
     "weather",
-    "vue",
     "forecast",
-    "darksky"
+    "darksky",
+    "vue-weather",
+    "vue-weather-widget",
+    "vuejs-weather",
+    "vuejs-weather-widget",
+    "vue",
+    "vuejs",
+    "vue-plugin",
+    "vue-component"
   ],
-  "author": "Sudipto Chandra",
+  "author": "Sudipto Chandra <dipu.sudipta@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/dipu-bd/vue-weather-forecast/issues"
@@ -39,5 +48,8 @@
       "dist",
       "test"
     ]
+  },
+  "dependencies": {
+    "vue": "^2.4.2"
   }
 }
