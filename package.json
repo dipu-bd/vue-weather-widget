@@ -1,0 +1,43 @@
+{
+  "name": "vue-weather-forecast",
+  "version": "0.0.0",
+  "description": "Weather forecast widget for Vuejs using DarkSky api",
+  "main": "index.js",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "node_modules/.bin/eslint ./",
+    "build": "node_modules/.bin/rollup -c ./build/rollup.config.js && NODE_ENV=production node_modules/.bin/rollup -c ./build/rollup.config.js",
+    "patch": "npm version patch --no-git-tag-version && git add package.json && git commit -m 'update version' && git push origin master && bower version patch && git push origin master --follow-tags && npm publish",
+    "minor": "npm version minor --no-git-tag-version && git add package.json && git commit -m 'update version' && git push origin master && bower version minor && git push origin master --follow-tags && npm publish",
+    "major": "npm version major --no-git-tag-version && git add package.json && git commit -m 'update version' && git push origin master && bower version major && git push origin master --follow-tags && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dipu-bd/vue-weather-forecast.git"
+  },
+  "keywords": [
+    "weather",
+    "vue",
+    "forecast",
+    "darksky"
+  ],
+  "author": "Sudipto Chandra",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/dipu-bd/vue-weather-forecast/issues"
+  },
+  "homepage": "https://github.com/dipu-bd/vue-weather-forecast#readme",
+  "semistandard": {
+    "ignore": [
+      "node_modules",
+      "bower_components",
+      "build",
+      "dist",
+      "test"
+    ]
+  }
+}
