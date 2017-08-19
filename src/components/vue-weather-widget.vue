@@ -52,6 +52,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<script src="../../dist/js/embed.min.js"></script>
