@@ -32,7 +32,22 @@ export default {
 			required: true
 		},
 
-		
+		// Return summary properties in the desired language.
+		// For list of supported languages, visit https://darksky.net/dev/docs/forecast
+		lang: {
+			type: String,
+			default: 'en',
+			required: false
+		},
+
+		// Return weather conditions in the requested units.
+		// For list of supported units, visit https://darksky.net/dev/docs/forecast
+		units: {
+			type: String,
+			default: 'auto',
+			required: false
+		},
+
 	},
 }
 </script>
