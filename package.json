@@ -1,6 +1,6 @@
 {
   "name": "vue-weather-forecast",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Weather forecast widget for Vuejs using DarkSky api",
   "main": "dist/js/vue-weather-widget.js",
   "jsnext:main": "src/index.js",
@@ -13,9 +13,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "node_modules/.bin/eslint ./",
     "build": "node_modules/.bin/rollup -c ./build/rollup.config.js && NODE_ENV=production node_modules/.bin/rollup -c ./build/rollup.config.js",
-    "patch": "npm version patch --no-git-tag-version && git add package.json && git commit -m 'Update version:patch' && git push && npm publish",
-    "minor": "npm version minor --no-git-tag-version && git add package.json && git commit -m 'Update version:minor' && git push && npm publish",
-    "major": "npm version major --no-git-tag-version && git add package.json && git commit -m 'Update version:major' && git push && npm publish"
+    "patch": "npm version patch --no-git-tag-version && git add package.json && git commit -m 'Update version:patch' && git push origin master && npm publish",
+    "minor": "npm version minor --no-git-tag-version && git add package.json && git commit -m 'Update version:minor' && git push origin master && npm publish",
+    "major": "npm version major --no-git-tag-version && git add package.json && git commit -m 'Update version:major' && git push origin master && npm publish"
   },
   "repository": {
     "type": "git",
