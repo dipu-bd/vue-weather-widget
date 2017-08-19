@@ -1,7 +1,7 @@
 <template>
-	<div>
-		Vue weather widget
-	</div>
+	<iframe src="about:blank">
+		
+	</iframe>
 </template>
 
 <script>
@@ -10,7 +10,6 @@ import Helper from '../helper';
 export default {
 	name: 'vue-weather-widget',
 
-	/* details at https://darksky.net/dev/docs/forecast */
 	props: {
 		// Your Dark Sky secret key
 		key: {
@@ -48,8 +47,33 @@ export default {
 			required: false
 		},
 
-	},
+		// Color of the Temparature bar. Default: '#333'
+		barColor: {
+			type: String,
+			default: '#333',
+			required: false
+		},
+
+		// Color of the text. Default: '#333'
+		textColor: {
+			type: String,
+			default: '#333',
+			required: false
+		},
+
+		// Title of the widget. Default: 'Weather'
+		title: {
+			type: String,
+			default: 'Weather',
+			required: false
+		},
+
+		// Controls whether to show or hide the title bar.
+		hideHeader: {
+			type: Boolean,
+			default: false,
+			required: false
+		},
+	}
 }
 </script>
-
-<script src="../../dist/js/embed.min.js"></script>
