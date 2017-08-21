@@ -1,6 +1,6 @@
 {
   "name": "vue-weather-widget",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "Weather forecast widget for Vuejs using DarkSky api",
   "main": "dist/js/vue-weather-widget.js",
   "jsnext:main": "src/index.js",
