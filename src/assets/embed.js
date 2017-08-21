@@ -3934,7 +3934,8 @@ export default function() {
 				})(d);
 			},
 			c = function(e) {
-				$alert = n.find('.fe_alert').empty();
+				var $alert = n.find('.fe_alert');
+				$alert.empty();
 				if (!e.alerts || !e.alerts.length) {
 					$alert.hide();
 					return;
