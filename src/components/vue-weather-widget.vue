@@ -133,6 +133,12 @@ export default {
 		}
 	},
 
+	watch: {
+		options() {
+			this.loadWeather();
+		}
+	},
+
 	mounted() {
 		Embed();
 		Vue.nextTick(this.loadWeather);
