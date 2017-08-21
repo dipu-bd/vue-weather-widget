@@ -4522,7 +4522,8 @@ var VueWeatherWidget$1 = { render: function render() {
 
 	methods: {
 		loadWeather: function loadWeather() {
-			var embed = new ForecastEmbed(this.options);
+			var opts = this.options;
+			var embed = new ForecastEmbed(opts);
 			embed.loading(true);
 			Helper.darkSkyApi(opts).then(function (f) {
 				embed.build(f);
