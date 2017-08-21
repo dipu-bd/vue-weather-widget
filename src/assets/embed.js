@@ -3578,7 +3578,7 @@ export default function() {
 		});
 	})(window);
 
-	var Skycons = null;
+	window.Skycons = null;
 	(function(e) {
 		'use strict';
 
@@ -3847,7 +3847,7 @@ export default function() {
 		};
 	})(document);
 
-	var StaticSkycons = function() {
+	window.StaticSkycons = function() {
 		var e = {};
 		return e.play = e.pause = function() {}, e.set = function(e, t) {
 			var n = $('#' + e),
@@ -3960,7 +3960,7 @@ export default function() {
 			f(e), l(e), c(e), $('body').hasClass('hide_daily') || i.play();
 		}, s(), t;
 	};
-	
+
 	window.ForecastEmbed.unit_labels = {
 		us: {
 			speed: 'mph'
