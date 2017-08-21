@@ -3910,6 +3910,7 @@ export default function() {
 				i.set('fe_current_icon', u(t.currently.icon));
 			},
 			l = function(t) {
+				var $daily_container;
 				$daily_container = n.find('.fe_daily'), $daily_container.empty();
 				var r = $('<div class="fe_day">           <span class="fe_label">MON</span>           <canvas class="fe_icon" width="52" height="52" style="width:26px; height:26px" />           <div class="fe_temp_bar">             <span class="fe_high_temp">72&deg;</span>             <span class="fe_low_temp">50&deg;</span>           </div>         </div>'),
 					s = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
