@@ -149,4 +149,6 @@ List of supported units:
 - `zh`: simplified Chinese
 - `zh-tw`: traditional Chinese
 
+## License 
 
+Apache License Version 2.0 &copy; Sudipto Chandra
