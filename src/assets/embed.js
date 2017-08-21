@@ -3833,7 +3833,7 @@ export default function () {
 				this.interval && (n(this.interval), this.interval = null);
 			}
 		};
-	})(this);
+	})(document);
 	
 	var StaticSkycons = function () {
 		var e = {};
