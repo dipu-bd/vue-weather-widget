@@ -28,7 +28,6 @@
 <script>
 import Helper from '../helper';
 import Embed from '../assets/embed';
-//import FlashCanvas from '../assets/flashcanvas';
 
 export default {
 	name: 'vue-weather-widget',
@@ -150,7 +149,6 @@ export default {
 
 	mounted() {
 		Embed();
-		//FlashCanvas();
 		Vue.nextTick(this.loadWeather);
 	},
 
