@@ -115,6 +115,7 @@ export default {
 	data() {
 		return {
 			updater: null,
+			embed: null,
 		};
 	},
 
@@ -133,7 +134,7 @@ export default {
 				text_color: this.textColor,
 				static_skycons: this.disableAnimation,
 			};
-			if(!ForecastEmbed.unit_labels[opts.units]) {
+			if(window.ForecastEmbed && !ForecastEmbed.unit_labels[opts.units]) {
 				opts.units = 'us';
 			}
 			if(!opts.lat || !opts.lon) {
@@ -155,10 +156,15 @@ export default {
 		}
 	},
 
-	mounted() {
+	created() {
 		Embed();
-		Vue.nextTick(this.loadWeather);
-		Vue.nextTick(this.setAutoUpdate);
+	},
+
+	mounted() {
+		this.embed = new ForecastEmbed(this.options);
+		this.embed.loading(true);
+		this.loadWeather();
+		this.setAutoUpdate();
 	},
 
 	destroyed() {
@@ -168,11 +174,9 @@ export default {
 	methods: {
 		loadWeather() {
 			let opts = this.options;
-			let embed = new ForecastEmbed(opts);
-			embed.loading(true);
 			Helper.darkSkyApi(opts).then((f) => {
-				embed.build(f);
-				embed.loading(false);
+				this.embed.build(f);
+				this.embed.loading(false);
 			});
 		},
 
@@ -186,10 +190,7 @@ export default {
 		setAutoUpdate() {
 			if(!this.updateInterval) return;
 			this.stopUpdater();
-
-			this.updater = setInterval(() => {
-				Vue.nextTick(this.loadWeather);
-			}, this.updateInterval * 1000);
+			this.updater = setInterval(this.loadWeather, this.updateInterval * 1000);
 		}
 	}
 
