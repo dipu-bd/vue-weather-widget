@@ -6,7 +6,7 @@ import uglify from 'rollup-plugin-uglify';
 export default {
   entry: 'src/index.js',
   dest: process.env.NODE_ENV === 'production' ? 'dist/js/vue-weather-widget.min.js' : 'dist/js/vue-weather-widget.js',
-  moduleName: 'VuePopper',
+  moduleName: 'VueWeatherWidget',
   format: 'umd',
   plugins: [
     vue({
