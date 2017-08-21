@@ -3970,7 +3970,7 @@ var Embed = function () {
 		});
 	})(window);
 
-	var Skycons = null;
+	window.Skycons = null;
 	(function (e) {
 		'use strict';
 
@@ -4265,7 +4265,7 @@ var Embed = function () {
 		};
 	})(document);
 
-	var StaticSkycons = function StaticSkycons() {
+	window.StaticSkycons = function () {
 		var e = {};
 		return e.play = e.pause = function () {}, e.set = function (e, t) {
 			var n = $('#' + e),
@@ -4387,6 +4387,7 @@ var Embed = function () {
 			f(e), l(e), c(e), $('body').hasClass('hide_daily') || i.play();
 		}, s(), t;
 	};
+
 	window.ForecastEmbed.unit_labels = {
 		us: {
 			speed: 'mph'
@@ -4475,21 +4476,10 @@ var VueWeatherWidget$1 = { render: function render() {
 			required: false
 		},
 
-		font: {
-			type: 'String',
-			default: null,
-			required: false
-		},
-
-		fontFaceName: {
-			type: String,
-			default: null,
-			required: false
-		},
-
-		fontFaceUrl: {
-			type: String,
-			default: null,
+		// Use static skycons
+		disableAnimation: {
+			type: Boolean,
+			default: false,
 			required: false
 		}
 	},
@@ -4507,10 +4497,7 @@ var VueWeatherWidget$1 = { render: function render() {
 				hide_header: this.hideHeader,
 				color: this.barColor,
 				text_color: this.textColor,
-				//font: this.font,
-				//ff_name: this.fontFaceName,
-				//ff_url: this.fontFaceUrl,
-				static_skycons: true
+				static_skycons: this.disableAnimation
 			};
 			if (!ForecastEmbed.unit_labels[opts.units]) {
 				opts.units = 'us';
