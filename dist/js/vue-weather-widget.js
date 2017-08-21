@@ -4,7 +4,10 @@
 	(global.VuePopper = factory());
 }(this, (function () { 'use strict';
 
-var jQuery = require('jquery');
+// Load jQuery
+if (!window.jQuery) {
+	window.jQuery = window.$ = require('jquery');
+}
 
 var Helper = {
 	/**
@@ -23,7 +26,7 @@ var Helper = {
 			lang: options.lang
 		});
 		// return jquery ajax promise
-		return jQuery.ajax({
+		return $.ajax({
 			type: 'GET',
 			dataType: 'jsonp',
 			url: api,
