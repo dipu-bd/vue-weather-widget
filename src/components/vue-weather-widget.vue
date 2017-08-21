@@ -7,7 +7,7 @@
 <script>
 import Helper from '../helper';
 import Embed from '../assets/embed';
-import FlashCanvas from '../assets/flashcanvas';
+//import FlashCanvas from '../assets/flashcanvas';
 
 export default {
 	name: 'vue-weather-widget',
@@ -118,9 +118,9 @@ export default {
 	},
 
 	mounted() {
-		FlashCanvas();
 		Embed();
-		setTimeout(loadWeather, 100);
+		//FlashCanvas();
+		setTimeout(this.loadWeather, 100);
 	},
 
 	methods: {
