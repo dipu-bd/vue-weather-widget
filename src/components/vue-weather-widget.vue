@@ -119,13 +119,13 @@ export default {
 
 	computed: {
 		options() {
-			return {
+			let opts = {
 				key: this.apiKey,
 				lat: this.latitude,
 				lon: this.longitude,
 				lang: this.language,
 
-				name: this.title,
+				title: this.title,
 				units: this.units.toLowerCase(),
 				hide_header: this.hideHeader,
 				color: this.barColor,
@@ -135,6 +135,16 @@ export default {
 				//ff_url: this.fontFaceUrl,
 				static_skycons: true,
 			};
+			if(!ForecastEmbed.unit_labels[opts.units]) {
+				opts.units = 'us';
+			}
+			if(!opts.lat || !opts.lon) {
+				opts.title = 'Invalid Location';
+			}
+			if(!opts.title) {
+				opts.hide_header = true;
+			}
+			return opts;
 		}
 	},
 
@@ -146,19 +156,7 @@ export default {
 
 	methods: {
 		loadWeather() {
-			if(!ForecastEmbed) return;
-
-			let opts = this.options;
-			if(!opts.lat || !opts.lon) {
-				opts.title = 'Invalid Location';
-			}
-
-			if(!ForecastEmbed.unit_labels[opts.units]) {
-				opts.units = 'us';
-			}
-
-			var embed = new ForecastEmbed(opts);
-			
+			let embed = new ForecastEmbed(this.options);
 			embed.loading(true);
 			Helper.darkSkyApi(opts).then((f) => {
 				embed.build(f);
