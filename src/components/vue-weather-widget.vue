@@ -120,7 +120,7 @@ export default {
 	mounted() {
 		Embed();
 		//FlashCanvas();
-		setTimeout(this.loadWeather, 100);
+		Vue.nextTick(this.loadWeather);
 	},
 
 	methods: {
@@ -137,7 +137,7 @@ export default {
 			}
 
 			var embed = new ForecastEmbed(opts);
-			embed.elem.prependTo(document.getElementsByTagName('weather-view'));
+			embed.elem.prependTo($('#weather-view'));
 			embed.loading(true);
 
 			Helper.darkSkyApi(opts).then((f) => {
