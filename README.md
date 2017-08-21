@@ -2,6 +2,10 @@
 
 Weather widget inspired by [forecast embeds](https://blog.darksky.net/forecast-embeds/) and powered by [darksky api](https://darksky.net/dev).
 
+<p>
+<a href="https://travis-ci.org/dipu-bd/vue-weather-widget"><img src="https://img.shields.io/travis/dipu-bd/vue-weather-widget.svg?style=flat-square"></a>
+</p>
+
 ## Demo
 
 [Browser preview](https://dipu-bd.github.io/vue-weather-widget/)
