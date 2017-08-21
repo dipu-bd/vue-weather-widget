@@ -1,4 +1,7 @@
-var jQuery = require('jquery');
+// Load jQuery
+if(!window.jQuery) {
+	window.jQuery = window.$ = require('jquery');
+}
 
 export default {
 	/**
@@ -21,7 +24,7 @@ export default {
 				lang: options.lang,
 			});
 		// return jquery ajax promise
-		return jQuery.ajax({
+		return $.ajax({
 			type: 'GET',
 			dataType: 'jsonp',
 			url: api,
