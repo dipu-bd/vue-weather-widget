@@ -1,5 +1,5 @@
 {
-  "name": "vue-weather-forecast",
+  "name": "vue-weather-widget",
   "version": "0.3.0",
   "description": "Weather forecast widget for Vuejs using DarkSky api",
   "main": "dist/js/vue-weather-widget.js",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dipu-bd/vue-weather-forecast.git"
+    "url": "git+https://github.com/dipu-bd/vue-weather-widget.git"
   },
   "keywords": [
     "weather",
@@ -38,9 +38,9 @@
   "author": "Sudipto Chandra <dipu.sudipta@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/dipu-bd/vue-weather-forecast/issues"
+    "url": "https://github.com/dipu-bd/vue-weather-widget/issues"
   },
-  "homepage": "https://github.com/dipu-bd/vue-weather-forecast#readme",
+  "homepage": "https://github.com/dipu-bd/vue-weather-widget#readme",
   "semistandard": {
     "ignore": [
       "node_modules",
