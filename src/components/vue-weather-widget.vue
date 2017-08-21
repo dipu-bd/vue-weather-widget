@@ -156,11 +156,8 @@ export default {
 		}
 	},
 
-	created() {
-		Embed();
-	},
-
 	mounted() {
+		Embed();
 		this.embed = new ForecastEmbed(this.options);
 		this.embed.loading(true);
 		this.loadWeather();
@@ -180,18 +177,18 @@ export default {
 			});
 		},
 
+		setAutoUpdate() {
+			if(!this.updateInterval) return;
+			this.stopUpdater();
+			this.updater = setInterval(this.loadWeather, this.updateInterval * 1000);
+		},
+
 		stopUpdater() {
 			if(this.updater) {
 				clearInterval(this.updater);
 				this.updater = null;
 			}
 		},
-
-		setAutoUpdate() {
-			if(!this.updateInterval) return;
-			this.stopUpdater();
-			this.updater = setInterval(this.loadWeather, this.updateInterval * 1000);
-		}
 	}
 
 }
