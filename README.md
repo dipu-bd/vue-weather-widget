@@ -59,7 +59,7 @@ export default {
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.js"></script>
 
-<!-- vue-weather-widget >
+<!-- vue-weather-widget -->
 <script type="text/javascript" src="vue-weather-widget.js"></script>
 <link href="vue-weather-widget.css" rel="stylesheet">
  
@@ -92,14 +92,8 @@ window.vm = new Vue({
 | --------|:------| -----------|-------|
 | api-key | String, *required*   | - | Your Dark Sky secret key |
 | latitude | String, *required* | - | The latitude of a location (in decimal degrees). Positive is north, negative is south. |
-| longitude | String, *required* | - | Return summary properties in the desired language.
-		[List of supported languages](https://darksky.net/dev/docs/forecast) |
-| units | String | `"us"` | List of supported units:    
-- `auto`: automatically select units based on geographic location
-- `ca`: same as si, except that windSpeed and windGust are in kilometers per hour
-- `uk2`: same as si, except that nearestStormDistance and visibility are in miles, and windSpeed and windGust are in miles per hour
-- `us`: Imperial units (the default)
-- `si`: SI units |
+| longitude | String, *required* | - | Return summary properties in the desired language. Click [here](https://darksky.net/dev/docs/forecast) for a list of supported languages. |
+| units | String | `"us"` | A list of supported units are given below. |
 | bar-color | String | `"#333"` | Color of the Temparature bar. |
 | text-color | String | `"#333"` | Color of the text. |
 | title | String | `"Weather"` | Title of the widget. |
@@ -108,5 +102,51 @@ window.vm = new Vue({
 | update-interval | Number | `null` | Interval in seconds to update weather data automatically. Set it to `0` or `null` to disable auto update. |
 
 
+### Supported units
+List of supported units:    
+
+- `auto`: automatically select units based on geographic location
+- `ca`: same as si, except that windSpeed and windGust are in kilometers per hour
+- `uk2`: same as si, except that nearestStormDistance and visibility are in miles, and windSpeed and windGust are in miles per hour
+- `us`: Imperial units (the default)
+- `si`: SI units 
+
+### Supported languages
+
+- `ar`: Arabic
+- `az`: Azerbaijani
+- `be`: Belarusian
+- `bg`: Bulgarian
+- `bs`: Bosnian
+- `ca`: Catalan
+- `cs`: Czech
+- `de`: German
+- `el`: Greek
+- `en`: English (which is the default)
+- `es`: Spanish
+- `et`: Estonian
+- `fr`: French
+- `hr`: Croatian
+- `hu`: Hungarian
+- `id`: Indonesian
+- `it`: Italian
+- `is`: Icelandic
+- `ka`: Georgian
+- `kw`: Cornish
+- `nb`: Norwegian Bokmål
+- `nl`: Dutch
+- `pl`: Polish
+- `pt`: Portuguese
+- `ru`: Russian
+- `sk`: Slovak
+- `sl`: Slovenian
+- `sr`: Serbian
+-` sv`: Swedish
+- `tet`: Tetum
+- `tr`: Turkish
+- `uk`: Ukrainian
+- `x-pig-latin`: Igpay Atinlay
+- `zh`: simplified Chinese
+- `zh-tw`: traditional Chinese
 
 
