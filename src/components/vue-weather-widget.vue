@@ -114,7 +114,8 @@ export default {
 	},
 
 	mounted() {
-
+		require('./embed');
+		setTimeout(loadWeather, 100);
 	},
 
 	methods: {
