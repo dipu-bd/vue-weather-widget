@@ -156,7 +156,8 @@ export default {
 
 	methods: {
 		loadWeather() {
-			let embed = new ForecastEmbed(this.options);
+			let opts = this.options;
+			let embed = new ForecastEmbed(opts);
 			embed.loading(true);
 			Helper.darkSkyApi(opts).then((f) => {
 				embed.build(f);

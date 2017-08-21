@@ -1,7 +1,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
-	(global.VuePopper = factory());
+	(global.VueWeatherWidget = factory());
 }(this, (function () { 'use strict';
 
 var Helper = {
@@ -3970,7 +3970,7 @@ var Embed = function () {
 		});
 	})(window);
 
-	var Skycons;
+	window.Skycons = null;
 	(function (e) {
 		'use strict';
 
@@ -4266,13 +4266,13 @@ var Embed = function () {
 				this.interval && (n(this.interval), this.interval = null);
 			}
 		};
-	})(this);
+	})(document);
 
-	var StaticSkycons = function StaticSkycons() {
+	window.StaticSkycons = function () {
 		var e = {};
 		return e.play = e.pause = function () {}, e.set = function (e, t) {
 			var n = $('#' + e),
-			    r = $('<img />').attr('id', n.attr('id')).attr('class', n.attr('class')).attr('src', 'skycons/' + t + '.gif').css({
+			    r = $('<img />').attr('id', n.attr('id')).attr('class', n.attr('class')).attr('src', 'https://forecast.io/embed/skycons/' + t + '.gif').css({
 				width: n.width(),
 				height: n.height()
 			});
@@ -4281,13 +4281,13 @@ var Embed = function () {
 	};
 	StaticSkycons.RAIN = 'rain', StaticSkycons.SNOW = 'snow', StaticSkycons.SLEET = 'sleet', StaticSkycons.WIND = 'wind', StaticSkycons.FOG = 'fog', StaticSkycons.CLOUDY = 'cloudy', StaticSkycons.PARTLY_CLOUDY_DAY = 'partly_cloudy_day', StaticSkycons.PARTLY_CLOUDY_NIGHT = 'partly_cloudy_night', StaticSkycons.CLEAR_DAY = 'clear_day', StaticSkycons.CLEAR_NIGHT = 'clear_night';
 
-	var ForecastEmbed = function ForecastEmbed(e) {
+	window.ForecastEmbed = function (e) {
 		var t = {},
 		    n,
 		    r,
 		    i,
 		    s = function s() {
-			n = $('      <div id="forecast_embed" class="fe_container">         <div class="fe_title" style="display:none">           <span class="fe_location">             <span></span>           </span>                      </div>                  <div class="fe_forecast">           <div class="fe_currently">             <canvas id="fe_current_icon" width="160" height="160" style="width:80px; height:80px"></canvas>             <div class="fe_temp"></div>             <div class="fe_summary"></div>             <div class="fe_wind"></div>           </div>                      <div class="fe_daily"></div>           <div style="clear:left"></div>         </div>                  <div class="fe_alert" style="display:none"></div>                  <div class="fe_loading" style="display:none">           <canvas id="fe_loading_icon" width="100" height="100" style="width:50px; height:50px"></canvas>           Loading...         </div>       </div>     '), t.elem = n, e.static_skycons && (window.Skycons = StaticSkycons), r = new Skycons({
+			n = $('#forecast_embed'), t.elem = n, e.static_skycons && (window.Skycons = StaticSkycons), r = new Skycons({
 				color: e.text_color || '#333'
 			}), i = new Skycons({
 				color: e.text_color || '#333'
@@ -4373,7 +4373,6 @@ var Embed = function () {
 			f(e), l(e), c(e), $('body').hasClass('hide_daily') || i.play();
 		}, s(), t;
 	};
-
 	ForecastEmbed.unit_labels = {
 		us: {
 			speed: 'mph'
@@ -4388,20 +4387,20 @@ var Embed = function () {
 			speed: 'mph'
 		}
 	};
-
-	window.ForecastEmbed = ForecastEmbed;
-	window.StaticSkycons = StaticSkycons;
-	window.Skycons = Skycons;
 };
 
+//import FlashCanvas from '../assets/flashcanvas';
+
 var VueWeatherWidget$1 = { render: function render() {
-		var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { attrs: { "id": "weather-view" } });
-	}, staticRenderFns: [],
+		var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _vm._m(0);
+	}, staticRenderFns: [function () {
+		var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "fe_container", attrs: { "id": "forecast_embed" } }, [_c('div', { staticClass: "fe_title", staticStyle: { "display": "none" } }, [_c('span', { staticClass: "fe_location" }, [_c('span')])]), _c('div', { staticClass: "fe_forecast" }, [_c('div', { staticClass: "fe_currently" }, [_c('canvas', { staticStyle: { "width": "80px", "height": "80px" }, attrs: { "id": "fe_current_icon", "width": "160", "height": "160" } }), _c('div', { staticClass: "fe_temp" }), _c('div', { staticClass: "fe_summary" }), _c('div', { staticClass: "fe_wind" })]), _c('div', { staticClass: "fe_daily" }), _c('div', { staticStyle: { "clear": "left" } })]), _c('div', { staticClass: "fe_alert", staticStyle: { "display": "none" } }), _c('div', { staticClass: "fe_loading", staticStyle: { "display": "none" } }, [_c('canvas', { staticStyle: { "width": "50px", "height": "50px" }, attrs: { "id": "fe_loading_icon", "width": "100", "height": "100" } }), _vm._v("Loading...")])]);
+	}],
 	name: 'vue-weather-widget',
 
 	props: {
 		// Your Dark Sky secret key
-		key: {
+		apiKey: {
 			type: String,
 			required: true
 		},
@@ -4485,48 +4484,46 @@ var VueWeatherWidget$1 = { render: function render() {
 
 	computed: {
 		options: function options() {
-			return {
-				key: this.key,
+			var opts = {
+				key: this.apiKey,
 				lat: this.latitude,
 				lon: this.longitude,
 				lang: this.language,
 
-				name: this.title,
+				title: this.title,
 				units: this.units.toLowerCase(),
 				hide_header: this.hideHeader,
 				color: this.barColor,
 				text_color: this.textColor,
-				font: this.font,
-				ff_name: this.fontFaceName,
-				ff_url: this.fontFaceUrl,
+				//font: this.font,
+				//ff_name: this.fontFaceName,
+				//ff_url: this.fontFaceUrl,
 				static_skycons: true
 			};
+			if (!ForecastEmbed.unit_labels[opts.units]) {
+				opts.units = 'us';
+			}
+			if (!opts.lat || !opts.lon) {
+				opts.title = 'Invalid Location';
+			}
+			if (!opts.title) {
+				opts.hide_header = true;
+			}
+			return opts;
 		}
 	},
 
 	mounted: function mounted() {
 		Embed();
-		setTimeout(loadWeather, 100);
+		//FlashCanvas();
+		Vue.nextTick(this.loadWeather);
 	},
 
 
 	methods: {
 		loadWeather: function loadWeather() {
-			if (!ForecastEmbed) return;
-
-			var opts = this.options;
-			if (!opts.lat || !opts.lon) {
-				opts.title = 'Invalid Location';
-			}
-
-			if (!ForecastEmbed.unit_labels[opts.units]) {
-				opts.units = 'us';
-			}
-
-			var embed = new ForecastEmbed(opts);
-			embed.elem.prependTo(document.getElementsByTagName('weather-view'));
+			var embed = new ForecastEmbed(this.options);
 			embed.loading(true);
-
 			Helper.darkSkyApi(opts).then(function (f) {
 				embed.build(f);
 				embed.loading(false);
