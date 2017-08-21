@@ -272,6 +272,11 @@ body.hide_daily .fe_container .fe_currently { width: 100%; }
 	font-weight: normal;
 }
 
+.fe_dir svg {
+	height: 30px;
+	color: #333;
+}
+
 .fe_container .fe_currently .fe_summary {
 	font-size: 18px;
 	font-weight: bold;
