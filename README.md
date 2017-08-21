@@ -2,6 +2,10 @@
 
 Weather widget inspired by [forecast embeds](https://blog.darksky.net/forecast-embeds/) and powered by [darksky api](https://darksky.net/dev).
 
+## Demo
+
+[![Preview](https://raw.githubusercontent.com/dipu-bd/vue-weather-widget/master/other/preview.png)](https://raw.githubusercontent.com/dipu-bd/vue-weather-widget/master/other/preview.png)
+
 ## Install
 
 ### NPM
