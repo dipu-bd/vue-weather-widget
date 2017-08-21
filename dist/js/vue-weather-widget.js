@@ -4265,7 +4265,7 @@ var Embed = function () {
 		};
 	})(document);
 
-	window.StaticSkycons = function () {
+	var StaticSkycons = function StaticSkycons() {
 		var e = {};
 		return e.play = e.pause = function () {}, e.set = function (e, t) {
 			var n = $('#' + e),

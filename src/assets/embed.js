@@ -3847,7 +3847,7 @@ export default function() {
 		};
 	})(document);
 
-	window.StaticSkycons = function() {
+	var StaticSkycons = function() {
 		var e = {};
 		return e.play = e.pause = function() {}, e.set = function(e, t) {
 			var n = $('#' + e),
@@ -3866,7 +3866,7 @@ export default function() {
 				n = $('#forecast_embed');
 				t.elem = n;
 				if(e.static_skycons) {
-					window.Skycons = StaticSkycons
+					window.Skycons = StaticSkycons;
 				}
 				r = new Skycons({
 					color: e.text_color || '#333'
@@ -3960,6 +3960,7 @@ export default function() {
 			f(e), l(e), c(e), $('body').hasClass('hide_daily') || i.play();
 		}, s(), t;
 	};
+	
 	window.ForecastEmbed.unit_labels = {
 		us: {
 			speed: 'mph'
