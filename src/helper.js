@@ -1,8 +1,3 @@
-// Load jQuery
-if(!window.jQuery) {
-	window.jQuery = window.$ = require('jquery');
-}
-
 export default {
 	/**
 	 * Convert given object into query parameters
