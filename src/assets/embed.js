@@ -3913,18 +3913,34 @@ export default function() {
 					break;
 				}
 				var h = Math.round(t.currently.temperature) + '&deg;';
-				l > 0 ? h += ' <span class="fe_dir">and rising</span>' : l < 0 && (h += ' <span class="fe_dir">and falling</span>'), n.find('.fe_currently .fe_temp').html(h), n.find('.fe_currently .fe_summary').html(a);
+				if(l > 0) {
+					h = '<span class="fe_dir"><svg viewBox="0 0 306 306"><polygonpoints="35.7,247.35 153,130.05 270.3,247.35 306,211.65 153,58.65 0,211.65" style="fill:'+ e.text_color +'" /></svg></span>' + h;
+				} else if(l < 0) {
+					h = h + '<span class="fe_dir"><svg viewBox="0 0 306 306"><polygon points="270.3,58.65 153,175.95 35.7,58.65 0,94.35 153,247.35 306,94.35" style="fill:'+ e.text_color +'" /></svg></span>';
+				}
+				n.find('.fe_currently .fe_temp').html(h);
+				n.find('.fe_currently .fe_summary').html(a);
+
 				if (t.currently.windSpeed) {
 					var p = Math.round(t.currently.windSpeed);
 					p != 0 && t.currently.windBearing ? p += ' ' + f + ' (' + o(t.currently.windBearing) + ')' : p += ' ' + f, n.find('.fe_currently .fe_wind').html('Wind: ' + p);
 				}
 				i.set('fe_current_icon', u(t.currently.icon));
 			},
+			getWeekDays = function(locale) {
+				var baseDate = new Date(Date.UTC(2017, 0, 1)); // just a Sunday
+				var weekDays = [];
+				for(var i = 0; i < 7; i++) {
+					weekDays.push(baseDate.toLocaleDateString(locale, { weekday: 'short' }));
+					baseDate.setDate(baseDate.getDate() + 1);
+				}
+				return weekDays;
+			},
 			l = function(t) {
 				var $daily_container;
 				$daily_container = n.find('.fe_daily'), $daily_container.empty();
 				var r = $('<div class="fe_day">           <span class="fe_label">MON</span>           <canvas class="fe_icon" width="52" height="52" style="width:26px; height:26px" />           <div class="fe_temp_bar">             <span class="fe_high_temp">72&deg;</span>             <span class="fe_low_temp">50&deg;</span>           </div>         </div>'),
-					s = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+					s = getWeekDays(e.lang),
 					o = (new Date).getDay(),
 					a = t.daily.data,
 					f = Math.max(6, a.length),
@@ -3935,7 +3951,7 @@ export default function() {
 					m = h - p,
 					g, y;
 				for (var d = 0; d < f; d++)(function(t) {
-					c = r.clone(), l = a[t], g = v * (l.temperatureMax - l.temperatureMin) / m, y = v * (h - l.temperatureMax) / m, c.find('.fe_label').html(t == 0 ? 'Today' : s[(o + t) % 7]), c.find('.fe_high_temp').html(Math.round(l.temperatureMax) + '&deg;'), c.find('.fe_low_temp').html(Math.round(l.temperatureMin) + '&deg;'), c.find('.fe_temp_bar').css({
+					c = r.clone(), l = a[t], g = v * (l.temperatureMax - l.temperatureMin) / m, y = v * (h - l.temperatureMax) / m, c.find('.fe_label').html(s[(o + t) % 7]), c.find('.fe_high_temp').html(Math.round(l.temperatureMax) + '&deg;'), c.find('.fe_low_temp').html(Math.round(l.temperatureMin) + '&deg;'), c.find('.fe_temp_bar').css({
 						height: g,
 						top: y,
 						'background-color': e.color || '#333'
