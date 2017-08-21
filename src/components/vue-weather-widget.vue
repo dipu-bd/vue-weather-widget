@@ -379,5 +379,29 @@ export default {
 
 	},
 
+	methods: {
+		loadWeather() {
+			if(!ForecastEmbed) return;
+
+			let opts = this.options;
+			if(!opts.lat || !opts.lon) {
+				opts.title = 'Invalid Location';
+			}
+
+			if(!ForecastEmbed.unit_labels[opts.units]) {
+				opts.units = 'us';
+			}
+
+			var embed = new ForecastEmbed(opts);
+			embed.elem.prependTo(document.getElementsByTagName('weather-view'));
+			embed.loading(true);
+
+			Helper.darkSkyApi(opts).then((f) => {
+				embed.build(f);
+				embed.loading(false);
+			});
+		},
+	}
+
 }
 </script>
