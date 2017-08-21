@@ -2,8 +2,11 @@
 	<div id="weather-view"></div>
 </template>
 
+<script src="../assets/embed.js"></script>
+
 <script>
 import Helper from '../helper';
+import Embed from '../assets/embed';
 
 export default {
 	name: 'vue-weather-widget',
@@ -114,7 +117,7 @@ export default {
 	},
 
 	mounted() {
-		require('./embed');
+		Embed();
 		setTimeout(loadWeather, 100);
 	},
 
