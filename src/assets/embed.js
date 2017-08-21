@@ -3839,7 +3839,7 @@ export default function () {
 		var e = {};
 		return e.play = e.pause = function () {}, e.set = function (e, t) {
 			var n = $('#' + e),
-				r = $('<img />').attr('id', n.attr('id')).attr('class', n.attr('class')).attr('src', 'skycons/' + t + '.gif').css({
+				r = $('<img />').attr('id', n.attr('id')).attr('class', n.attr('class')).attr('src', 'https://forecast.io/embed/skycons/' + t + '.gif').css({
 					width: n.width(),
 					height: n.height()
 				});
@@ -3851,7 +3851,7 @@ export default function () {
 	window.ForecastEmbed = function (e) {
 		var t = {},
 			n, r, i, s = function () {
-				n = $('      <div id="forecast_embed" class="fe_container">         <div class="fe_title" style="display:none">           <span class="fe_location">             <span></span>           </span>                      </div>                  <div class="fe_forecast">           <div class="fe_currently">             <canvas id="fe_current_icon" width="160" height="160" style="width:80px; height:80px"></canvas>             <div class="fe_temp"></div>             <div class="fe_summary"></div>             <div class="fe_wind"></div>           </div>                      <div class="fe_daily"></div>           <div style="clear:left"></div>         </div>                  <div class="fe_alert" style="display:none"></div>                  <div class="fe_loading" style="display:none">           <canvas id="fe_loading_icon" width="100" height="100" style="width:50px; height:50px"></canvas>           Loading...         </div>       </div>     '), t.elem = n, e.static_skycons && (window.Skycons = StaticSkycons), r = new Skycons({
+				n = $('#forecast_embed'), t.elem = n, e.static_skycons && (window.Skycons = StaticSkycons), r = new Skycons({
 					color: e.text_color || '#333'
 				}), i = new Skycons({
 					color: e.text_color || '#333'
