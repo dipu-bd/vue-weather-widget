@@ -4389,8 +4389,6 @@ var Embed = function () {
 	};
 };
 
-//import FlashCanvas from '../assets/flashcanvas';
-
 var VueWeatherWidget$1 = { render: function render() {
 		var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _vm._m(0);
 	}, staticRenderFns: [function () {
@@ -4515,7 +4513,6 @@ var VueWeatherWidget$1 = { render: function render() {
 
 	mounted: function mounted() {
 		Embed();
-		//FlashCanvas();
 		Vue.nextTick(this.loadWeather);
 	},
 
