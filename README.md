@@ -92,7 +92,7 @@ window.vm = new Vue({
 | --------|:------| -----------|-------|
 | api-key | String, *required*   | - | Your Dark Sky secret key |
 | latitude | String, *required* | - | The latitude of a location (in decimal degrees). Positive is north, negative is south. |
-| longitude | String, *required* | - | Return summary properties in the desired language. Click [here](https://darksky.net/dev/docs/forecast) for a list of supported languages. |
+| longitude | String, *required* | - | Return summary properties in the desired language. See below for a list of supported languages. |
 | units | String | `"us"` | A list of supported units are given below. |
 | bar-color | String | `"#333"` | Color of the Temparature bar. |
 | text-color | String | `"#333"` | Color of the text. |
