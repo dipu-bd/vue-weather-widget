@@ -97,21 +97,10 @@ export default {
 			required: false
 		},
 
-		font: {
-			type: 'String',
-			default: null,
-			required: false
-		},
-
-		fontFaceName: {
-			type: String,
-			default: null,
-			required: false
-		},
-
-		fontFaceUrl: {
-			type: String,
-			default: null,
+		// Use static skycons
+		disableAnimation: {
+			type: Boolean,
+			default: false,
 			required: false
 		}
 	},
@@ -129,10 +118,7 @@ export default {
 				hide_header: this.hideHeader,
 				color: this.barColor,
 				text_color: this.textColor,
-				//font: this.font,
-				//ff_name: this.fontFaceName,
-				//ff_url: this.fontFaceUrl,
-				static_skycons: true,
+				static_skycons: this.disableAnimation,
 			};
 			if(!ForecastEmbed.unit_labels[opts.units]) {
 				opts.units = 'us';
