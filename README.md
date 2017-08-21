@@ -6,6 +6,7 @@ Weather widget inspired by [forecast embeds](https://blog.darksky.net/forecast-e
 <a href="#"><img src="https://img.shields.io/badge/vuejs-2.x-brightgreen.svg?style=flat-square"></a>
 <a href="https://travis-ci.org/dipu-bd/vue-weather-widget"><img src="https://img.shields.io/travis/dipu-bd/vue-weather-widget.svg?style=flat-square"></a>
 <a href="https://codeclimate.com/github/dipu-bd/vue-weather-widget"><img src="https://img.shields.io/codeclimate/github/dipu-bd/vue-weather-widget.svg?style=flat-square"></a>
+<a href="https://www.npmjs.com/package/vue-weather-widget"><img src="https://img.shields.io/npm/dt/vue-weather-widget.svg?style=flat-square"></a>
 </p>
 
 ## Demo
