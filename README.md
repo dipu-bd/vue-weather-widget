@@ -86,3 +86,27 @@ window.vm = new Vue({
 ```
 
 
+## Props
+
+| Props | Type | Default | Description  |
+| --------|:------| -----------|-------|
+| api-key | String, *required*   | - | Your Dark Sky secret key |
+| latitude | String, *required* | - | The latitude of a location (in decimal degrees). Positive is north, negative is south. |
+| longitude | String, *required* | - | Return summary properties in the desired language.
+		[List of supported languages](https://darksky.net/dev/docs/forecast) |
+| units | String | `"us"` | List of supported units:    
+- `auto`: automatically select units based on geographic location
+- `ca`: same as si, except that windSpeed and windGust are in kilometers per hour
+- `uk2`: same as si, except that nearestStormDistance and visibility are in miles, and windSpeed and windGust are in miles per hour
+- `us`: Imperial units (the default)
+- `si`: SI units |
+| bar-color | String | `"#333"` | Color of the Temparature bar. |
+| text-color | String | `"#333"` | Color of the text. |
+| title | String | `"Weather"` | Title of the widget. |
+| hide-header | Boolean | `false` | Controls whether to show or hide the title bar. |
+| disable-animation | Boolean | `false` | Use static icons when enabled. |
+| update-interval | Number | `null` | Interval in seconds to update weather data automatically. Set it to `0` or `null` to disable auto update. |
+
+
+
+
