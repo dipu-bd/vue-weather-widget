@@ -4,7 +4,9 @@ Weather widget inspired by [forecast embeds](https://blog.darksky.net/forecast-e
 
 ## Demo
 
-[![Preview](https://raw.githubusercontent.com/dipu-bd/vue-weather-widget/master/other/preview.png)](https://raw.githubusercontent.com/dipu-bd/vue-weather-widget/master/other/preview.png)
+[Browser preview](https://dipu-bd.github.io/vue-weather-widget/)
+
+[![Preview](https://raw.githubusercontent.com/dipu-bd/vue-weather-widget/master/other/preview.png)](https://dipu-bd.github.io/vue-weather-widget/)
 
 ## Install
 
