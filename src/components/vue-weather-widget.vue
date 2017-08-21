@@ -13,7 +13,7 @@ export default {
 
 	props: {
 		// Your Dark Sky secret key
-		key: {
+		apiKey: {
 			type: String,
 			required: true
 		},
@@ -98,7 +98,7 @@ export default {
 	computed: {
 		options() {
 			return {
-				key: this.key,
+				key: this.apiKey,
 				lat: this.latitude,
 				lon: this.longitude,
 				lang: this.language,
