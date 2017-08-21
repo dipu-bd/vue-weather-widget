@@ -4481,8 +4481,23 @@ var VueWeatherWidget$1 = { render: function render() {
 			type: Boolean,
 			default: false,
 			required: false
+		},
+
+		// Auto update interval in seconds
+		updateInterval: {
+			type: Number,
+			default: null,
+			required: false
 		}
 	},
+
+	data: function data() {
+		return {
+			updater: null,
+			embed: null
+		};
+	},
+
 
 	computed: {
 		options: function options() {
@@ -4499,7 +4514,7 @@ var VueWeatherWidget$1 = { render: function render() {
 				text_color: this.textColor,
 				static_skycons: this.disableAnimation
 			};
-			if (!ForecastEmbed.unit_labels[opts.units]) {
+			if (window.ForecastEmbed && !ForecastEmbed.unit_labels[opts.units]) {
 				opts.units = 'us';
 			}
 			if (!opts.lat || !opts.lon) {
@@ -4512,21 +4527,47 @@ var VueWeatherWidget$1 = { render: function render() {
 		}
 	},
 
+	watch: {
+		options: function options() {
+			this.loadWeather();
+		},
+		updateInterval: function updateInterval() {
+			this.setAutoUpdate();
+		}
+	},
+
 	mounted: function mounted() {
 		Embed();
-		Vue.nextTick(this.loadWeather);
+		this.embed = new ForecastEmbed(this.options);
+		this.embed.loading(true);
+		this.loadWeather();
+		this.setAutoUpdate();
+	},
+	destroyed: function destroyed() {
+		this.stopUpdater();
 	},
 
 
 	methods: {
 		loadWeather: function loadWeather() {
+			var _this = this;
+
 			var opts = this.options;
-			var embed = new ForecastEmbed(opts);
-			embed.loading(true);
 			Helper.darkSkyApi(opts).then(function (f) {
-				embed.build(f);
-				embed.loading(false);
+				_this.embed.build(f);
+				_this.embed.loading(false);
 			});
+		},
+		setAutoUpdate: function setAutoUpdate() {
+			if (!this.updateInterval) return;
+			this.stopUpdater();
+			this.updater = setInterval(this.loadWeather, this.updateInterval * 1000);
+		},
+		stopUpdater: function stopUpdater() {
+			if (this.updater) {
+				clearInterval(this.updater);
+				this.updater = null;
+			}
 		}
 	}
 
