@@ -9,6 +9,7 @@ Weather widget inspired by [forecast embeds](https://blog.darksky.net/forecast-e
 <a href="https://www.npmjs.com/package/vue-weather-widget"><img src="https://img.shields.io/npm/dt/vue-weather-widget.svg?style=flat-square"></a>
 <a href="https://david-dm.org/dipu-bd/vue-weather-widget"><img src="https://david-dm.org/dipu-bd/vue-weather-widget.svg?style=flat-square"></a>
 <a href="https://david-dm.org/dipu-bd/vue-weather-widget?type=dev"><img src="https://david-dm.org/dipu-bd/vue-weather-widget/dev-status.svg?style=flat-square"></a>
+<a href="https://github.com/dipu-bd/vue-weather-widget/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/vue-weather-widget.svg?style=flat-square"></a>
 </p>
 
 ## Demo
