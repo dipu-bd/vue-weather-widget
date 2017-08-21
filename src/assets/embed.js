@@ -3567,7 +3567,7 @@ export default function () {
 		});
 	})(window);
 
-	var Skycons;
+	window.Skycons = null;
 	(function (e) {
 		'use strict';
 
@@ -3835,7 +3835,7 @@ export default function () {
 		};
 	})(document);
 	
-	var StaticSkycons = function () {
+	window.StaticSkycons = function () {
 		var e = {};
 		return e.play = e.pause = function () {}, e.set = function (e, t) {
 			var n = $('#' + e),
@@ -3848,7 +3848,7 @@ export default function () {
 	};
 	StaticSkycons.RAIN = 'rain', StaticSkycons.SNOW = 'snow', StaticSkycons.SLEET = 'sleet', StaticSkycons.WIND = 'wind', StaticSkycons.FOG = 'fog', StaticSkycons.CLOUDY = 'cloudy', StaticSkycons.PARTLY_CLOUDY_DAY = 'partly_cloudy_day', StaticSkycons.PARTLY_CLOUDY_NIGHT = 'partly_cloudy_night', StaticSkycons.CLEAR_DAY = 'clear_day', StaticSkycons.CLEAR_NIGHT = 'clear_night';
 
-	var ForecastEmbed = function (e) {
+	window.ForecastEmbed = function (e) {
 		var t = {},
 			n, r, i, s = function () {
 				n = $('      <div id="forecast_embed" class="fe_container">         <div class="fe_title" style="display:none">           <span class="fe_location">             <span></span>           </span>                      </div>                  <div class="fe_forecast">           <div class="fe_currently">             <canvas id="fe_current_icon" width="160" height="160" style="width:80px; height:80px"></canvas>             <div class="fe_temp"></div>             <div class="fe_summary"></div>             <div class="fe_wind"></div>           </div>                      <div class="fe_daily"></div>           <div style="clear:left"></div>         </div>                  <div class="fe_alert" style="display:none"></div>                  <div class="fe_loading" style="display:none">           <canvas id="fe_loading_icon" width="100" height="100" style="width:50px; height:50px"></canvas>           Loading...         </div>       </div>     '), t.elem = n, e.static_skycons && (window.Skycons = StaticSkycons), r = new Skycons({
@@ -3931,7 +3931,6 @@ export default function () {
 			f(e), l(e), c(e), $('body').hasClass('hide_daily') || i.play();
 		}, s(), t;
 	};
-
 	ForecastEmbed.unit_labels = {
 		us: {
 			speed: 'mph'
@@ -3946,8 +3945,4 @@ export default function () {
 			speed: 'mph'
 		}
 	};
-
-	window.ForecastEmbed = ForecastEmbed;
-	window.StaticSkycons = StaticSkycons;
-	window.Skycons = Skycons;
 }
