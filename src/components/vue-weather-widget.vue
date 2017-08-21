@@ -102,7 +102,20 @@ export default {
 			type: Boolean,
 			default: false,
 			required: false
+		},
+
+		// Auto update interval in seconds
+		updateInterval: {
+			type: Number,
+			default: null,
+			required: false
 		}
+	},
+
+	data() {
+		return {
+			updater: null,
+		};
 	},
 
 	computed: {
@@ -136,12 +149,20 @@ export default {
 	watch: {
 		options() {
 			this.loadWeather();
+		},
+		updateInterval() {
+			this.setAutoUpdate();
 		}
 	},
 
 	mounted() {
 		Embed();
 		Vue.nextTick(this.loadWeather);
+		Vue.nextTick(this.setAutoUpdate);
+	},
+
+	destroyed() {
+		this.stopUpdater();
 	},
 
 	methods: {
@@ -154,6 +175,22 @@ export default {
 				embed.loading(false);
 			});
 		},
+
+		stopUpdater() {
+			if(this.updater) {
+				clearInterval(this.updater);
+				this.updater = null;
+			}
+		},
+
+		setAutoUpdate() {
+			if(!this.updateInterval) return;
+			this.stopUpdater();
+
+			this.updater = setInterval(() => {
+				Vue.nextTick(this.loadWeather);
+			}, this.updateInterval * 1000);
+		}
 	}
 
 }
