@@ -3970,7 +3970,7 @@ var Embed = function () {
 		});
 	})(window);
 
-	window.Skycons = null;
+	var Skycons = null;
 	(function (e) {
 		'use strict';
 
@@ -4129,6 +4129,7 @@ var Embed = function () {
 			}
 			h < 1 && (h *= f.length / 2 - 1, v = Math.floor(h), h -= v, v *= 2, v += 2, w(e, t, n + (f[v - 2] * (1 - h) + f[v] * h) * i, r + (f[v - 1] * (1 - h) + f[v + 1] * h) * i, i, s, a));
 		}
+
 		var t, n;
 		(function () {
 			var r = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame,
@@ -4145,18 +4146,14 @@ var Embed = function () {
 				i(e.value);
 			}) : (t = setInterval, n = clearInterval);
 		})();
-		var r = 500,
-		    i = .08,
-		    s = 2 * Math.PI,
-		    o = 2 / Math.sqrt(2),
-		    y = [[-0.75, -0.18, -0.7219, -0.1527, -0.6971, -0.1225, -0.6739, -0.091, -0.6516, -0.0588, -0.6298, -0.0262, -0.6083, .0065, -0.5868, .0396, -0.5643, .0731, -0.5372, .1041, -0.5033, .1259, -0.4662, .1406, -0.4275, .1493, -0.3881, .153, -0.3487, .1526, -0.3095, .1488, -0.2708, .1421, -0.2319, .1342, -0.1943, .1217, -0.16, .1025, -0.129, .0785, -0.1012, .0509, -0.0764, .0206, -0.0547, -0.012, -0.0378, -0.0472, -0.0324, -0.0857, -0.0389, -0.1241, -0.0546, -0.1599, -0.0814, -0.1876, -0.1193, -0.1964, -0.1582, -0.1935, -0.1931, -0.1769, -0.2157, -0.1453, -0.229, -0.1085, -0.2327, -0.0697, -0.224, -0.0317, -0.2064, .0033, -0.1853, .0362, -0.1613, .0672, -0.135, .0961, -0.1051, .1213, -0.0706, .1397, -0.0332, .1512, .0053, .158, .0442, .1624, .0833, .1636, .1224, .1615, .1613, .1565, .1999, .15, .2378, .1402, .2749, .1279, .3118, .1147, .3487, .1015, .3858, .0892, .4236, .0787, .4621, .0715, .5012, .0702, .5398, .0766, .5768, .089, .6123, .1055, .6466, .1244, .6805, .144, .7147, .163, .75, .18], [-0.75, 0, -0.7033, .0195, -0.6569, .0399, -0.6104, .06, -0.5634, .0789, -0.5155, .0954, -0.4667, .1089, -0.4174, .1206, -0.3676, .1299, -0.3174, .1365, -0.2669, .1398, -0.2162, .1391, -0.1658, .1347, -0.1157, .1271, -0.0661, .1169, -0.017, .1046, .0316, .0903, .0791, .0728, .1259, .0534, .1723, .0331, .2188, .0129, .2656, -0.0064, .3122, -0.0263, .3586, -0.0466, .4052, -0.0665, .4525, -0.0847, .5007, -0.1002, .5497, -0.113, .5991, -0.124, .6491, -0.1325, .6994, -0.138, .75, -0.14]],
-		    b = [{
-			start: .36,
-			end: .11
-		}, {
-			start: .56,
-			end: .16
-		}];
+
+		var r = 500;
+		var i = .08;
+		var s = 2 * Math.PI;
+		var o = 2 / Math.sqrt(2);
+		var y = [[-0.75, -0.18, -0.7219, -0.1527, -0.6971, -0.1225, -0.6739, -0.091, -0.6516, -0.0588, -0.6298, -0.0262, -0.6083, .0065, -0.5868, .0396, -0.5643, .0731, -0.5372, .1041, -0.5033, .1259, -0.4662, .1406, -0.4275, .1493, -0.3881, .153, -0.3487, .1526, -0.3095, .1488, -0.2708, .1421, -0.2319, .1342, -0.1943, .1217, -0.16, .1025, -0.129, .0785, -0.1012, .0509, -0.0764, .0206, -0.0547, -0.012, -0.0378, -0.0472, -0.0324, -0.0857, -0.0389, -0.1241, -0.0546, -0.1599, -0.0814, -0.1876, -0.1193, -0.1964, -0.1582, -0.1935, -0.1931, -0.1769, -0.2157, -0.1453, -0.229, -0.1085, -0.2327, -0.0697, -0.224, -0.0317, -0.2064, .0033, -0.1853, .0362, -0.1613, .0672, -0.135, .0961, -0.1051, .1213, -0.0706, .1397, -0.0332, .1512, .0053, .158, .0442, .1624, .0833, .1636, .1224, .1615, .1613, .1565, .1999, .15, .2378, .1402, .2749, .1279, .3118, .1147, .3487, .1015, .3858, .0892, .4236, .0787, .4621, .0715, .5012, .0702, .5398, .0766, .5768, .089, .6123, .1055, .6466, .1244, .6805, .144, .7147, .163, .75, .18], [-0.75, 0, -0.7033, .0195, -0.6569, .0399, -0.6104, .06, -0.5634, .0789, -0.5155, .0954, -0.4667, .1089, -0.4174, .1206, -0.3676, .1299, -0.3174, .1365, -0.2669, .1398, -0.2162, .1391, -0.1658, .1347, -0.1157, .1271, -0.0661, .1169, -0.017, .1046, .0316, .0903, .0791, .0728, .1259, .0534, .1723, .0331, .2188, .0129, .2656, -0.0064, .3122, -0.0263, .3586, -0.0466, .4052, -0.0665, .4525, -0.0847, .5007, -0.1002, .5497, -0.113, .5991, -0.124, .6491, -0.1325, .6994, -0.138, .75, -0.14]];
+		var b = [{ start: .36, end: .11 }, { start: .56, end: .16 }];
+
 		Skycons = function Skycons(e) {
 			this.list = [], this.interval = null, this.color = e && e.color ? e.color : 'black', this.resizeClear = !!e && !!e.resizeClear;
 		}, Skycons.CLEAR_DAY = function (e, t, n) {
@@ -4287,17 +4284,32 @@ var Embed = function () {
 		    r,
 		    i,
 		    s = function s() {
-			n = $('#forecast_embed'), t.elem = n, e.static_skycons && (window.Skycons = StaticSkycons), r = new Skycons({
+			n = $('#forecast_embed');
+			t.elem = n;
+			if (e.static_skycons) {
+				window.Skycons = StaticSkycons;
+			}
+			r = new Skycons({
 				color: e.text_color || '#333'
-			}), i = new Skycons({
+			});
+			i = new Skycons({
 				color: e.text_color || '#333'
-			}), e.hide_header ? n.find('.fe_title').remove() : (n.find('.fe_title .fe_location span').html(e.title), n.find('.fe_title').show());
-			if (e.ff_name && e.ff_url) {
-				var s = document.createElement('style');
-				s.type = 'text/css', document.getElementsByTagName('head')[0].appendChild(s);
-				var o = 'font-family: ' + e.ff_name + '; src: url(' + e.ff_url + ');';
-				s.styleSheet ? s.styleSheet.cssText = '@font-face {' + o + '}' : s.innerHTML = '@font-face {' + o + '}';
-			}(e.font || e.ff_name) && $('body').css('font-family', e.font || e.ff_name), e.text_color && (n.css('color', e.text_color), n.find('a').css('color', e.text_color), n.find('.fe_title').css('border-color', e.text_color), n.find('.fe_alert a').css('color', e.text_color)), $(window).bind('resize', a), a();
+			});
+
+			if (e.hide_header) {
+				n.find('.fe_title').remove();
+			} else {
+				n.find('.fe_title .fe_location span').html(e.title);
+				n.find('.fe_title').show();
+			}
+
+			if (e.text_color) {
+				n.css('color', e.text_color);
+				n.find('a').css('color', e.text_color);
+				n.find('.fe_title').css('border-color', e.text_color);
+				n.find('.fe_alert a').css('color', e.text_color);
+			}
+			$(window).bind('resize', a), a();
 		},
 		    o = function o(e) {
 			var t = Math.round(e / 45);
@@ -4375,7 +4387,7 @@ var Embed = function () {
 			f(e), l(e), c(e), $('body').hasClass('hide_daily') || i.play();
 		}, s(), t;
 	};
-	ForecastEmbed.unit_labels = {
+	window.ForecastEmbed.unit_labels = {
 		us: {
 			speed: 'mph'
 		},

@@ -3578,7 +3578,7 @@ export default function() {
 		});
 	})(window);
 
-	window.Skycons = null;
+	var Skycons = null;
 	(function(e) {
 		'use strict';
 
@@ -3737,6 +3737,7 @@ export default function() {
 				[-0.75, 0, -0.7033, .0195, -0.6569, .0399, -0.6104, .06, -0.5634, .0789, -0.5155, .0954, -0.4667, .1089, -0.4174, .1206, -0.3676, .1299, -0.3174, .1365, -0.2669, .1398, -0.2162, .1391, -0.1658, .1347, -0.1157, .1271, -0.0661, .1169, -0.017, .1046, .0316, .0903, .0791, .0728, .1259, .0534, .1723, .0331, .2188, .0129, .2656, -0.0064, .3122, -0.0263, .3586, -0.0466, .4052, -0.0665, .4525, -0.0847, .5007, -0.1002, .5497, -0.113, .5991, -0.124, .6491, -0.1325, .6994, -0.138, .75, -0.14]
 			];
 			var b = [{ start: .36, end: .11}, { start: .56, end: .16}];
+		
 		Skycons = function(e) {
 			this.list = [], this.interval = null, this.color = e && e.color ? e.color : 'black', this.resizeClear = !!e && !!e.resizeClear;
 		}, Skycons.CLEAR_DAY = function(e, t, n) {
@@ -3862,17 +3863,32 @@ export default function() {
 	window.ForecastEmbed = function(e) {
 		var t = {},
 			n, r, i, s = function() {
-				n = $('#forecast_embed'), t.elem = n, e.static_skycons && (window.Skycons = StaticSkycons), r = new Skycons({
+				n = $('#forecast_embed');
+				t.elem = n;
+				if(e.static_skycons) {
+					window.Skycons = StaticSkycons
+				}
+				r = new Skycons({
 					color: e.text_color || '#333'
-				}), i = new Skycons({
+				});
+				i = new Skycons({
 					color: e.text_color || '#333'
-				}), e.hide_header ? n.find('.fe_title').remove() : (n.find('.fe_title .fe_location span').html(e.title), n.find('.fe_title').show());
-				if (e.ff_name && e.ff_url) {
-					var s = document.createElement('style');
-					s.type = 'text/css', document.getElementsByTagName('head')[0].appendChild(s);
-					var o = 'font-family: ' + e.ff_name + '; src: url(' + e.ff_url + ');';
-					s.styleSheet ? s.styleSheet.cssText = '@font-face {' + o + '}' : s.innerHTML = '@font-face {' + o + '}';
-				}(e.font || e.ff_name) && $('body').css('font-family', e.font || e.ff_name), e.text_color && (n.css('color', e.text_color), n.find('a').css('color', e.text_color), n.find('.fe_title').css('border-color', e.text_color), n.find('.fe_alert a').css('color', e.text_color)), $(window).bind('resize', a), a();
+				});
+
+				if(e.hide_header) {
+					n.find('.fe_title').remove();
+				} else {
+					n.find('.fe_title .fe_location span').html(e.title);
+					n.find('.fe_title').show();
+				}
+
+				if(e.text_color) {
+					n.css('color', e.text_color);
+					n.find('a').css('color', e.text_color);
+					n.find('.fe_title').css('border-color', e.text_color);
+					n.find('.fe_alert a').css('color', e.text_color);
+				}
+				$(window).bind('resize', a), a();
 			},
 			o = function(e) {
 				var t = Math.round(e / 45);
