@@ -23,8 +23,6 @@
 	</div>
 </template>
 
-<script src="../assets/embed.js"></script>
-
 <script>
 import Helper from '../helper';
 import Embed from '../assets/embed';
