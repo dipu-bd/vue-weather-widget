@@ -13,9 +13,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "node_modules/.bin/eslint ./",
     "lint-fix": "node_modules/.bin/eslint --fix ./",
-    "build": "node_modules/.bin/rollup -c ./build/rollup.config.js",
-    "watch": "node_modules/.bin/rollup -c ./build/rollup.config.js --watch",
+    "dev": "node_modules/.bin/rollup -c ./build/rollup.config.js",
     "prod": "NODE_ENV=production node_modules/.bin/rollup -c ./build/rollup.config.js",
+    "watch": "node_modules/.bin/rollup -c ./build/rollup.config.js --watch",
+    "build": "npm run dev && npm run prod",
     "patch": "npm version patch --no-git-tag-version && git add package.json && git commit -m 'Update version:patch' && git push origin master && npm publish",
     "minor": "npm version minor --no-git-tag-version && git add package.json && git commit -m 'Update version:minor' && git push origin master && npm publish",
     "major": "npm version major --no-git-tag-version && git add package.json && git commit -m 'Update version:major' && git push origin master && npm publish"
