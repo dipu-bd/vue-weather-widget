@@ -11,7 +11,7 @@ export default {
   plugins: [
     vue({
       css (style, styles, compiler) {
-        fs.writeFileSync('dist/css/vue-weather-widget.css', style)
+        fs.writeFileSync('dist/css/vue-weather-widget.css', style);
       }
     }),
     babel({
