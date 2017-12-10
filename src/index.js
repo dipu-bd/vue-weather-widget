@@ -1,6 +1,6 @@
 try {
 	window.$ = window.jQuery = require('jquery');
-	require('./dist/css/vue-weather-widget.css');
+	require('../css/vue-weather-widget.css');
 } catch (ex) {
 	// ignore exceptions
 }

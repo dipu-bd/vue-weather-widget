@@ -4628,7 +4628,7 @@ __$__vue_module__.prototype = __vue_module__.prototype;
 
 try {
 	window.$ = window.jQuery = require('jquery');
-	require('./dist/css/vue-weather-widget.css');
+	require('../css/vue-weather-widget.css');
 } catch (ex) {
 	// ignore exceptions
 }
