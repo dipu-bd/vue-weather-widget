@@ -1,36 +1,26 @@
-import fs from 'fs';
-import vue from 'rollup-plugin-vue';
-import babel from 'rollup-plugin-babel';
+import vue from 'rollup-plugin-vue2';
+import css from 'rollup-plugin-css-only';
+import buble from 'rollup-plugin-buble';
+import nodeResolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
 import uglify from 'rollup-plugin-uglify';
 
 const production = (process.env.NODE_ENV === 'production');
 
 export default {
-	entry: 'src/index.js',
-	dest: 'dist/js/vue-weather-widget' + (production ? '.min.js' : '.js'),
 	moduleName: 'VueWeatherWidget',
+	input: 'src/index.js',
+	output: {
+		file: 'dist/js/vue-weather-widget' + (production ? '.min.js' : '.js'),
+		format: 'cjs'
+	},
 	format: 'umd',
 	plugins: [
-		vue({
-			css (style) {
-				if(production) {
-					style = style.replace(/\s/g, ' ').replace(/\s\s/g, ' ');
-				}
-				fs.writeFileSync('dist/css/vue-weather-widget'
-					+ (production ? '.min.css' : '.css'), style.trim());
-			}
-		}),
-		babel({
-			babelrc: false,
-			runtimeHelpers: true,
-			externalHelpers: false,
-			exclude: 'node_modules/**',
-			presets: [['es2015', {'modules': false}]],
-			plugins: [
-				'transform-object-assign',
-				'external-helpers'
-			]
-		}),
+		vue(),
+		css(),
+		buble(),
+		nodeResolve({ browser: true, jsnext: true, main: true }),
+		commonjs(),
 		(production && uglify())
 	],
 };
