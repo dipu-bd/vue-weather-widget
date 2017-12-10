@@ -1,5 +1,5 @@
 import vue from 'rollup-plugin-vue2';
-import css from 'rollup-plugin-css-only';
+import css from 'rollup-plugin-css-porter';
 import buble from 'rollup-plugin-buble';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
@@ -17,7 +17,8 @@ export default {
 	plugins: [
 		vue(),
 		css({
-			output: 'dist/css/vue-weather-widget' + (production ? '.min.css' : '.css')
+			minified: production,
+			dest: 'dist/css/vue-weather-widget' + (production ? '.min.css' : '.css')
 		}),
 		buble(),
 		nodeResolve({ browser: true, jsnext: true, main: true }),
