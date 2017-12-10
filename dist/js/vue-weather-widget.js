@@ -4626,9 +4626,11 @@ var __$__vue_module__ = _extends(__vue_module__, { render: function render() {
     }] });
 __$__vue_module__.prototype = __vue_module__.prototype;
 
-if (window && require && !(window.$ || window.jQuery)) {
+try {
 	window.$ = window.jQuery = require('jquery');
 	require('./dist/css/vue-weather-widget.css');
+} catch (ex) {
+	// ignore exceptions
 }
 
 return __$__vue_module__;
