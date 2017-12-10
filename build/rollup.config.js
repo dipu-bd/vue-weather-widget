@@ -8,7 +8,7 @@ const production = (process.env.NODE_ENV === 'production');
 
 export default {
 	entry: 'src/index.js',
-	dest: production ? 'dist/weather-widget.min.js' : 'dist/weather-widget.js',
+	dest: 'dist/js/vue-weather-widget' + (production ? 'min.js' : '.js'),
 	moduleName: 'VueWeatherWidget',
 	format: 'umd',
 	plugins: [
@@ -17,13 +17,11 @@ export default {
 		}),
 		vue({
 			css (style) {
-				if(!production) {
-					fs.writeFileSync('dist/weather-widget.css', style.trim());
-				} else {
-					var minified = style.replace(/\s/g, ' ').trim();
-					minified = minified.replace(/\s\s/g, ' ');
-					fs.writeFileSync('dist/weather-widget.min.css', minified);
+				if(production) {
+					style = style.replace(/\s/g, ' ').replace(/\s\s/g, ' ');
 				}
+				fs.writeFileSync('dist/css/vue-weather-widget'
+					+ (production ? 'min.css' : '.css'), style.trim());
 			}
 		}),
 		babel({
