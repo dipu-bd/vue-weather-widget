@@ -1,3 +1,19 @@
 {
-  "presets": ["es2015"]
+  "runtimeHelpers": true,
+  "externalHelpers": false,
+  "exclude": "node_modules/**",
+  "presets": [
+    [
+      "latest",
+      {
+        "es2015": {
+          "modules": false 
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    "external-helpers",
+    "transform-object-assign"
+  ]
 }
