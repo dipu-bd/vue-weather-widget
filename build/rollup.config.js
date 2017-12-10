@@ -11,9 +11,6 @@ export default {
 	moduleName: 'VueWeatherWidget',
 	format: 'umd',
 	plugins: [
-		css({
-			minified: production
-		}),
 		vue({
 			css (style) {
 				if(production) {
