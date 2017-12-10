@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Weather from '../../../src/index.js'
+import Weather from 'vue-weather-widget';
 
 export default {
   name: 'app',
