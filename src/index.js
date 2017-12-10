@@ -1,6 +1,8 @@
-if(window && require && !(window.$ || window.jQuery)) {
+try {
 	window.$ = window.jQuery = require('jquery');
 	require('./dist/css/vue-weather-widget.css');
+} catch (ex) {
+	// ignore exceptions
 }
 
 import VueWeatherWidget from './components/vue-weather-widget.vue';
