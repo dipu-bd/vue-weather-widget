@@ -8,16 +8,17 @@ import uglify from 'rollup-plugin-uglify';
 const production = (process.env.NODE_ENV === 'production');
 
 export default {
-	moduleName: 'VueWeatherWidget',
 	input: 'src/index.js',
 	output: {
 		file: 'dist/js/vue-weather-widget' + (production ? '.min.js' : '.js'),
-		format: 'cjs'
+		name: 'VueWeatherWidget',
+		format: 'cjs' //'umd'
 	},
-	format: 'umd',
 	plugins: [
 		vue(),
-		css(),
+		css({
+			output: 'dist/css/vue-weather-widget' + (production ? '.min.css' : '.css')
+		}),
 		buble(),
 		nodeResolve({ browser: true, jsnext: true, main: true }),
 		commonjs(),
