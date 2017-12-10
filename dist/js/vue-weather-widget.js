@@ -39,6 +39,40 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
 var Embed = function () {
 	(function (e, t) {
 		function _(e) {
@@ -4420,11 +4454,7 @@ var Embed = function () {
 	};
 };
 
-var VueWeatherWidget$1 = { render: function render() {
-		var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _vm._m(0);
-	}, staticRenderFns: [function () {
-		var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "fe_container", attrs: { "id": "forecast_embed" } }, [_c('div', { staticClass: "fe_title", staticStyle: { "display": "none" } }, [_c('span', { staticClass: "fe_location" }, [_c('span')])]), _c('div', { staticClass: "fe_forecast" }, [_c('div', { staticClass: "fe_currently" }, [_c('canvas', { staticStyle: { "width": "80px", "height": "80px" }, attrs: { "id": "fe_current_icon", "width": "160", "height": "160" } }), _c('div', { staticClass: "fe_temp" }), _c('div', { staticClass: "fe_summary" }), _c('div', { staticClass: "fe_wind" })]), _c('div', { staticClass: "fe_daily" }), _c('div', { staticStyle: { "clear": "left" } })]), _c('div', { staticClass: "fe_alert", staticStyle: { "display": "none" } }), _c('div', { staticClass: "fe_loading", staticStyle: { "display": "none" } }, [_c('canvas', { staticStyle: { "width": "50px", "height": "50px" }, attrs: { "id": "fe_loading_icon", "width": "100", "height": "100" } }), _vm._v("Loading...")])]);
-	}],
+var __vue_module__ = {
 	name: 'vue-weather-widget',
 
 	props: {
@@ -4589,6 +4619,13 @@ var VueWeatherWidget$1 = { render: function render() {
 
 };
 
-return VueWeatherWidget$1;
+var __$__vue_module__ = _extends(__vue_module__, { render: function render() {
+        var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _vm._m(0, false, false);
+    }, staticRenderFns: [function () {
+        var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "fe_container", attrs: { "id": "forecast_embed" } }, [_c('div', { staticClass: "fe_title", staticStyle: { "display": "none" } }, [_c('span', { staticClass: "fe_location" }, [_c('span')])]), _vm._v(" "), _c('div', { staticClass: "fe_forecast" }, [_c('div', { staticClass: "fe_currently" }, [_c('canvas', { staticStyle: { "width": "80px", "height": "80px" }, attrs: { "id": "fe_current_icon", "width": "160", "height": "160" } }), _vm._v(" "), _c('div', { staticClass: "fe_temp" }), _vm._v(" "), _c('div', { staticClass: "fe_summary" }), _vm._v(" "), _c('div', { staticClass: "fe_wind" })]), _vm._v(" "), _c('div', { staticClass: "fe_daily" }), _vm._v(" "), _c('div', { staticStyle: { "clear": "left" } })]), _vm._v(" "), _c('div', { staticClass: "fe_alert", staticStyle: { "display": "none" } }), _vm._v(" "), _c('div', { staticClass: "fe_loading", staticStyle: { "display": "none" } }, [_c('canvas', { staticStyle: { "width": "50px", "height": "50px" }, attrs: { "id": "fe_loading_icon", "width": "100", "height": "100" } }), _vm._v(" Loading... ")])]);
+    }] });
+__$__vue_module__.prototype = __vue_module__.prototype;
+
+return __$__vue_module__;
 
 })));
