@@ -2,7 +2,6 @@ import fs from 'fs';
 import vue from 'rollup-plugin-vue';
 import babel from 'rollup-plugin-babel';
 import uglify from 'rollup-plugin-uglify';
-import css from 'rollup-plugin-css-porter';
 
 const production = (process.env.NODE_ENV === 'production');
 
