@@ -15,9 +15,9 @@ export default {
 			+ options.key + '/'
 			+ options.lat + ',' + options.lon
 			+ '?' + this.encodeQueryParam({
-				units: options.units,
-				lang: options.lang,
-			});
+			units: options.units,
+			lang: options.lang,
+		});
 		// return jquery ajax promise
 		return $.ajax({
 			type: 'GET',

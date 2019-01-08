@@ -34,7 +34,7 @@ var Helper = {
 	
 };
 
-var Embed = function() {
+function Embed() {
 	(function(e, t) {
 		function _(e) {
 			var t = M[e] = {};
@@ -354,7 +354,6 @@ var Embed = function() {
 
 		function Kn(e, t, n) {
 			var r, i = 0,
-				s = 0,
 				o = Xn.length,
 				u = v.Deferred().always(function() {
 					delete a.elem;
@@ -504,7 +503,7 @@ var Embed = function() {
 		v.fn = v.prototype = {
 			constructor: v,
 			init: function(e, n, r) {
-				var s, o, u, a;
+				var s, o, a;
 				if (!e) { return this; }
 				if (e.nodeType) { return this.context = this[0] = e, this.length = 1, this; }
 				if (typeof e == 'string') {
@@ -622,7 +621,7 @@ var Embed = function() {
 					return !1;
 				}
 				var r;
-				for (r in e){  }
+				for (r in e){ }
 				return r === t || p.call(e, r);
 			},
 			isEmptyObject: function(e) {
@@ -1132,8 +1131,6 @@ var Embed = function() {
 				});
 			},
 			addClass: function(e) {
-				var this$1 = this;
-
 				var t, n, r, i, s, o, u;
 				if (v.isFunction(e)) { return this.each(function(t) {
 					v(this).addClass(e.call(this, t, this.className));
@@ -1141,7 +1138,7 @@ var Embed = function() {
 				if (e && typeof e == 'string') {
 					t = e.split(y);
 					for (n = 0, r = this.length; n < r; n++) {
-						i = this$1[n];
+						i = this[n];
 						if (i.nodeType === 1)
 							{ if (!i.className && t.length === 1) { i.className = e; }
 							else {
@@ -1154,8 +1151,6 @@ var Embed = function() {
 				return this;
 			},
 			removeClass: function(e) {
-				var this$1 = this;
-
 				var n, r, i, s, o, u, a;
 				if (v.isFunction(e)) { return this.each(function(t) {
 					v(this).removeClass(e.call(this, t, this.className));
@@ -1163,7 +1158,7 @@ var Embed = function() {
 				if (e && typeof e == 'string' || e === t) {
 					n = (e || '').split(y);
 					for (u = 0, a = this.length; u < a; u++) {
-						i = this$1[u];
+						i = this[u];
 						if (i.nodeType === 1 && i.className) {
 							r = (' ' + i.className + ' ').replace(q, ' ');
 							for (s = 0, o = n.length; s < o; s++)
@@ -1190,13 +1185,11 @@ var Embed = function() {
 				});
 			},
 			hasClass: function(e) {
-				var this$1 = this;
-
 				var t = ' ' + e + ' ',
 					n = 0,
 					r = this.length;
 				for (; n < r; n++)
-					{ if (this$1[n].nodeType === 1 && (' ' + this$1[n].className + ' ').replace(q, ' ').indexOf(t) >= 0) { return !0; } }
+					{ if (this[n].nodeType === 1 && (' ' + this[n].className + ' ').replace(q, ' ').indexOf(t) >= 0) { return !0; } }
 				return !1;
 			},
 			val: function(e) {
@@ -1469,10 +1462,8 @@ var Embed = function() {
 				return;
 			},
 			dispatch: function(n) {
-				var this$1 = this;
-
 				n = v.event.fix(n || e.event);
-				var r, i, s, o, u, a, f, c, h, p, d = (v._data(this, 'events') || {})[n.type] || [],
+				var r, i, s, o, u, a, f, c, h, d = (v._data(this, 'events') || {})[n.type] || [],
 					m = d.delegateCount,
 					g = l.call(arguments),
 					y = !n.exclusive && !n.namespace,
@@ -1484,7 +1475,7 @@ var Embed = function() {
 					{ for (s = n.target; s != this; s = s.parentNode || this)
 						{ if (s.disabled !== !0 || n.type !== 'click') {
 							u = {}, f = [];
-							for (r = 0; r < m; r++) { c = d[r], h = c.selector, u[h] === t && (u[h] = c.needsContext ? v(h, this$1).index(s) >= 0 : v.find(h, this$1, null, [s]).length), u[h] && f.push(c); }
+							for (r = 0; r < m; r++) { c = d[r], h = c.selector, u[h] === t && (u[h] = c.needsContext ? v(h, this).index(s) >= 0 : v.find(h, this, null, [s]).length), u[h] && f.push(c); }
 							f.length && w.push({
 								elem: s,
 								matches: f
@@ -1658,12 +1649,10 @@ var Embed = function() {
 			};
 		}), v.fn.extend({
 			on: function(e, n, r, i, s) {
-					var this$1 = this;
-
 					var o, u;
 					if (typeof e == 'object') {
 						typeof n != 'string' && (r = r || n, n = t);
-						for (u in e) { this$1.on(u, n, r, e[u], s); }
+						for (u in e) { this.on(u, n, r, e[u], s); }
 						return this;
 					}
 					r == null && i == null ? (i = n, r = n = t) : i == null && (typeof n == 'string' ? (i = r, r = t) : (i = r, r = n, n = t));
@@ -1679,12 +1668,10 @@ var Embed = function() {
 					return this.on(e, t, n, r, 1);
 				},
 			off: function(e, n, r) {
-					var this$1 = this;
-
 					var i, s;
 					if (e && e.preventDefault && e.handleObj) { return i = e.handleObj, v(e.delegateTarget).off(i.namespace ? i.origType + '.' + i.namespace : i.origType, i.selector, i.handler), this; }
 					if (typeof e == 'object') {
-						for (s in e) { this$1.off(s, n, e[s]); }
+						for (s in e) { this.off(s, n, e[s]); }
 						return this;
 					}
 					if (n === !1 || typeof n == 'function') { r = n, n = t; }
@@ -1737,7 +1724,8 @@ var Embed = function() {
 				v.fn[t] = function(e, n) {
 					return n == null && (n = e, e = null), arguments.length > 0 ? this.on(t, null, e, n) : this.trigger(t);
 				}, Q.test(t) && (v.event.fixHooks[t] = v.event.keyHooks), G.test(t) && (v.event.fixHooks[t] = v.event.mouseHooks);
-			}), function(e, t) {
+			}),
+			function(e, t) {
 				function nt(e, t, n, r) {
 					n = n || [], t = t || g;
 					var i, s, a, f, l = t.nodeType;
@@ -1998,12 +1986,10 @@ var Embed = function() {
 					S = [].push,
 					x = [].slice,
 					T = [].indexOf || function(e) {
-						var this$1 = this;
-
 						var t = 0,
 							n = this.length;
 						for (; t < n; t++)
-							{ if (this$1[t] === e) { return t; } }
+							{ if (this[t] === e) { return t; } }
 						return -1;
 					},
 					N = function(e, t) {
@@ -2031,9 +2017,7 @@ var Embed = function() {
 					I = new RegExp('^' + O + '*([\\x20\\t\\r\\n\\f>+~])' + O + '*'),
 					q = new RegExp(H),
 					R = /^(?:#([\w\-]+)|(\w+)|\.([\w\-]+))$/,
-					U = /^:not/,
 					z = /[\x20\t\r\n\f]*[+~]/,
-					W = /:not\($/,
 					X = /h\d/i,
 					V = /input|select|textarea|button/i,
 					$ = /\\(?!\\)/g,
@@ -2194,11 +2178,13 @@ var Embed = function() {
 					},
 					filter: {
 						ID: r ? function(e) {
-							return e = e.replace($, ''), function(t) {
+							return e = e.replace($, ''),
+								function(t) {
 									return t.getAttribute('id') === e;
 								};
 						} : function(e) {
-							return e = e.replace($, ''), function(t) {
+							return e = e.replace($, ''),
+								function(t) {
 									var n = typeof t.getAttributeNode !== p && t.getAttributeNode('id');
 									return n && n.value === e;
 								};
@@ -2465,18 +2451,14 @@ var Embed = function() {
 			};
 		v.fn.extend({
 			find: function(e) {
-				var this$1 = this;
-
 				var t, n, r, i, s, o, u = this;
 				if (typeof e != 'string') { return v(e).filter(function() {
-					var this$1 = this;
-
 					for (t = 0, n = u.length; t < n; t++)
-						{ if (v.contains(u[t], this$1)) { return !0; } }
+						{ if (v.contains(u[t], this)) { return !0; } }
 				}); }
 				o = this.pushStack('', 'find', e);
 				for (t = 0, n = this.length; t < n; t++) {
-					r = o.length, v.find(e, this$1[t], o);
+					r = o.length, v.find(e, this[t], o);
 					if (t > 0)
 						{ for (i = r; i < o.length; i++)
 							{ for (s = 0; s < r; s++)
@@ -2491,10 +2473,8 @@ var Embed = function() {
 				var t, n = v(e, this),
 					r = n.length;
 				return this.filter(function() {
-					var this$1 = this;
-
 					for (t = 0; t < r; t++)
-						{ if (v.contains(this$1, n[t])) { return !0; } }
+						{ if (v.contains(this, n[t])) { return !0; } }
 				});
 			},
 			not: function(e) {
@@ -2507,14 +2487,12 @@ var Embed = function() {
 				return !!e && (typeof e == 'string' ? st.test(e) ? v(e, this.context).index(this[0]) >= 0 : v.filter(e, this).length > 0 : this.filter(e).length > 0);
 			},
 			closest: function(e, t) {
-				var this$1 = this;
-
 				var n, r = 0,
 					i = this.length,
 					s = [],
 					o = st.test(e) || typeof e != 'string' ? v(e, t || this.context) : 0;
 				for (; r < i; r++) {
-					n = this$1[r];
+					n = this[r];
 					while (n && n.ownerDocument && n !== t && n.nodeType !== 11) {
 						if (o ? o.index(n) > -1 : v.find.matchesSelector(n, e)) {
 							s.push(n);
@@ -2712,8 +2690,6 @@ var Embed = function() {
 			},
 			html: function(e) {
 				return v.access(this, function(e) {
-					var this$1 = this;
-
 					var n = this[0] || {},
 						r = 0,
 						i = this.length;
@@ -2721,7 +2697,7 @@ var Embed = function() {
 					if (typeof e == 'string' && !yt.test(e) && (v.support.htmlSerialize || !wt.test(e)) && (v.support.leadingWhitespace || !pt.test(e)) && !Nt[(vt.exec(e) || ['', ''])[1].toLowerCase()]) {
 						e = e.replace(dt, '<$1></$2>');
 						try {
-							for (; r < i; r++) { n = this$1[r] || {}, n.nodeType === 1 && (v.cleanData(n.getElementsByTagName('*')), n.innerHTML = e); }
+							for (; r < i; r++) { n = this[r] || {}, n.nodeType === 1 && (v.cleanData(n.getElementsByTagName('*')), n.innerHTML = e); }
 							n = 0;
 						} catch (s) {}
 					}
@@ -2743,8 +2719,6 @@ var Embed = function() {
 				return this.remove(e, !0);
 			},
 			domManip: function(e, n, r) {
-				var this$1 = this;
-
 				e = [].concat.apply([], e);
 				var i, s, o, u, a = 0,
 					f = e[0],
@@ -2761,7 +2735,7 @@ var Embed = function() {
 					i = v.buildFragment(e, this, l), o = i.fragment, s = o.firstChild, o.childNodes.length === 1 && (o = s);
 					if (s) {
 						n = n && v.nodeName(s, 'tr');
-						for (u = i.cacheable || c - 1; a < c; a++) { r.call(n && v.nodeName(this$1[a], 'table') ? Lt(this$1[a], 'tbody') : this$1[a], a === u ? o : v.clone(o, !0, !0)); }
+						for (u = i.cacheable || c - 1; a < c; a++) { r.call(n && v.nodeName(this[a], 'table') ? Lt(this[a], 'tbody') : this[a], a === u ? o : v.clone(o, !0, !0)); }
 					}
 					o = s = null, l.length && v.each(l, function(e, t) {
 						t.src ? v.ajax ? v.ajax({
@@ -2790,15 +2764,13 @@ var Embed = function() {
 			replaceAll: 'replaceWith'
 		}, function(e, t) {
 			v.fn[e] = function(n) {
-				var this$1 = this;
-
 				var r, i = 0,
 					s = [],
 					o = v(n),
 					u = o.length,
 					a = this.length === 1 && this[0].parentNode;
 				if ((a == null || a && a.nodeType === 11 && a.childNodes.length === 1) && u === 1) { return o[t](this[0]), this; }
-				for (; i < u; i++) { r = (i > 0 ? this$1.clone(!0) : this$1).get(), v(o[i])[t](r), s = s.concat(r); }
+				for (; i < u; i++) { r = (i > 0 ? this.clone(!0) : this).get(), v(o[i])[t](r), s = s.concat(r); }
 				return this.pushStack(s, e, o.selector);
 			};
 		}), v.extend({
@@ -2819,7 +2791,7 @@ var Embed = function() {
 				return r = i = null, o;
 			},
 			clean: function(e, t, n, r) {
-				var s, o, u, a, f, l, c, h, p, d, m, g, y = t === i && Ct,
+				var s, o, u, a, f, l, c, h, p, m, g, y = t === i && Ct,
 					b = [];
 				if (!t || typeof t.createDocumentFragment == 'undefined') { t = i; }
 				for (s = 0;
@@ -2869,7 +2841,8 @@ var Embed = function() {
 						}
 					} }
 			}
-		}), function() {
+		}),
+			function() {
 				var e, t;
 				v.uaMatch = function(e) {
 					e = e.toLowerCase();
@@ -3345,7 +3318,8 @@ var Embed = function() {
 			jn = 0;
 		v.ajaxSettings.xhr = e.ActiveXObject ? function() {
 			return !this.isLocal && Fn() || In();
-		} : Fn, function(e) {
+		} : Fn,
+			function(e) {
 				v.extend(v.support, {
 					ajax: !!e,
 					cors: !!e && 'withCredentials' in e
@@ -3479,8 +3453,6 @@ var Embed = function() {
 					delete e.stop, t(r);
 				};
 				return typeof e != 'string' && (r = n, n = e, e = t), n && e !== !1 && this.queue(e || 'fx', []), this.each(function() {
-					var this$1 = this;
-
 					var t = !0,
 						n = e != null && e + 'queueHooks',
 						s = v.timers,
@@ -3488,7 +3460,7 @@ var Embed = function() {
 					if (n) { o[n] && o[n].stop && i(o[n]); }
 					else
 						{ for (n in o) { o[n] && o[n].stop && Wn.test(n) && i(o[n]); } }
-					for (n = s.length; n--;) { s[n].elem === this$1 && (e == null || s[n].queue === e) && (s[n].anim.stop(r), t = !1, s.splice(n, 1)); }
+					for (n = s.length; n--;) { s[n].elem === this && (e == null || s[n].queue === e) && (s[n].anim.stop(r), t = !1, s.splice(n, 1)); }
 					(t || !r) && v.dequeue(this, e);
 				});
 			}
@@ -3643,6 +3615,7 @@ var Embed = function() {
 
 	window.Skycons = null;
 	(function(e) {
+
 		function u(e, t, n, r) {
 			e.beginPath(), e.arc(t, n, r, 0, s, !1), e.fill();
 		}
@@ -3703,8 +3676,6 @@ var Embed = function() {
 		function v(e, t, n, r, i, o, u) {
 			t /= 750;
 			var f = i * .1875,
-				l = s * 11 / 12,
-				c = s * 7 / 12,
 				h, p, d, v;
 			e.strokeStyle = u, e.lineWidth = o * .5, e.lineCap = 'round', e.lineJoin = 'round';
 			for (h = 4; h--;) { p = (t + h / 4) % 1, d = Math.floor(n + (h - 1.5) / 1.5 * (h === 1 || h === 2 ? -1 : 1) * f) + .5, v = r + p * i, a(e, d, v - o * 1.5, d, v + o * 1.5); }
@@ -3870,25 +3841,21 @@ var Embed = function() {
 				}, this.list.push(n), this.draw(n, r);
 			},
 			set: function(e, t) {
-				var this$1 = this;
-
 				var n;
 				typeof e == 'string' && (e = document.getElementById(e));
 				for (n = this.list.length; n--;)
-					{ if (this$1.list[n].element === e) {
-						this$1.list[n].drawing = t, this$1.draw(this$1.list[n], r);
+					{ if (this.list[n].element === e) {
+						this.list[n].drawing = t, this.draw(this.list[n], r);
 						return;
 					} }
 				this.add(e, t);
 			},
 			remove: function(e) {
-				var this$1 = this;
-
 				var t;
 				typeof e == 'string' && (e = document.getElementById(e));
 				for (t = this.list.length; t--;)
-					{ if (this$1.list[t].element === e) {
-						this$1.list.splice(t, 1);
+					{ if (this.list[t].element === e) {
+						this.list.splice(t, 1);
 						return;
 					} }
 			},
@@ -4055,10 +4022,10 @@ var Embed = function() {
 			speed: 'mph'
 		}
 	};
-};
+}
 
-var VueWeatherWidget$1 = {
-render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0,false,false)},
+var VueWeatherWidget = {
+render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)},
 staticRenderFns: [function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fe_container",attrs:{"id":"forecast_embed"}},[_c('div',{staticClass:"fe_title",staticStyle:{"display":"none"}},[_c('span',{staticClass:"fe_location"},[_c('span')])]),_vm._v(" "),_c('div',{staticClass:"fe_forecast"},[_c('div',{staticClass:"fe_currently"},[_c('canvas',{staticStyle:{"width":"80px","height":"80px"},attrs:{"id":"fe_current_icon","width":"160","height":"160"}}),_vm._v(" "),_c('div',{staticClass:"fe_temp"}),_vm._v(" "),_c('div',{staticClass:"fe_summary"}),_vm._v(" "),_c('div',{staticClass:"fe_wind"})]),_vm._v(" "),_c('div',{staticClass:"fe_daily"}),_vm._v(" "),_c('div',{staticStyle:{"clear":"left"}})]),_vm._v(" "),_c('div',{staticClass:"fe_alert",staticStyle:{"display":"none"}}),_vm._v(" "),_c('div',{staticClass:"fe_loading",staticStyle:{"display":"none"}},[_c('canvas',{staticStyle:{"width":"50px","height":"50px"},attrs:{"id":"fe_loading_icon","width":"100","height":"100"}}),_vm._v("\n\t\tLoading...\n\t")])])}],
 	name: 'vue-weather-widget',
 
@@ -4232,4 +4199,4 @@ try {
 	// ignore exceptions
 }
 
-module.exports = VueWeatherWidget$1;
+module.exports = VueWeatherWidget;
