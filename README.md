@@ -157,7 +157,7 @@ List of supported units:
 - `sk`: Slovak
 - `sl`: Slovenian
 - `sr`: Serbian
--` sv`: Swedish
+- `sv`: Swedish
 - `tet`: Tetum
 - `tr`: Turkish
 - `uk`: Ukrainian
