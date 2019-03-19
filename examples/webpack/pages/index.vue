@@ -1,33 +1,34 @@
 <template>
-  <div id="app">
-    <weather 
+  <section class="container">
+    <weather
       api-key="6f4f5c469cd230cb0b90ca2a001cc57c"
       title="Weather for Dhaka, Bangaldesh"
       units="uk"
       :latitude="lat"
       :longitude="long"
-      language="en"></weather>
-  </div>
+      language="en"
+    ></weather>
+  </section>
 </template>
 
 <script>
-import Weather from 'vue-weather-widget';
+import Weather from "vue-weather-widget";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Weather
   },
   data: () => ({
-    lat: '24.886436',
-    long: '91.880722'
+    lat: "24.886436",
+    long: "91.880722"
   })
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+.container {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
