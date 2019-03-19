@@ -13,7 +13,7 @@
   "dependencies": {
     "cross-env": "^5.2.0",
     "nuxt": "^2.4.0",
-    "vue-weather-widget": "^2.1.6"
+    "vue-weather-widget": "^2.1.7"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
