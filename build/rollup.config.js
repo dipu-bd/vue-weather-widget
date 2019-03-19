@@ -18,7 +18,7 @@ export default {
     vue(),
     css({
       minified: production,
-      dest: "dist/css/vue-weather-widget" + (production ? ".min.css" : ".css")
+      dest: "dist/css/vue-weather-widget.css" // + (production ? ".min.css" : ".css")
     }),
     buble(),
     nodeResolve({ browser: true, jsnext: true, main: true }),
