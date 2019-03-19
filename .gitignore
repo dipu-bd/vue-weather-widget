@@ -11,4 +11,3 @@ selenium-debug.log
 local.log
 sauce_connect.log
 yarn.lock
-package-lock.json
