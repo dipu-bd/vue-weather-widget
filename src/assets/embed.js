@@ -3951,7 +3951,7 @@ export default function() {
 					m = h - p,
 					g, y;
 				for (var d = 0; d < f; d++)(function(t) {
-					c = r.clone(), l = a[t], g = v * (l.temperatureMax - l.temperatureMin) / m, y = v * (h - l.temperatureMax) / m, c.find('.fe_label').html(s[(o + t) % 7]), c.find('.fe_high_temp').html(Math.round(l.temperatureMax) + '&deg;'), c.find('.fe_low_temp').html(Math.round(l.temperatureMin) + '&deg;'), c.find('.fe_temp_bar').css({
+					c = r.clone(), l = a[t], g = v * (l.temperatureMax - l.temperatureMin) / m, y = v * (h - l.temperatureMax) / m, c.find('.fe_label').html(s[(o + t + 1) % 7]), c.find('.fe_high_temp').html(Math.round(l.temperatureMax) + '&deg;'), c.find('.fe_low_temp').html(Math.round(l.temperatureMin) + '&deg;'), c.find('.fe_temp_bar').css({
 						height: g,
 						top: y,
 						'background-color': e.color || '#333'
