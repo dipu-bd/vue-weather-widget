@@ -1,6 +1,6 @@
 {
   "name": "vue-weather-widget",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Weather forecast widget for Vuejs using DarkSky api",
   "main": "dist/js/vue-weather-widget.js",
   "jsnext:main": "src/index.js",
@@ -57,15 +57,14 @@
     "vue": "^2.6.10"
   },
   "devDependencies": {
-    "eslint": "^6.6.0",
-    "parse5": "^5.1.1",
-    "rollup": "^1.26.3",
+    "eslint": "^7.4.0",
+    "parse5": "^6.0.0",
+    "rollup": "^2.21.0",
     "rollup-plugin-buble": "^0.19.8",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-css-porter": "^1.0.2",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-uglify": "^6.0.3",
-    "rollup-plugin-vue2": "^0.8.1",
-    "rollup-watch": "^4.3.1"
+    "rollup-plugin-vue2": "^0.8.1"
   }
 }
