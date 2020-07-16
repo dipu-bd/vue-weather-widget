@@ -53,12 +53,11 @@
     ]
   },
   "dependencies": {
-    "jquery": "^3.4.1",
-    "vue": "^2.6.10"
+    "jquery": "^3.5.1",
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "eslint": "^7.4.0",
-    "parse5": "^6.0.0",
     "rollup": "^2.21.0",
     "rollup-plugin-buble": "^0.19.8",
     "rollup-plugin-commonjs": "^10.1.0",
