@@ -1,9 +1,11 @@
-try {
-	window.$ = window.jQuery = require('jquery');
-	require('../css/vue-weather-widget.css');
-} catch (ex) {
-	// ignore exceptions
-}
+import VueWeatherWidget from "./VueWeatherWidget.vue";
 
-import VueWeatherWidget from './components/vue-weather-widget.vue';
-export default VueWeatherWidget;
+export default {
+  // export the widget
+  VueWeatherWidget,
+
+  // plugin
+  install(Vue) {
+    Vue.component("vue-weather", VueWeatherWidget);
+  },
+};

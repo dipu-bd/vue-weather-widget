@@ -15,7 +15,7 @@
     "build:dev": "rollup --config rollup.config.js",
     "build:prod": "NODE_ENV=production rollup --config rollup.config.js",
     "build": "npm run lint && concurrently npm:build:prod npm:build:dev",
-    "watch": "chokidar \"src/**/*\" --initial --command \"npm run build:dev\"",
+    "watch": "chokidar  \"*.js\" \"src/**/*\" --initial --command \"npm run build:dev\"",
     "patch": "npm version patch --no-git-tag-version && git add package.json && git commit -m 'Update version:patch' && git push origin master && npm publish",
     "minor": "npm version minor --no-git-tag-version && git add package.json && git commit -m 'Update version:minor' && git push origin master && npm publish",
     "major": "npm version major --no-git-tag-version && git add package.json && git commit -m 'Update version:major' && git push origin master && npm publish"

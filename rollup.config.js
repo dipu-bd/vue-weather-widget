@@ -23,7 +23,10 @@ export default {
       dest: "dist/css/vue-weather-widget.css",
     }),
     buble(),
-    nodeResolve({ browser: true }),
+    nodeResolve({
+      browser: true,
+      preferBuiltins: true,
+    }),
     commonjs(),
     production && strip(),
     production && uglify(),

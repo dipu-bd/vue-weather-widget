@@ -7,15 +7,19 @@
 
   <title>Vue-Weather-Widget: Basic usage</title>
 
-  <link href="../../dist/css/vue-weather-widget.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../dist/css/vue-weather-widget.css">
 
   <style>
     body {
-      padding: 0;
-      margin: 0;
       font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-      height: 245px;
-      overflow: hidden;
+    }
+
+    #app {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   </style>
 </head>
@@ -23,8 +27,7 @@
 <body>
 
   <div id="app">
-    <weather api-key="6f4f5c469cd230cb0b90ca2a001cc57c" title="Weather for Dhaka, Bangaldesh" latitude="24.886436"
-      longitude="91.880722" units="uk" language="en"></weather>
+    <weather api-key="e20753dfcaae902ab091fbb4925d432a" units="uk"></weather>
   </div>
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
@@ -37,6 +40,7 @@
         'weather': VueWeatherWidget
       }
     });
+    //setTimeout(() => location.reload(), 1000);
   </script>
 
 </body>
