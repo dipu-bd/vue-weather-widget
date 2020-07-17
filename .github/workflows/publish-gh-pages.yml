@@ -26,14 +26,11 @@ jobs:
         run: |
           cd examples/static
           cp -r ../../.git .
+          git config --local user.email "dipu.sudipta@gmail.com"
+          git config --local user.name "dipu-bd"
           git branch -D gh-pages || true
           git checkout -b gh-pages
           git add --all
-      
-      - name: Commit files
-        run: |
-          git config --local user.email "dipu.sudipta@gmail.com"
-          git config --local user.name "dipu-bd"
           git commit -m "[GHA] Update gh-pages"
         
       - name: Publish changes
