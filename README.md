@@ -19,23 +19,13 @@ Weather widget inspired by [forecast embeds](https://blog.darksky.net/forecast-e
 ### NPM
 
 ```
-npm install --save vue-weather-widget
+npm i vue-weather-widget
 ```
 
 ### YARN
 
 ```
 yarn add vue-weather-widget
-```
-
-## Development
-
-```bash
-# install dependencies
-npm install
-
-# build dist files
-npm run build
 ```
 
 ## Usage
