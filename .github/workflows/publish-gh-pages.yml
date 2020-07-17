@@ -1,0 +1,43 @@
+# This workflow will publish dist to gh-pages on every push to master branch
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: GH Pages Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  checkout-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+  
+      - name: Build examples/dist
+        run: |
+          npm ci
+          npm run build
+      
+      - name: Recreating gh-pages
+        run: |
+          cd examples/static
+          cp -r ../../.git .
+          git branch -D gh-pages
+          git checkout -b gh-pages
+      
+      - name: Commit files
+        run: |
+          git config --local user.email "dipu.sudipta@gmail.com"
+          git config --local user.name "dipu-bd"
+          git commit -m "[GHA] Update gh-pages"
+          git add --all
+        
+      - name: Publish changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+ 
