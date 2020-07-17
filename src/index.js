@@ -1,10 +1,10 @@
 import VueWeatherWidget from "./VueWeatherWidget.vue";
+import utils from "./utils";
+
+export const VueWeather = VueWeatherWidget;
+export const VueWeatherUtils = utils;
 
 export default {
-  // export the widget
-  VueWeatherWidget,
-
-  // plugin
   install(Vue) {
     Vue.component("vue-weather", VueWeatherWidget);
   },

@@ -1,5 +1,7 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, basedir, module) {
@@ -137,7 +139,7 @@ var IP_CACHE = "vww__cache_ip";
 var IP_LOCATION_CACHE = "vww__cache_ip_location";
 var GEOCODE_CACHE = "vww__cache_geocode";
 
-var Utils = {
+var utils = {
   lookupIP: function lookupIP() {
     var cache = localStorage[IP_CACHE] || "{}";
     cache = JSON.parse(cache);
@@ -1245,7 +1247,7 @@ staticRenderFns: [],
       type: String,
     },
 
-    // Auto update interval in seconds
+    // Auto update interval in milliseconds
     updateInterval: {
       type: Number,
     },
@@ -1275,6 +1277,7 @@ staticRenderFns: [],
       weather: null,
       error: null,
       location: {},
+      timeout: null,
     };
   },
 
@@ -1285,10 +1288,15 @@ staticRenderFns: [],
     longitude: "hydrate",
     language: "hydrate",
     units: "hydrate",
+    updateInterval: "hydrate",
   },
 
   mounted: function mounted() {
     this.hydrate();
+  },
+
+  destroyed: function destroyed() {
+    clearTimeout(this.timeout);
   },
 
   computed: {
@@ -1344,11 +1352,37 @@ staticRenderFns: [],
   },
 
   methods: {
-    hydrate: function hydrate() {
+    loadWeather: function loadWeather() {
       var this$1 = this;
 
-      this.$set(this, "loading", true);
-      this.$nextTick()
+      return utils.fetchWeather({
+        apiKey: this.apiKey,
+        lat: this.location.lat,
+        lng: this.location.lng,
+        units: this.units,
+        language: this.language,
+      }).then(function (data) {
+        this$1.$set(this$1, "weather", data);
+      });
+    },
+
+    autoupdate: function autoupdate() {
+      var this$1 = this;
+
+      clearTimeout(this.timeout);
+      var time = Number(this.updateInterval);
+      if (!time || time < 10 || this.destroyed) {
+        return;
+      }
+      this.timeout = setTimeout(function () { return this$1.hydrate(false); }, time);
+    },
+
+    hydrate: function hydrate(setLoading) {
+      var this$1 = this;
+      if ( setLoading === void 0 ) setLoading = true;
+
+      this.$set(this, "loading", setLoading);
+      return this.$nextTick()
         .then(this.processLocation)
         .then(this.loadWeather)
         .then(function () {
@@ -1359,6 +1393,7 @@ staticRenderFns: [],
         })
         .finally(function () {
           this$1.$set(this$1, "loading", false);
+          this$1.autoupdate();
         });
     },
 
@@ -1367,7 +1402,7 @@ staticRenderFns: [],
 
       if (!this.latitude || !this.longitude) {
         if (!this.address) {
-          return Utils.fetchLocationByIP().then(function (data) {
+          return utils.fetchLocationByIP().then(function (data) {
             this$1.$set(this$1, "location", {
               lat: data.latitude,
               lng: data.longitude,
@@ -1375,7 +1410,7 @@ staticRenderFns: [],
             });
           });
         } else {
-          return Utils.geocode(this.address).then(function (data) {
+          return utils.geocode(this.address).then(function (data) {
             this$1.$set(this$1, "location", {
               lat: data.latitude,
               lng: data.longitude,
@@ -1384,7 +1419,7 @@ staticRenderFns: [],
           });
         }
       } else {
-        return Utils.reverseGeocode(this.latitude, this.longitude).then(
+        return utils.reverseGeocode(this.latitude, this.longitude).then(
           function (data) {
             this$1.$set(this$1, "location", {
               lat: this$1.latitude,
@@ -1395,32 +1430,18 @@ staticRenderFns: [],
         );
       }
     },
-
-    loadWeather: function loadWeather() {
-      var this$1 = this;
-
-      return Utils.fetchWeather({
-        apiKey: this.apiKey,
-        lat: this.location.lat,
-        lng: this.location.lng,
-        units: this.units,
-        language: this.language,
-      }).then(function (data) {
-        console.log(data);
-        this$1.$set(this$1, "weather", data);
-      });
-    },
   },
 };
 
-var index = {
-  // export the widget
-  VueWeatherWidget: VueWeatherWidget,
+var VueWeather = VueWeatherWidget;
+var VueWeatherUtils = utils;
 
-  // plugin
+var index = {
   install: function install(Vue) {
     Vue.component("vue-weather", VueWeatherWidget);
   },
 };
 
-module.exports = index;
+exports.VueWeather = VueWeather;
+exports.VueWeatherUtils = VueWeatherUtils;
+exports.default = index;

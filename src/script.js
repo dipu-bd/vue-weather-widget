@@ -57,7 +57,7 @@ export default {
       type: String,
     },
 
-    // Auto update interval in seconds
+    // Auto update interval in milliseconds
     updateInterval: {
       type: Number,
     },
@@ -87,6 +87,7 @@ export default {
       weather: null,
       error: null,
       location: {},
+      timeout: null,
     };
   },
 
@@ -97,10 +98,15 @@ export default {
     longitude: "hydrate",
     language: "hydrate",
     units: "hydrate",
+    updateInterval: "hydrate",
   },
 
   mounted() {
     this.hydrate();
+  },
+
+  destroyed() {
+    clearTimeout(this.timeout);
   },
 
   computed: {
@@ -156,9 +162,30 @@ export default {
   },
 
   methods: {
-    hydrate() {
-      this.$set(this, "loading", true);
-      this.$nextTick()
+    loadWeather() {
+      return Utils.fetchWeather({
+        apiKey: this.apiKey,
+        lat: this.location.lat,
+        lng: this.location.lng,
+        units: this.units,
+        language: this.language,
+      }).then((data) => {
+        this.$set(this, "weather", data);
+      });
+    },
+
+    autoupdate() {
+      clearTimeout(this.timeout);
+      const time = Number(this.updateInterval);
+      if (!time || time < 10 || this.destroyed) {
+        return;
+      }
+      this.timeout = setTimeout(() => this.hydrate(false), time);
+    },
+
+    hydrate(setLoading = true) {
+      this.$set(this, "loading", setLoading);
+      return this.$nextTick()
         .then(this.processLocation)
         .then(this.loadWeather)
         .then(() => {
@@ -169,6 +196,7 @@ export default {
         })
         .finally(() => {
           this.$set(this, "loading", false);
+          this.autoupdate();
         });
     },
 
@@ -202,19 +230,6 @@ export default {
           }
         );
       }
-    },
-
-    loadWeather() {
-      return Utils.fetchWeather({
-        apiKey: this.apiKey,
-        lat: this.location.lat,
-        lng: this.location.lng,
-        units: this.units,
-        language: this.language,
-      }).then((data) => {
-        console.log(data);
-        this.$set(this, "weather", data);
-      });
     },
   },
 };
