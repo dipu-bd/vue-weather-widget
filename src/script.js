@@ -124,12 +124,11 @@ export default {
       const forecasts = [];
       let globalMaxTemp = -Infinity;
       let globalMinTemp = Infinity;
-      const time = new Date().getTime() / 1e3;
 
+      const time = new Date().getTime() / 1e3;
       const daily = this.weather.daily.data;
       for (let i = 0; i < daily.length; i++) {
         const day = daily[i];
-        if (day.time <= time) continue;
         if (day.temperatureMax > globalMaxTemp) {
           globalMaxTemp = day.temperatureMax;
         }
@@ -142,10 +141,14 @@ export default {
       const tempRange = globalMaxTemp - globalMinTemp;
       for (let i = 0; i < forecasts.length; ++i) {
         const day = forecasts[i];
-        day.weekName = new Date(day.time * 1000).toLocaleDateString(
-          this.language,
-          { weekday: "short" }
-        );
+        if (day.time <= time) {
+          day.weekName = "Today";
+        } else {
+          day.weekName = new Date(day.time * 1000).toLocaleDateString(
+            this.language,
+            { weekday: "short" }
+          );
+        }
         const max = day.temperatureMax;
         const min = day.temperatureMin;
         day.height = Math.round((100 * (max - min)) / tempRange);
