@@ -1,23 +1,23 @@
 <template>
   <section class="container">
-    <weather
+    <vue-weather
       api-key="6f4f5c469cd230cb0b90ca2a001cc57c"
       title="Weather for Dhaka, Bangaldesh"
       units="uk"
       :latitude="lat"
       :longitude="long"
       language="en"
-    ></weather>
+    />
   </section>
 </template>
 
 <script>
-import Weather from "vue-weather-widget";
+import { VueWeather } from "vue-weather-widget";
 
 export default {
   name: "app",
   components: {
-    Weather
+    VueWeather
   },
   data: () => ({
     lat: "24.886436",
