@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  checkout-and-deploy:
+  gh-pages:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -39,4 +39,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           force: true
+          directory: examples/static
  
