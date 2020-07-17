@@ -1,8 +1,9 @@
 import vue from "rollup-plugin-vue2";
-import buble from "rollup-plugin-buble";
-import nodeResolve from "rollup-plugin-node-resolve";
-import commonjs from "rollup-plugin-commonjs";
-import scss from "rollup-plugin-scss";
+import css from "rollup-plugin-css-porter";
+import buble from "@rollup/plugin-buble";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import strip from "@rollup/plugin-strip";
 import { uglify } from "rollup-plugin-uglify";
 
 const production = process.env.NODE_ENV === "production";
@@ -14,21 +15,17 @@ export default {
     name: "VueWeatherWidget",
     format: "cjs", //'umd'
   },
+  external: ["vue"],
   plugins: [
     vue(),
-    scss({
-      output: true,
-      outputStyle: "compressed",
-      dest: "dist/css/vue-weather-widget" + (production ? ".min.css" : ".css"),
+    css({
+      minified: production,
+      dest: "dist/css/vue-weather-widget.css",
     }),
     buble(),
-    nodeResolve({ browser: true, jsnext: true, main: true }),
+    nodeResolve({ browser: true }),
     commonjs(),
+    production && strip(),
     production && uglify(),
   ],
-  external: ["vue"],
-  watch: {
-    exclude: "node_modules/**",
-    include: "src/**",
-  },
 };

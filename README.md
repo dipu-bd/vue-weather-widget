@@ -1,14 +1,12 @@
 # Vue Weather Widget
 
-Weather widget inspired by [forecast embeds](https://blog.darksky.net/forecast-embeds/) and powered by [darksky api](https://darksky.net/dev).
+[![vue 2x](https://img.shields.io/badge/vuejs-2.x-brightgreen.svg)](https://vuejs.org/)
+[![npm](https://img.shields.io/npm/v/vue-weather-widget)](http://npmjs.com/package/vue-weather-widget)
+[![npm download per month](https://img.shields.io/npm/dm/vue-weather-widget)](http://npmjs.com/package/vue-weather-widget)
+[![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/vue-weather-widget?color=red)](https://raw.githubusercontent.com/dipu-bd/vue-weather-widget/master/package.json)
+[![NPM license](https://img.shields.io/npm/l/vue-weather-widget?color=blueviolet)](https://raw.githubusercontent.com/dipu-bd/vue-weather-widget/master/LICENSE)
 
-<p>
-<a href="#"><img src="https://img.shields.io/badge/vuejs-2.x-brightgreen.svg?style=flat-square"></a>
-<a href="https://travis-ci.org/dipu-bd/vue-weather-widget"><img src="https://img.shields.io/travis/dipu-bd/vue-weather-widget.svg?style=flat-square"></a>
-<!-- <a href="https://codeclimate.com/github/dipu-bd/vue-weather-widget"><img src="https://img.shields.io/codeclimate/github/dipu-bd/vue-weather-widget.svg?style=flat-square"></a> -->
-<a href="https://www.npmjs.com/package/vue-weather-widget"><img src="https://img.shields.io/npm/dt/vue-weather-widget.svg?style=flat-square"></a>
-<a href="https://github.com/dipu-bd/vue-weather-widget/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/vue-weather-widget.svg?style=flat-square"></a>
-</p>
+Weather widget inspired by [forecast embeds](https://blog.darksky.net/forecast-embeds/) and powered by [darksky api](https://darksky.net/dev).
 
 ## Demo
 
@@ -19,15 +17,16 @@ Weather widget inspired by [forecast embeds](https://blog.darksky.net/forecast-e
 ## Install
 
 ### NPM
+
 ```
 npm install --save vue-weather-widget
 ```
 
 ### YARN
+
 ```
 yarn add vue-weather-widget
 ```
-
 
 ## Development
 
@@ -45,7 +44,7 @@ npm run build
 
 ```js
 <template>
-    <weather 
+    <weather
         api-key="<your-dark-sky-api-key>"
         title="Weather"
         latitude="24.886436"
@@ -64,66 +63,74 @@ export default {
         'weather': VueWeatherWidget
     },
 }
-</script> 
-```
-
-### Browser (ES5)
-```html
-<!-- Requirements -->
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.js"></script>
-
-<!-- vue-weather-widget -->
-<script type="text/javascript" src="vue-weather-widget.js"></script>
-<link href="vue-weather-widget.css" rel="stylesheet">
- 
-<!-- Vue app -->
-<div id="app">
-    <weather 
-        api-key="<your-dark-sky-api-key>"
-        title="Weather"
-        latitude="24.886436"
-        longitude="91.880722"
-        language="en"
-        units="uk">
-    </weather>
-</div>
-
-<script>
-window.vm = new Vue({
-    el: '#app',
-    components: {
-        'weather': VueWeatherWidget
-    }
-});
 </script>
 ```
 
+### Browser (ES5)
+
+```html
+<!-- Requirements -->
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.js"
+></script>
+
+<!-- vue-weather-widget -->
+<script type="text/javascript" src="vue-weather-widget.js"></script>
+<link href="vue-weather-widget.css" rel="stylesheet" />
+
+<!-- Vue app -->
+<div id="app">
+  <weather
+    api-key="<your-dark-sky-api-key>"
+    title="Weather"
+    latitude="24.886436"
+    longitude="91.880722"
+    language="en"
+    units="uk"
+  >
+  </weather>
+</div>
+
+<script>
+  window.vm = new Vue({
+    el: "#app",
+    components: {
+      weather: VueWeatherWidget,
+    },
+  });
+</script>
+```
 
 ## Props
 
-| Props | Type | Default | Description  |
-| --------|:------| -----------|-------|
-| api-key | String, *required*   | - | Your Dark Sky secret key |
-| latitude | String, *required* | - | The latitude of a location (in decimal degrees). Positive is north, negative is south. |
-| longitude | String, *required* | - | Return summary properties in the desired language. See below for a list of supported languages. |
-| units | String | `"us"` | A list of supported units are given below. |
-| bar-color | String | `"#333"` | Color of the Temparature bar. |
-| text-color | String | `"#333"` | Color of the text. |
-| title | String | `"Weather"` | Title of the widget. |
-| hide-header | Boolean | `false` | Controls whether to show or hide the title bar. |
-| disable-animation | Boolean | `false` | Use static icons when enabled. |
-| update-interval | Number | `null` | Interval in seconds to update weather data automatically. Set it to `0` or `null` to disable auto update. |
-
+| Props             | Type               | Default     | Description                                                                                               |
+| ----------------- | :----------------- | ----------- | --------------------------------------------------------------------------------------------------------- |
+| api-key           | String, _required_ | -           | Your Dark Sky secret key                                                                                  |
+| latitude          | String, _required_ | -           | The latitude of a location (in decimal degrees). Positive is north, negative is south.                    |
+| longitude         | String, _required_ | -           | Return summary properties in the desired language. See below for a list of supported languages.           |
+| units             | String             | `"us"`      | A list of supported units are given below.                                                                |
+| bar-color         | String             | `"#333"`    | Color of the Temparature bar.                                                                             |
+| text-color        | String             | `"#333"`    | Color of the text.                                                                                        |
+| title             | String             | `"Weather"` | Title of the widget.                                                                                      |
+| hide-header       | Boolean            | `false`     | Controls whether to show or hide the title bar.                                                           |
+| disable-animation | Boolean            | `false`     | Use static icons when enabled.                                                                            |
+| update-interval   | Number             | `null`      | Interval in seconds to update weather data automatically. Set it to `0` or `null` to disable auto update. |
 
 ### Supported units
-List of supported units:    
+
+List of supported units:
 
 - `auto`: automatically select units based on geographic location
 - `ca`: same as si, except that windSpeed and windGust are in kilometers per hour
 - `uk2`: same as si, except that nearestStormDistance and visibility are in miles, and windSpeed and windGust are in miles per hour
 - `us`: Imperial units (the default)
-- `si`: SI units 
+- `si`: SI units
 
 ### Supported languages
 
@@ -163,6 +170,6 @@ List of supported units:
 - `zh`: simplified Chinese
 - `zh-tw`: traditional Chinese
 
-## License 
+## License
 
 Apache License Version 2.0 &copy; Sudipto Chandra
