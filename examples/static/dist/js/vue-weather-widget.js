@@ -1312,12 +1312,11 @@ staticRenderFns: [],
       var forecasts = [];
       var globalMaxTemp = -Infinity;
       var globalMinTemp = Infinity;
-      var time = new Date().getTime() / 1e3;
 
+      var time = new Date().getTime() / 1e3;
       var daily = this.weather.daily.data;
       for (var i = 0; i < daily.length; i++) {
         var day = daily[i];
-        if (day.time <= time) { continue; }
         if (day.temperatureMax > globalMaxTemp) {
           globalMaxTemp = day.temperatureMax;
         }
@@ -1330,10 +1329,14 @@ staticRenderFns: [],
       var tempRange = globalMaxTemp - globalMinTemp;
       for (var i$1 = 0; i$1 < forecasts.length; ++i$1) {
         var day$1 = forecasts[i$1];
-        day$1.weekName = new Date(day$1.time * 1000).toLocaleDateString(
-          this.language,
-          { weekday: "short" }
-        );
+        if (day$1.time <= time) {
+          day$1.weekName = "Today";
+        } else {
+          day$1.weekName = new Date(day$1.time * 1000).toLocaleDateString(
+            this.language,
+            { weekday: "short" }
+          );
+        }
         var max = day$1.temperatureMax;
         var min = day$1.temperatureMin;
         day$1.height = Math.round((100 * (max - min)) / tempRange);

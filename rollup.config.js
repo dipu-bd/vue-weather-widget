@@ -7,11 +7,12 @@ import strip from "@rollup/plugin-strip";
 import { uglify } from "rollup-plugin-uglify";
 
 const production = process.env.BUILD === "production";
+const distDir = "examples/static/dist";
 
 export default {
   input: "src/index.js",
   output: {
-    file: "dist/js/vue-weather-widget" + (production ? ".min.js" : ".js"),
+    file: `${distDir}/js/vue-weather-widget${production ? ".min.js" : ".js"}`,
     name: "VueWeatherWidget",
     format: "cjs", //'umd'
   },
@@ -20,7 +21,7 @@ export default {
     vue(),
     css({
       minified: production,
-      dest: "dist/css/vue-weather-widget.css",
+      dest: `${distDir}/css/vue-weather-widget.css`,
     }),
     buble(),
     nodeResolve({
