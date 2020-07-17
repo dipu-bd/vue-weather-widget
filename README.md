@@ -42,19 +42,19 @@ npm run build
 
 ### Vue
 
-```vue
+```html
 <template>
   <vue-weather api-key="<your-dark-sky-api-key>" units="uk" />
 </template>
 
 <script>
-import VueWeatherWidget from "vue-weather-widget/src/VueWeatherWidget.vue";
+  import VueWeatherWidget from "vue-weather-widget/src/VueWeatherWidget.vue";
 
-export default {
-  components: {
-    VueWeatherWidget,
-  },
-};
+  export default {
+    components: {
+      VueWeatherWidget,
+    },
+  };
 </script>
 ```
 
@@ -129,7 +129,7 @@ List of supported units:
 
 - `auto`: automatically select units based on geographic location
 - `ca`: same as si, except that windSpeed and windGust are in kilometers per hour
-- `uk2`: same as si, except that nearestStormDistance and visibility are in miles, and windSpeed and windGust are in miles per hour
+- `uk`: same as si, except that nearestStormDistance and visibility are in miles, and windSpeed and windGust are in miles per hour
 - `us`: Imperial units (the default)
 - `si`: SI units
 
