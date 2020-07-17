@@ -52,11 +52,6 @@ export default {
       default: false,
     },
 
-    // Title of the widget.
-    title: {
-      type: String,
-    },
-
     // Auto update interval in milliseconds
     updateInterval: {
       type: Number,

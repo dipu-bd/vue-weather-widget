@@ -6,7 +6,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import strip from "@rollup/plugin-strip";
 import { uglify } from "rollup-plugin-uglify";
 
-const production = process.env.NODE_ENV === "production";
+const production = process.env.BUILD === "production";
 
 export default {
   input: "src/index.js",

@@ -1,7 +1,5 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', { value: true });
-
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, basedir, module) {
@@ -139,7 +137,7 @@ var IP_CACHE = "vww__cache_ip";
 var IP_LOCATION_CACHE = "vww__cache_ip_location";
 var GEOCODE_CACHE = "vww__cache_geocode";
 
-var utils = {
+var Utils = {
   lookupIP: function lookupIP() {
     var cache = localStorage[IP_CACHE] || "{}";
     cache = JSON.parse(cache);
@@ -1186,7 +1184,7 @@ staticRenderFns: [],
 var Skycon = SkyconComponent;
 
 var VueWeatherWidget = {
-render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vww__widget",style:({ color: _vm.textColor })},[_vm._t("header",[_c('div',{staticClass:"vww__header",style:({ borderColor: _vm.barColor })},[_vm._t("title",[_c('span',{staticClass:"vww__title"},[_vm._v("\n          "+_vm._s(_vm.title || ("Weather for " + (_vm.location.name)))+"\n        ")])])],2)]),_vm._v(" "),_c('div',{staticClass:"vww__content"},[(_vm.loading)?_c('div',{staticClass:"vww__loading"},[_vm._t("loading",[_c('skycon',{attrs:{"condition":"partly-cloudy-day","color":_vm.textColor,"paused":_vm.disableAnimation}}),_vm._v(" "),_c('span',{staticClass:"vww__title"},[_vm._v("Loading...")])])],2):(_vm.error || !_vm.weather || !_vm.currently || !_vm.daily)?_c('div',{staticClass:"vww__error"},[_vm._t("error",[_c('skycon',{attrs:{"condition":"rain","color":_vm.textColor,"paused":_vm.disableAnimation}}),_vm._v(" "),_c('span',{staticClass:"vww__title"},[_vm._v(_vm._s(_vm.error || "Something went wrong!"))])])],2):[_c('div',{staticClass:"vww__currently"},[_c('div',[_c('skycon',{attrs:{"condition":_vm.currently.icon,"size":"80","color":_vm.textColor,"paused":_vm.disableAnimation}}),_vm._v(" "),_c('div',{staticClass:"vww__temp"},[_vm._v("\n            "+_vm._s(Math.round(_vm.currently.temperature))+"°\n            "),(_vm.isDownward)?_c('div',[_c('svg',{attrs:{"viewBox":"0 0 306 306","width":"24","height":"24"}},[_c('polygon',{style:({ fill: _vm.textColor }),attrs:{"points":"270.3,58.65 153,175.95 35.7,58.65 0,94.35 153,247.35 306,94.35"}})])]):_c('div',[_c('svg',{attrs:{"viewBox":"0 0 306 306","width":"24","height":"24"}},[_c('polygon',{style:({ fill: _vm.textColor }),attrs:{"points":"35.7,247.35 153,130.05 270.3,247.35 306,211.65 153,58.65 0,211.65"}})])])])],1),_vm._v(" "),_c('div',{staticClass:"vww__title"},[_vm._v(_vm._s(_vm.currently.summary))]),_vm._v(" "),_c('div',{staticClass:"vww__wind"},[_vm._v("\n          Wind: "+_vm._s(Math.round(_vm.currently.windSpeed))+" mph ("+_vm._s(_vm.windBearing)+")\n        ")])]),_vm._v(" "),_c('div',{staticClass:"vww__daily"},_vm._l((_vm.daily),function(day){return _c('div',{key:day.time,staticClass:"vww__day"},[_c('span',[_vm._v(_vm._s(day.weekName))]),_vm._v(" "),_c('span',[_c('skycon',{staticStyle:{"display":"block"},attrs:{"condition":day.icon,"size":"26","color":_vm.textColor,"paused":_vm.disableAnimation}})],1),_vm._v(" "),_c('div',{staticClass:"vww__day-bar"},[_c('div',{style:({ height: ((day.top) + "%") })},[_c('span',[_vm._v(_vm._s(Math.round(day.temperatureMax))+"°")])]),_vm._v(" "),_c('div',{style:({
+render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vww__widget",style:({ color: _vm.textColor })},[_vm._t("header",[(!_vm.hideHeader)?_c('div',{staticClass:"vww__header",style:({ borderColor: _vm.barColor })},[_vm._t("title",[_c('span',{staticClass:"vww__title"},[_vm._v("\n          "+_vm._s(_vm.title || ("Weather for " + (_vm.location.name)))+"\n        ")])])],2):_vm._e()]),_vm._v(" "),_c('div',{staticClass:"vww__content"},[(_vm.loading)?_c('div',{staticClass:"vww__loading"},[_vm._t("loading",[_c('skycon',{attrs:{"condition":"partly-cloudy-day","color":_vm.textColor,"paused":_vm.disableAnimation}}),_vm._v(" "),_c('span',{staticClass:"vww__title"},[_vm._v("Loading...")])])],2):(_vm.error || !_vm.weather || !_vm.currently || !_vm.daily)?_c('div',{staticClass:"vww__error"},[_vm._t("error",[_c('skycon',{attrs:{"condition":"rain","color":_vm.textColor,"paused":_vm.disableAnimation}}),_vm._v(" "),_c('span',{staticClass:"vww__title"},[_vm._v(_vm._s(_vm.error || "Something went wrong!"))])])],2):[_c('div',{staticClass:"vww__currently"},[_c('div',[_c('skycon',{attrs:{"condition":_vm.currently.icon,"size":"80","color":_vm.textColor,"paused":_vm.disableAnimation}}),_vm._v(" "),_c('div',{staticClass:"vww__temp"},[_vm._v("\n            "+_vm._s(Math.round(_vm.currently.temperature))+"°\n            "),(_vm.isDownward)?_c('div',[_c('svg',{attrs:{"viewBox":"0 0 306 306","width":"24","height":"24"}},[_c('polygon',{style:({ fill: _vm.textColor }),attrs:{"points":"270.3,58.65 153,175.95 35.7,58.65 0,94.35 153,247.35 306,94.35"}})])]):_c('div',[_c('svg',{attrs:{"viewBox":"0 0 306 306","width":"24","height":"24"}},[_c('polygon',{style:({ fill: _vm.textColor }),attrs:{"points":"35.7,247.35 153,130.05 270.3,247.35 306,211.65 153,58.65 0,211.65"}})])])])],1),_vm._v(" "),_c('div',{staticClass:"vww__title"},[_vm._v(_vm._s(_vm.currently.summary))]),_vm._v(" "),_c('div',{staticClass:"vww__wind"},[_vm._v("\n          Wind: "+_vm._s(Math.round(_vm.currently.windSpeed))+" mph ("+_vm._s(_vm.windBearing)+")\n        ")])]),_vm._v(" "),_c('div',{staticClass:"vww__daily"},_vm._l((_vm.daily),function(day){return _c('div',{key:day.time,staticClass:"vww__day"},[_c('span',[_vm._v(_vm._s(day.weekName))]),_vm._v(" "),_c('span',[_c('skycon',{staticStyle:{"display":"block"},attrs:{"condition":day.icon,"size":"26","color":_vm.textColor,"paused":_vm.disableAnimation}})],1),_vm._v(" "),_c('div',{staticClass:"vww__day-bar"},[_c('div',{style:({ height: ((day.top) + "%") })},[_c('span',[_vm._v(_vm._s(Math.round(day.temperatureMax))+"°")])]),_vm._v(" "),_c('div',{style:({
                 borderRadius: '10px',
                 background: _vm.barColor,
                 height: ((day.height) + "%"),
@@ -1240,11 +1238,6 @@ staticRenderFns: [],
     hideHeader: {
       type: Boolean,
       default: false,
-    },
-
-    // Title of the widget.
-    title: {
-      type: String,
     },
 
     // Auto update interval in milliseconds
@@ -1355,7 +1348,7 @@ staticRenderFns: [],
     loadWeather: function loadWeather() {
       var this$1 = this;
 
-      return utils.fetchWeather({
+      return Utils.fetchWeather({
         apiKey: this.apiKey,
         lat: this.location.lat,
         lng: this.location.lng,
@@ -1402,7 +1395,7 @@ staticRenderFns: [],
 
       if (!this.latitude || !this.longitude) {
         if (!this.address) {
-          return utils.fetchLocationByIP().then(function (data) {
+          return Utils.fetchLocationByIP().then(function (data) {
             this$1.$set(this$1, "location", {
               lat: data.latitude,
               lng: data.longitude,
@@ -1410,7 +1403,7 @@ staticRenderFns: [],
             });
           });
         } else {
-          return utils.geocode(this.address).then(function (data) {
+          return Utils.geocode(this.address).then(function (data) {
             this$1.$set(this$1, "location", {
               lat: data.latitude,
               lng: data.longitude,
@@ -1419,7 +1412,7 @@ staticRenderFns: [],
           });
         }
       } else {
-        return utils.reverseGeocode(this.latitude, this.longitude).then(
+        return Utils.reverseGeocode(this.latitude, this.longitude).then(
           function (data) {
             this$1.$set(this$1, "location", {
               lat: this$1.latitude,
@@ -1433,15 +1426,10 @@ staticRenderFns: [],
   },
 };
 
-var VueWeather = VueWeatherWidget;
-var VueWeatherUtils = utils;
-
 var index = {
   install: function install(Vue) {
     Vue.component("vue-weather", VueWeatherWidget);
   },
 };
 
-exports.VueWeather = VueWeather;
-exports.VueWeatherUtils = VueWeatherUtils;
-exports.default = index;
+module.exports = index;

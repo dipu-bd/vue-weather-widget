@@ -1,7 +1,11 @@
 <template>
   <div class="vww__widget" :style="{ color: textColor }">
     <slot name="header">
-      <div class="vww__header" :style="{ borderColor: barColor }">
+      <div
+        class="vww__header"
+        :style="{ borderColor: barColor }"
+        v-if="!hideHeader"
+      >
         <slot name="title">
           <span class="vww__title">
             {{ title || `Weather for ${location.name}` }}

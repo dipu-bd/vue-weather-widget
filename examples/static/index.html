@@ -7,7 +7,7 @@
 
   <title>Vue-Weather-Widget: Basic usage</title>
 
-  <link rel="stylesheet" href="../../dist/css/vue-weather-widget.css">
+  <link rel="stylesheet" href="../../dist/css/vue-weather-widget.min.css">
 
   <style>
     body {
@@ -15,11 +15,13 @@
     }
 
     #app {
-      width: 100vw;
-      height: 100vh;
+      width: 95vw;
+      height: 95vh;
+      padding: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
   </style>
 </head>
@@ -31,16 +33,15 @@
   </div>
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
-  <script type="text/javascript" src="../../dist/js/vue-weather-widget.js"></script>
+  <script type="text/javascript" src="../../dist/js/vue-weather-widget.min.js"></script>
 
   <script>
     window.vm = new Vue({
       el: '#app',
       components: {
-        'weather': VueWeatherWidget
-      }
+        'weather': VueWeatherWidget,
+      },
     });
-    //setTimeout(() => location.reload(), 1000);
   </script>
 
 </body>

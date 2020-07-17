@@ -12,7 +12,7 @@ Weather widget inspired by [forecast embeds](https://blog.darksky.net/forecast-e
 
 [Browser preview](https://dipu-bd.github.io/vue-weather-widget/)
 
-[![Preview](https://raw.githubusercontent.com/dipu-bd/vue-weather-widget/master/other/preview.png)](https://dipu-bd.github.io/vue-weather-widget/)
+[![Preview](https://raw.githubusercontent.com/dipu-bd/vue-weather-widget/master/other/preview.gif)](https://dipu-bd.github.io/vue-weather-widget/)
 
 ## Install
 
@@ -40,33 +40,25 @@ npm run build
 
 ## Usage
 
-### VueJS single file (ECMAScript 2015)
+### Vue
 
-```js
+```vue
 <template>
-    <weather
-        api-key="<your-dark-sky-api-key>"
-        title="Weather"
-        latitude="24.886436"
-        longitude="91.880722"
-        language="en"
-        units="uk">
-    </weather>
+  <vue-weather api-key="<your-dark-sky-api-key>" units="uk" />
 </template>
 
 <script>
-import VueWeatherWidget from 'vue-weather-widget';
-import 'vue-weather-widget/dist/css/vue-weather-widget.css';
+import VueWeatherWidget from "vue-weather-widget/src/VueWeatherWidget.vue";
 
 export default {
-    components: {
-        'weather': VueWeatherWidget
-    },
-}
+  components: {
+    VueWeatherWidget,
+  },
+};
 </script>
 ```
 
-### Browser (ES5)
+### Browser
 
 ```html
 <!-- Requirements -->
@@ -88,7 +80,6 @@ export default {
 <div id="app">
   <weather
     api-key="<your-dark-sky-api-key>"
-    title="Weather"
     latitude="24.886436"
     longitude="91.880722"
     language="en"
@@ -98,7 +89,7 @@ export default {
 </div>
 
 <script>
-  window.vm = new Vue({
+  new Vue({
     el: "#app",
     components: {
       weather: VueWeatherWidget,
@@ -109,18 +100,28 @@ export default {
 
 ## Props
 
-| Props             | Type               | Default     | Description                                                                                               |
-| ----------------- | :----------------- | ----------- | --------------------------------------------------------------------------------------------------------- |
-| api-key           | String, _required_ | -           | Your Dark Sky secret key                                                                                  |
-| latitude          | String, _required_ | -           | The latitude of a location (in decimal degrees). Positive is north, negative is south.                    |
-| longitude         | String, _required_ | -           | Return summary properties in the desired language. See below for a list of supported languages.           |
-| units             | String             | `"us"`      | A list of supported units are given below.                                                                |
-| bar-color         | String             | `"#333"`    | Color of the Temparature bar.                                                                             |
-| text-color        | String             | `"#333"`    | Color of the text.                                                                                        |
-| title             | String             | `"Weather"` | Title of the widget.                                                                                      |
-| hide-header       | Boolean            | `false`     | Controls whether to show or hide the title bar.                                                           |
-| disable-animation | Boolean            | `false`     | Use static icons when enabled.                                                                            |
-| update-interval   | Number             | `null`      | Interval in seconds to update weather data automatically. Set it to `0` or `null` to disable auto update. |
+| Props             | Type                | Default  | Description                                                                                                        |
+| ----------------- | :------------------ | :------: | ------------------------------------------------------------------------------------------------------------------ |
+| api-key           | String (_required_) |    -     | Your Dark Sky API key                                                                                              |
+| address           | String              | current  | An address of a location (By default, it will be use user's IP to find current location)                           |
+| latitude          | String              | current  | The latitude of a location (By default, it will be use user's IP to find current location)                         |
+| longitude         | String              | current  | The longitude of a location (By default, it will be use user's IP to find current location)                        |
+| language          | String              |  `"en"`  | A list of supported languages are given below.                                                                     |
+| units             | String              |  `"us"`  | A list of supported units are given below.                                                                         |
+| hide-header       | Boolean             | `false`  | Whether to show or hide the title bar.                                                                             |
+| update-interval   | Number              |  `null`  | Interval in _milliseconds_ to update weather data periodically. Seting it to `0` or `null` to disables autoupdate. |
+| disable-animation | Boolean             | `false`  | Use static icons when enabled.                                                                                     |
+| bar-color         | String              | `"#444"` | Color of the Temparature bar.                                                                                      |
+| text-color        | String              | `"#333"` | Color of the text.                                                                                                 |
+
+## Slots
+
+| Name    | Description                        |
+| ------- | ---------------------------------- |
+| header  | The header component               |
+| title   | The title inside the header        |
+| loading | Component to display while loading |
+| error   | Component to display on error      |
 
 ### Supported units
 
@@ -169,7 +170,3 @@ List of supported units:
 - `x-pig-latin`: Igpay Atinlay
 - `zh`: simplified Chinese
 - `zh-tw`: traditional Chinese
-
-## License
-
-Apache License Version 2.0 &copy; Sudipto Chandra

@@ -103,7 +103,7 @@
   height: 100%;
   text-align: center;
   position: relative;
-  width: 30px;
+  min-width: 50px;
 }
 
 .vww__day > span {
@@ -115,6 +115,7 @@
 
 .vww__day-bar {
   margin-top: 20px;
+  width: 30px;
   height: calc(100% - 80px);
 }
 
