@@ -8,7 +8,7 @@
       >
         <slot name="title">
           <span class="vww__title">
-            {{ title || `Weather for ${location.name}` }}
+            {{ `Weather for ${location.name}` }}
           </span>
         </slot>
       </div>
