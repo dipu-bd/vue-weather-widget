@@ -9,7 +9,7 @@ export default {
   },
 
   props: {
-    // use OpenWeatherMap vs DarkSky API?
+    // use OpenWeatherMap vs Dark Sky API?
     useOpenWeatherMap: {
       type: Boolean,
       default: true
