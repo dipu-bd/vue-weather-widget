@@ -168,16 +168,17 @@ export default {
   methods: {
     loadWeather() {
       const { useOpenWeatherMap } = this
-      const method = useOpenWeatherMap ? Utils.fetchOWMWeather : Utils.fetchWeather
-      return method({
+      const fetchWeatherMethod = useOpenWeatherMap
+        ? Utils.fetchOWMWeather
+        : Utils.fetchWeather
+      return fetchWeatherMethod({
         apiKey: this.apiKey,
         lat: this.location.lat,
         lng: this.location.lng,
         units: this.units,
         language: this.language,
       }).then((data) => {
-        const weather = useOpenWeatherMap ? Utils.mapData(data) : data
-        this.$set(this, "weather", weather);
+        this.$set(this, "weather", data);
       });
     },
 
