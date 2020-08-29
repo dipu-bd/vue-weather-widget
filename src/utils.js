@@ -127,7 +127,7 @@ export default {
       `&lon=${opts.lng}` +
       `&units=${units}` +
       `&lang=${opts.language}`
-    ).then((resp) => return this.mapData(resp.json()));
+    ).then((resp) => this.mapData(resp.json());
   },
 
   mapData(data = {}) {
