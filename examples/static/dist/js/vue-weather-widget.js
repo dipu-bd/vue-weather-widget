@@ -137,6 +137,24 @@ var IP_CACHE = "vww__cache_ip";
 var IP_LOCATION_CACHE = "vww__cache_ip_location";
 var GEOCODE_CACHE = "vww__cache_geocode";
 
+var ICON_MAPPINGS = {
+  'clear-day': ['01d'],
+  'clear-night': ['01n'],
+  'cloudy': ['03d', '03n'],
+  'fog': ['50d', '50n'],
+  'partly-cloudy-day': ['02d', '04d' ],
+  'partly-cloudy-night': ['02n', '04n'],
+  'rain': ['09d', '09n', '10d', '10n', '11d', '11n'],
+  'sleet': ['13d', '13n'],
+  'snow': ['13d', '13n'],
+  'wind': ['50d', '50n']
+};
+
+var UNIT_MAPPINGS = {
+  'us': 'imperial',
+  'uk': 'metric'
+};
+
 var Utils = {
   lookupIP: function lookupIP() {
     var cache = localStorage[IP_CACHE] || "{}";
@@ -229,6 +247,71 @@ var Utils = {
         "/" + (opts.lat) + "," + (opts.lng) +
         "?units=" + (opts.units) + "&lang=" + (opts.language)
     ).then(function (resp) { return resp.json(); });
+  },
+
+  fetchOWMWeather: function fetchOWMWeather(opts) {
+    if ( opts === void 0 ) opts = {};
+
+    opts.units = opts.units || "us";
+    opts.language = opts.language || "en";
+    if (!opts.lat || !opts.lng) {
+      throw new Error("Geolocation is required");
+    }
+
+    var units = UNIT_MAPPINGS[opts.units];
+
+    return fetch(
+      "https://api.openweathermap.org/data/2.5/onecall?appid=" + (opts.apiKey) +
+      "&lat=" + (opts.lat) +
+      "&lon=" + (opts.lng) +
+      "&units=" + units +
+      "&lang=" + (opts.language)
+    ).then(function (resp) { return resp.json(); });
+  },
+
+  mapData: function mapData(data) {
+    var this$1 = this;
+    if ( data === void 0 ) data = {};
+
+    var current = data.current;
+    var weather = current.weather;
+    var currentWeather = weather[0];
+    var description = currentWeather.description;
+    var icon = currentWeather.icon;
+    var iconName = this.mapIcon(icon);
+
+    return {
+      currently: Object.assign({}, current, {
+        icon: iconName,
+        temperature: current.temp,
+        summary: description,
+        windSpeed: current.wind_speed,
+        windBearing: current.wind_deg
+      }),
+      daily: {
+        data: data.daily.map(function (day) {
+          return {
+            temperatureMax: day.temp.max,
+            temperatureMin: day.temp.min,
+            time: day.dt,
+            icon: this$1.mapIcon(day.weather[0].icon),
+          }
+        })
+      },
+      hourly: {
+        data: data.hourly.map(function (hour) {
+          return {
+            temperature: hour.temp,
+          }
+        })
+      }
+    }
+  },
+
+  mapIcon: function mapIcon(code) {
+    return Object.keys(ICON_MAPPINGS).find(function (key) {
+      return ICON_MAPPINGS[key].includes(code)
+    })
   },
 };
 
@@ -1197,7 +1280,13 @@ staticRenderFns: [],
   },
 
   props: {
-    // Your Dark Sky secret key
+    // use OpenWeatherMap vs DarkSky API?
+    useOpenWeatherMap: {
+      type: Boolean,
+      default: true
+    },
+
+    // Your Dark Sky / OpenWeatherMap secret key
     apiKey: {
       type: String,
       required: true,
@@ -1351,14 +1440,17 @@ staticRenderFns: [],
     loadWeather: function loadWeather() {
       var this$1 = this;
 
-      return Utils.fetchWeather({
+      var args = {
         apiKey: this.apiKey,
         lat: this.location.lat,
         lng: this.location.lng,
         units: this.units,
         language: this.language,
-      }).then(function (data) {
-        this$1.$set(this$1, "weather", data);
+      };
+      var method = this.useOpenWeatherMap ? Utils.fetchOWMWeather : Utils.fetchWeather;
+      return method(args).then(function (data) {
+        var weather = this$1.useOpenWeatherMap ? Utils.mapData(data) : data;
+        this$1.$set(this$1, "weather", weather);
       });
     },
 

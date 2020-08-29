@@ -9,7 +9,13 @@ export default {
   },
 
   props: {
-    // Your Dark Sky secret key
+    // use OpenWeatherMap vs DarkSky API?
+    useOpenWeatherMap: {
+      type: Boolean,
+      default: true
+    },
+
+    // Your Dark Sky / OpenWeatherMap secret key
     apiKey: {
       type: String,
       required: true,
@@ -126,7 +132,7 @@ export default {
       let globalMinTemp = Infinity;
 
       const time = new Date().getTime() / 1e3;
-      const daily = this.weather.daily.data;
+      const daily = this.weather.daily.data
       for (let i = 0; i < daily.length; i++) {
         const day = daily[i];
         if (day.temperatureMax > globalMaxTemp) {
@@ -161,14 +167,17 @@ export default {
 
   methods: {
     loadWeather() {
-      return Utils.fetchWeather({
+      const args = {
         apiKey: this.apiKey,
         lat: this.location.lat,
         lng: this.location.lng,
         units: this.units,
         language: this.language,
-      }).then((data) => {
-        this.$set(this, "weather", data);
+      }
+      const method = this.useOpenWeatherMap ? Utils.fetchOWMWeather : Utils.fetchWeather
+      return method(args).then((data) => {
+        const weather = this.useOpenWeatherMap ? Utils.mapData(data) : data
+        this.$set(this, "weather", weather);
       });
     },
 
