@@ -30,7 +30,7 @@ yarn add vue-weather-widget
 
 ## API Keys
 
-This component works with both the DarkSky API, and the OpenWeatherMap API. Since it is no longer 
+This component works with both the DarkSky API, and the OpenWeatherMap API. Since it is no longer
 possible to create a DarkSky API key, it is recommended to use OpenWeatherMap. https://openweathermap.org/appid
 
 ## Usage
@@ -39,15 +39,16 @@ possible to create a DarkSky API key, it is recommended to use OpenWeatherMap. h
 
 ```html
 <template>
-  <vue-weather api-key="<your-api-key>" units="uk" />
+  <vue-weather api-key="<your-open-weather-map-api-key>" units="uk" />
+  <vue-weather api-key="<your-dark-sky-api-key>" use-dark-sky-api units="uk" />
 </template>
 
 <script>
-  import VueWeatherWidget from "vue-weather-widget/src/VueWeatherWidget.vue";
+  import VueWeather from "vue-weather-widget";
 
   export default {
     components: {
-      VueWeatherWidget,
+      VueWeather,
     },
   };
 </script>
@@ -95,20 +96,20 @@ possible to create a DarkSky API key, it is recommended to use OpenWeatherMap. h
 
 ## Props
 
-| Props                | Type                | Default  | Description                                                                                                        |
-|----------------------|---------------------|----------|--------------------------------------------------------------------------------------------------------------------|
-| use-open-weather-map | Boolean             | `true`   | Use OpenWeatherMap API instead of Dark Sky API                                                                     |
-| api-key              | String (_required_) | -        | Your OpenWeatherMap or Dark Sky API key                                                                            |
-| address              | String              | current  | An address of a location (By default, it will be use user's IP to find current location)                           |
-| latitude             | String              | current  | The latitude of a location (By default, it will be use user's IP to find current location)                         |
-| longitude            | String              | current  | The longitude of a location (By default, it will be use user's IP to find current location)                        |
-| language             | String              | `"en"`   | A list of supported languages are given below.                                                                     |
-| units                | String              | `"us"`   | A list of supported units are given below.                                                                         |
-| hide-header          | Boolean             | `false`  | Whether to show or hide the title bar.                                                                             |
-| update-interval      | Number              | `null`   | Interval in _milliseconds_ to update weather data periodically. Seting it to `0` or `null` to disables autoupdate. |
-| disable-animation    | Boolean             | `false`  | Use static icons when enabled.                                                                                     |
-| bar-color            | String              | `"#444"` | Color of the Temparature bar.                                                                                      |
-| text-color           | String              | `"#333"` | Color of the text.                                                                                                 |
+| Props             | Type                | Default  | Description                                                                                                        |
+| ----------------- | ------------------- | -------- | ------------------------------------------------------------------------------------------------------------------ |
+| api-key           | String (_required_) | -        | Your OpenWeatherMap or Dark Sky API key                                                                            |
+| use-dark-sky-api  | Boolean             | `true`   | Use DarkSky API instead of OpenWeatherMap                                                                          |
+| address           | String              | current  | An address of a location (By default, it will be use user's IP to find current location)                           |
+| latitude          | String              | current  | The latitude of a location (By default, it will be use user's IP to find current location)                         |
+| longitude         | String              | current  | The longitude of a location (By default, it will be use user's IP to find current location)                        |
+| language          | String              | `"en"`   | A list of supported languages are given below.                                                                     |
+| units             | String              | `"us"`   | A list of supported units are given below.                                                                         |
+| hide-header       | Boolean             | `false`  | Whether to show or hide the title bar.                                                                             |
+| update-interval   | Number              | `null`   | Interval in _milliseconds_ to update weather data periodically. Seting it to `0` or `null` to disables autoupdate. |
+| disable-animation | Boolean             | `false`  | Use static icons when enabled.                                                                                     |
+| bar-color         | String              | `"#444"` | Color of the Temparature bar.                                                                                      |
+| text-color        | String              | `"#333"` | Color of the text.                                                                                                 |
 
 ## Slots
 
