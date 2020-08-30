@@ -9,7 +9,13 @@ export default {
   },
 
   props: {
-    // Your Dark Sky secret key
+    // use OpenWeatherMap vs Dark Sky API?
+    useOpenWeatherMap: {
+      type: Boolean,
+      default: true
+    },
+
+    // Your Dark Sky / OpenWeatherMap secret key
     apiKey: {
       type: String,
       required: true,
@@ -161,7 +167,11 @@ export default {
 
   methods: {
     loadWeather() {
-      return Utils.fetchWeather({
+      const { useOpenWeatherMap } = this
+      const fetchWeatherMethod = useOpenWeatherMap
+        ? Utils.fetchOWMWeather
+        : Utils.fetchWeather
+      return fetchWeatherMethod({
         apiKey: this.apiKey,
         lat: this.location.lat,
         lng: this.location.lng,
