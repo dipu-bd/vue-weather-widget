@@ -19,9 +19,16 @@
       height: 95vh;
       padding: 15px;
       display: flex;
+      flex-flow: column;
       align-items: center;
       justify-content: center;
       overflow: hidden;
+    }
+
+    h1 {
+      color: teal;
+      border-bottom: 1px solid #dddddd;
+      padding: 10px 0;
     }
   </style>
 </head>
@@ -29,11 +36,14 @@
 <body>
 
   <div id="app">
-    <!-- <weather api-key="e20753dfcaae902ab091fbb4925d432a" units="uk" :use-open-weather-map="false"></weather> -->
+    <h1>From Open Weather Map</h1>
     <weather api-key="45aee2ef715cfa91ed7957e8cfd37a70" units="uk"></weather>
+
+    <h1>From Dark Sky Api</h1>
+    <weather api-key="e20753dfcaae902ab091fbb4925d432a" units="uk" use-dark-sky-api></weather>
   </div>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"></script>
   <script type="text/javascript" src="dist/js/vue-weather-widget.js"></script>
 
   <script>

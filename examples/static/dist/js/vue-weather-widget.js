@@ -16,146 +16,674 @@ function commonjsRequire () {
 	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
 }
 
-var fetchJsonp = createCommonjsModule(function (module, exports) {
-(function (global, factory) {
-  {
-    factory(exports, module);
-  }
-})(commonjsGlobal, function (exports, module) {
+/**
+ * Helpers.
+ */
 
-  var defaultOptions = {
-    timeout: 5000,
-    jsonpCallback: 'callback',
-    jsonpCallbackFunction: null
+var s = 1000;
+var m = s * 60;
+var h = m * 60;
+var d = h * 24;
+var y = d * 365.25;
+
+/**
+ * Parse or format the given `val`.
+ *
+ * Options:
+ *
+ *  - `long` verbose formatting [false]
+ *
+ * @param {String|Number} val
+ * @param {Object} [options]
+ * @throws {Error} throw an error if val is not a non-empty string or a number
+ * @return {String|Number}
+ * @api public
+ */
+
+var ms = function(val, options) {
+  options = options || {};
+  var type = typeof val;
+  if (type === 'string' && val.length > 0) {
+    return parse(val);
+  } else if (type === 'number' && isNaN(val) === false) {
+    return options.long ? fmtLong(val) : fmtShort(val);
+  }
+  throw new Error(
+    'val is not a non-empty string or a valid number. val=' +
+      JSON.stringify(val)
+  );
+};
+
+/**
+ * Parse the given `str` and return milliseconds.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function parse(str) {
+  str = String(str);
+  if (str.length > 100) {
+    return;
+  }
+  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(
+    str
+  );
+  if (!match) {
+    return;
+  }
+  var n = parseFloat(match[1]);
+  var type = (match[2] || 'ms').toLowerCase();
+  switch (type) {
+    case 'years':
+    case 'year':
+    case 'yrs':
+    case 'yr':
+    case 'y':
+      return n * y;
+    case 'days':
+    case 'day':
+    case 'd':
+      return n * d;
+    case 'hours':
+    case 'hour':
+    case 'hrs':
+    case 'hr':
+    case 'h':
+      return n * h;
+    case 'minutes':
+    case 'minute':
+    case 'mins':
+    case 'min':
+    case 'm':
+      return n * m;
+    case 'seconds':
+    case 'second':
+    case 'secs':
+    case 'sec':
+    case 's':
+      return n * s;
+    case 'milliseconds':
+    case 'millisecond':
+    case 'msecs':
+    case 'msec':
+    case 'ms':
+      return n;
+    default:
+      return undefined;
+  }
+}
+
+/**
+ * Short format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtShort(ms) {
+  if (ms >= d) {
+    return Math.round(ms / d) + 'd';
+  }
+  if (ms >= h) {
+    return Math.round(ms / h) + 'h';
+  }
+  if (ms >= m) {
+    return Math.round(ms / m) + 'm';
+  }
+  if (ms >= s) {
+    return Math.round(ms / s) + 's';
+  }
+  return ms + 'ms';
+}
+
+/**
+ * Long format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtLong(ms) {
+  return plural(ms, d, 'day') ||
+    plural(ms, h, 'hour') ||
+    plural(ms, m, 'minute') ||
+    plural(ms, s, 'second') ||
+    ms + ' ms';
+}
+
+/**
+ * Pluralization helper.
+ */
+
+function plural(ms, n, name) {
+  if (ms < n) {
+    return;
+  }
+  if (ms < n * 1.5) {
+    return Math.floor(ms / n) + ' ' + name;
+  }
+  return Math.ceil(ms / n) + ' ' + name + 's';
+}
+
+var debug = createCommonjsModule(function (module, exports) {
+/**
+ * This is the common logic for both the Node.js and web browser
+ * implementations of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
+exports.coerce = coerce;
+exports.disable = disable;
+exports.enable = enable;
+exports.enabled = enabled;
+exports.humanize = ms;
+
+/**
+ * The currently active debug mode names, and names to skip.
+ */
+
+exports.names = [];
+exports.skips = [];
+
+/**
+ * Map of special "%n" handling functions, for the debug "format" argument.
+ *
+ * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+ */
+
+exports.formatters = {};
+
+/**
+ * Previous log timestamp.
+ */
+
+var prevTime;
+
+/**
+ * Select a color.
+ * @param {String} namespace
+ * @return {Number}
+ * @api private
+ */
+
+function selectColor(namespace) {
+  var hash = 0, i;
+
+  for (i in namespace) {
+    hash  = ((hash << 5) - hash) + namespace.charCodeAt(i);
+    hash |= 0; // Convert to 32bit integer
+  }
+
+  return exports.colors[Math.abs(hash) % exports.colors.length];
+}
+
+/**
+ * Create a debugger with the given `namespace`.
+ *
+ * @param {String} namespace
+ * @return {Function}
+ * @api public
+ */
+
+function createDebug(namespace) {
+
+  function debug() {
+    var arguments$1 = arguments;
+
+    // disabled?
+    if (!debug.enabled) { return; }
+
+    var self = debug;
+
+    // set `diff` timestamp
+    var curr = +new Date();
+    var ms = curr - (prevTime || curr);
+    self.diff = ms;
+    self.prev = prevTime;
+    self.curr = curr;
+    prevTime = curr;
+
+    // turn the `arguments` into a proper Array
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments$1[i];
+    }
+
+    args[0] = exports.coerce(args[0]);
+
+    if ('string' !== typeof args[0]) {
+      // anything else let's inspect with %O
+      args.unshift('%O');
+    }
+
+    // apply any `formatters` transformations
+    var index = 0;
+    args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format) {
+      // if we encounter an escaped % then don't increase the array index
+      if (match === '%%') { return match; }
+      index++;
+      var formatter = exports.formatters[format];
+      if ('function' === typeof formatter) {
+        var val = args[index];
+        match = formatter.call(self, val);
+
+        // now we need to remove `args[index]` since it's inlined in the `format`
+        args.splice(index, 1);
+        index--;
+      }
+      return match;
+    });
+
+    // apply env-specific formatting (colors, etc.)
+    exports.formatArgs.call(self, args);
+
+    var logFn = debug.log || exports.log || console.log.bind(console);
+    logFn.apply(self, args);
+  }
+
+  debug.namespace = namespace;
+  debug.enabled = exports.enabled(namespace);
+  debug.useColors = exports.useColors();
+  debug.color = selectColor(namespace);
+
+  // env-specific initialization logic for debug instances
+  if ('function' === typeof exports.init) {
+    exports.init(debug);
+  }
+
+  return debug;
+}
+
+/**
+ * Enables a debug mode by namespaces. This can include modes
+ * separated by a colon and wildcards.
+ *
+ * @param {String} namespaces
+ * @api public
+ */
+
+function enable(namespaces) {
+  exports.save(namespaces);
+
+  exports.names = [];
+  exports.skips = [];
+
+  var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+  var len = split.length;
+
+  for (var i = 0; i < len; i++) {
+    if (!split[i]) { continue; } // ignore empty strings
+    namespaces = split[i].replace(/\*/g, '.*?');
+    if (namespaces[0] === '-') {
+      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+    } else {
+      exports.names.push(new RegExp('^' + namespaces + '$'));
+    }
+  }
+}
+
+/**
+ * Disable debug output.
+ *
+ * @api public
+ */
+
+function disable() {
+  exports.enable('');
+}
+
+/**
+ * Returns true if the given mode name is enabled, false otherwise.
+ *
+ * @param {String} name
+ * @return {Boolean}
+ * @api public
+ */
+
+function enabled(name) {
+  var i, len;
+  for (i = 0, len = exports.skips.length; i < len; i++) {
+    if (exports.skips[i].test(name)) {
+      return false;
+    }
+  }
+  for (i = 0, len = exports.names.length; i < len; i++) {
+    if (exports.names[i].test(name)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Coerce `val`.
+ *
+ * @param {Mixed} val
+ * @return {Mixed}
+ * @api private
+ */
+
+function coerce(val) {
+  if (val instanceof Error) { return val.stack || val.message; }
+  return val;
+}
+});
+
+var browser = createCommonjsModule(function (module, exports) {
+/**
+ * This is the web browser implementation of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = debug;
+exports.log = log;
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
+exports.storage = 'undefined' != typeof chrome
+               && 'undefined' != typeof chrome.storage
+                  ? chrome.storage.local
+                  : localstorage();
+
+/**
+ * Colors.
+ */
+
+exports.colors = [
+  'lightseagreen',
+  'forestgreen',
+  'goldenrod',
+  'dodgerblue',
+  'darkorchid',
+  'crimson'
+];
+
+/**
+ * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+ * and the Firebug extension (any Firefox version) are known
+ * to support "%c" CSS customizations.
+ *
+ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+ */
+
+function useColors() {
+  // NB: In an Electron preload script, document will be defined but not fully
+  // initialized. Since we know we're in Chrome, we'll just detect this case
+  // explicitly
+  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
+    return true;
+  }
+
+  // is webkit? http://stackoverflow.com/a/16459606/376773
+  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
+    // is firebug? http://stackoverflow.com/a/398120/376773
+    (typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+    // is firefox >= v31?
+    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
+    // double check webkit in userAgent just in case we are in a worker
+    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
+}
+
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+exports.formatters.j = function(v) {
+  try {
+    return JSON.stringify(v);
+  } catch (err) {
+    return '[UnexpectedJSONParseError]: ' + err.message;
+  }
+};
+
+
+/**
+ * Colorize log arguments if enabled.
+ *
+ * @api public
+ */
+
+function formatArgs(args) {
+  var useColors = this.useColors;
+
+  args[0] = (useColors ? '%c' : '')
+    + this.namespace
+    + (useColors ? ' %c' : ' ')
+    + args[0]
+    + (useColors ? '%c ' : ' ')
+    + '+' + exports.humanize(this.diff);
+
+  if (!useColors) { return; }
+
+  var c = 'color: ' + this.color;
+  args.splice(1, 0, c, 'color: inherit');
+
+  // the final "%c" is somewhat tricky, because there could be other
+  // arguments passed either before or after the %c, so we need to
+  // figure out the correct index to insert the CSS into
+  var index = 0;
+  var lastC = 0;
+  args[0].replace(/%[a-zA-Z%]/g, function(match) {
+    if ('%%' === match) { return; }
+    index++;
+    if ('%c' === match) {
+      // we only are interested in the *last* %c
+      // (the user may have provided their own)
+      lastC = index;
+    }
+  });
+
+  args.splice(lastC, 0, c);
+}
+
+/**
+ * Invokes `console.log()` when available.
+ * No-op when `console.log` is not a "function".
+ *
+ * @api public
+ */
+
+function log() {
+  // this hackery is required for IE8/9, where
+  // the `console.log` function doesn't have 'apply'
+  return 'object' === typeof console
+    && console.log
+    && Function.prototype.apply.call(console.log, console, arguments);
+}
+
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+
+function save(namespaces) {
+  try {
+    if (null == namespaces) {
+      exports.storage.removeItem('debug');
+    } else {
+      exports.storage.debug = namespaces;
+    }
+  } catch(e) {}
+}
+
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+
+function load() {
+  var r;
+  try {
+    r = exports.storage.debug;
+  } catch(e) {}
+
+  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+  if (!r && typeof process !== 'undefined' && 'env' in process) {
+    r = process.env.DEBUG;
+  }
+
+  return r;
+}
+
+/**
+ * Enable namespaces listed in `localStorage.debug` initially.
+ */
+
+exports.enable(load());
+
+/**
+ * Localstorage attempts to return the localstorage.
+ *
+ * This is necessary because safari throws
+ * when a user disables cookies/localstorage
+ * and you attempt to access it.
+ *
+ * @return {LocalStorage}
+ * @api private
+ */
+
+function localstorage() {
+  try {
+    return window.localStorage;
+  } catch (e) {}
+}
+});
+
+/**
+ * Module dependencies
+ */
+
+var debug$1 = browser('jsonp');
+
+/**
+ * Module exports.
+ */
+
+var jsonp_1 = jsonp;
+
+/**
+ * Callback index.
+ */
+
+var count = 0;
+
+/**
+ * Noop function.
+ */
+
+function noop(){}
+
+/**
+ * JSONP handler
+ *
+ * Options:
+ *  - param {String} qs parameter (`callback`)
+ *  - prefix {String} qs parameter (`__jp`)
+ *  - name {String} qs parameter (`prefix` + incr)
+ *  - timeout {Number} how long after a timeout error is emitted (`60000`)
+ *
+ * @param {String} url
+ * @param {Object|Function} optional options / callback
+ * @param {Function} optional callback
+ */
+
+function jsonp(url, opts, fn){
+  if ('function' == typeof opts) {
+    fn = opts;
+    opts = {};
+  }
+  if (!opts) { opts = {}; }
+
+  var prefix = opts.prefix || '__jp';
+
+  // use the callback name that was passed if one was provided.
+  // otherwise generate a unique name by incrementing our counter.
+  var id = opts.name || (prefix + (count++));
+
+  var param = opts.param || 'callback';
+  var timeout = null != opts.timeout ? opts.timeout : 60000;
+  var enc = encodeURIComponent;
+  var target = document.getElementsByTagName('script')[0] || document.head;
+  var script;
+  var timer;
+
+
+  if (timeout) {
+    timer = setTimeout(function(){
+      cleanup();
+      if (fn) { fn(new Error('Timeout')); }
+    }, timeout);
+  }
+
+  function cleanup(){
+    if (script.parentNode) { script.parentNode.removeChild(script); }
+    window[id] = noop;
+    if (timer) { clearTimeout(timer); }
+  }
+
+  function cancel(){
+    if (window[id]) {
+      cleanup();
+    }
+  }
+
+  window[id] = function(data){
+    debug$1('jsonp got', data);
+    cleanup();
+    if (fn) { fn(null, data); }
   };
 
-  function generateCallbackFunction() {
-    return 'jsonp_' + Date.now() + '_' + Math.ceil(Math.random() * 100000);
-  }
+  // add qs component
+  url += (~url.indexOf('?') ? '&' : '?') + param + '=' + enc(id);
+  url = url.replace('?&', '?');
 
-  function clearFunction(functionName) {
-    // IE8 throws an exception when you try to delete a property on window
-    // http://stackoverflow.com/a/1824228/751089
-    try {
-      delete window[functionName];
-    } catch (e) {
-      window[functionName] = undefined;
-    }
-  }
+  debug$1('jsonp req "%s"', url);
 
-  function removeScript(scriptId) {
-    var script = document.getElementById(scriptId);
-    if (script) {
-      document.getElementsByTagName('head')[0].removeChild(script);
-    }
-  }
+  // create script
+  script = document.createElement('script');
+  script.src = url;
+  target.parentNode.insertBefore(script, target);
 
-  function fetchJsonp(_url) {
-    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-    // to avoid param reassign
-    var url = _url;
-    var timeout = options.timeout || defaultOptions.timeout;
-    var jsonpCallback = options.jsonpCallback || defaultOptions.jsonpCallback;
-
-    var timeoutId = undefined;
-
-    return new Promise(function (resolve, reject) {
-      var callbackFunction = options.jsonpCallbackFunction || generateCallbackFunction();
-      var scriptId = jsonpCallback + '_' + callbackFunction;
-
-      window[callbackFunction] = function (response) {
-        resolve({
-          ok: true,
-          // keep consistent with fetch API
-          json: function json() {
-            return Promise.resolve(response);
-          }
-        });
-
-        if (timeoutId) { clearTimeout(timeoutId); }
-
-        removeScript(scriptId);
-
-        clearFunction(callbackFunction);
-      };
-
-      // Check if the user set their own params, and if not add a ? to start a list of params
-      url += url.indexOf('?') === -1 ? '?' : '&';
-
-      var jsonpScript = document.createElement('script');
-      jsonpScript.setAttribute('src', '' + url + jsonpCallback + '=' + callbackFunction);
-      if (options.charset) {
-        jsonpScript.setAttribute('charset', options.charset);
-      }
-      jsonpScript.id = scriptId;
-      document.getElementsByTagName('head')[0].appendChild(jsonpScript);
-
-      timeoutId = setTimeout(function () {
-        reject(new Error('JSONP request to ' + _url + ' timed out'));
-
-        clearFunction(callbackFunction);
-        removeScript(scriptId);
-        window[callbackFunction] = function () {
-          clearFunction(callbackFunction);
-        };
-      }, timeout);
-
-      // Caught if got 404/500
-      jsonpScript.onerror = function () {
-        reject(new Error('JSONP request to ' + _url + ' failed'));
-
-        clearFunction(callbackFunction);
-        removeScript(scriptId);
-        if (timeoutId) { clearTimeout(timeoutId); }
-      };
-    });
-  }
-
-  // export as global function
-  /*
-  let local;
-  if (typeof global !== 'undefined') {
-    local = global;
-  } else if (typeof self !== 'undefined') {
-    local = self;
-  } else {
-    try {
-      local = Function('return this')();
-    } catch (e) {
-      throw new Error('polyfill failed because global object is unavailable in this environment');
-    }
-  }
-  local.fetchJsonp = fetchJsonp;
-  */
-
-  module.exports = fetchJsonp;
-});
-});
+  return cancel;
+}
 
 var IP_CACHE = "vww__cache_ip";
 var IP_LOCATION_CACHE = "vww__cache_ip_location";
 var GEOCODE_CACHE = "vww__cache_geocode";
 
 var ICON_MAPPINGS = {
-  'clear-day': ['01d'],
-  'clear-night': ['01n'],
-  'cloudy': ['03d', '03n'],
-  'fog': ['50d', '50n'],
-  'partly-cloudy-day': ['02d', '04d' ],
-  'partly-cloudy-night': ['02n', '04n'],
-  'rain': ['09d', '09n', '10d', '10n', '11d', '11n'],
-  'sleet': ['13d', '13n'],
-  'snow': ['13d', '13n'],
-  'wind': ['50d', '50n']
+  "clear-day": ["01d"],
+  "clear-night": ["01n"],
+  cloudy: ["03d", "03n"],
+  fog: ["50d", "50n"],
+  "partly-cloudy-day": ["02d", "04d"],
+  "partly-cloudy-night": ["02n", "04n"],
+  rain: ["09d", "09n", "10d", "10n", "11d", "11n"],
+  sleet: ["13d", "13n"],
+  snow: ["13d", "13n"],
+  wind: ["50d", "50n"],
 };
 
 var UNIT_MAPPINGS = {
-  'us': 'imperial',
-  'uk': 'metric'
+  us: "imperial",
+  uk: "metric",
 };
 
-var Utils = {
+var utils = {
   lookupIP: function lookupIP() {
     var cache = localStorage[IP_CACHE] || "{}";
     cache = JSON.parse(cache);
@@ -182,11 +710,9 @@ var Utils = {
   },
 
   fetchLocationByIP: function fetchLocationByIP(ip) {
-    var this$1 = this;
-
     if (!ip) {
-      return this.lookupIP().then(function (data) {
-        return this$1.fetchLocationByIP(data["ip"]);
+      return utils.lookupIP().then(function (data) {
+        return utils.fetchLocationByIP(data["ip"]);
       });
     }
 
@@ -218,9 +744,7 @@ var Utils = {
 
     var apiKey = "c3bb8aa0a56b21122dea6a2a8ada70c8";
     var apiType = reversed ? "reverse" : "forward";
-    return fetch(
-      ("http://api.positionstack.com/v1/" + apiType + "?access_key=" + apiKey + "&query=" + query)
-    )
+    return fetch(("http://api.positionstack.com/v1/" + apiType + "?access_key=" + apiKey + "&query=" + query))
       .then(function (resp) { return resp.json(); })
       .then(function (result) {
         cache[query] = result.data[0];
@@ -231,7 +755,7 @@ var Utils = {
   },
 
   reverseGeocode: function reverseGeocode(lat, lng) {
-    return this.geocode((lat + "," + lng), true);
+    return utils.geocode((lat + "," + lng), true);
   },
 
   fetchWeather: function fetchWeather(opts) {
@@ -241,12 +765,23 @@ var Utils = {
     if (!opts.lat || !opts.lng) {
       throw new Error("Geolocation is required");
     }
-
-    return fetchJsonp(
-      "https://api.darksky.net/forecast/" + (opts.apiKey) +
-        "/" + (opts.lat) + "," + (opts.lng) +
-        "?units=" + (opts.units) + "&lang=" + (opts.language)
-    ).then(function (resp) { return resp.json(); });
+    // return fetchJsonp(
+    //   `https://api.darksky.net/forecast/${opts.apiKey}` +
+    //     `/${opts.lat},${opts.lng}` +
+    //     `?units=${opts.units}&lang=${opts.language}`
+    // ).then((resp) => resp.json());
+    return new Promise(function (resolve, reject) {
+      jsonp_1(
+        "https://api.darksky.net/forecast/" + (opts.apiKey) +
+          "/" + (opts.lat) + "," + (opts.lng) +
+          "?units=" + (opts.units) + "&lang=" + (opts.language),
+        function (err, data) {
+          console.log(err, data);
+          if (err) { reject(err); }
+          else { resolve(data); }
+        }
+      );
+    });
   },
 
   fetchOWMWeather: function fetchOWMWeather(opts) {
@@ -262,23 +797,22 @@ var Utils = {
 
     return fetch(
       "https://api.openweathermap.org/data/2.5/onecall?appid=" + (opts.apiKey) +
-      "&lat=" + (opts.lat) +
-      "&lon=" + (opts.lng) +
-      "&units=" + units +
-      "&lang=" + (opts.language)
-    ).then(function (resp) { return resp.json(); });
+        "&lat=" + (opts.lat) +
+        "&lon=" + (opts.lng) +
+        "&units=" + units +
+        "&lang=" + (opts.language)
+    )
+      .then(function (resp) { return resp.json(); })
+      .then(utils.mapData);
   },
 
   mapData: function mapData(data) {
-    var this$1 = this;
-    if ( data === void 0 ) data = {};
-
     var current = data.current;
     var weather = current.weather;
     var currentWeather = weather[0];
     var description = currentWeather.description;
     var icon = currentWeather.icon;
-    var iconName = this.mapIcon(icon);
+    var iconName = utils.mapIcon(icon);
 
     return {
       currently: Object.assign({}, current, {
@@ -286,7 +820,7 @@ var Utils = {
         temperature: current.temp,
         summary: description,
         windSpeed: current.wind_speed,
-        windBearing: current.wind_deg
+        windBearing: current.wind_deg,
       }),
       daily: {
         data: data.daily.map(function (day) {
@@ -294,24 +828,24 @@ var Utils = {
             temperatureMax: day.temp.max,
             temperatureMin: day.temp.min,
             time: day.dt,
-            icon: this$1.mapIcon(day.weather[0].icon),
-          }
-        })
+            icon: utils.mapIcon(day.weather[0].icon),
+          };
+        }),
       },
       hourly: {
         data: data.hourly.map(function (hour) {
           return {
             temperature: hour.temp,
-          }
-        })
-      }
-    }
+          };
+        }),
+      },
+    };
   },
 
   mapIcon: function mapIcon(code) {
     return Object.keys(ICON_MAPPINGS).find(function (key) {
-      return ICON_MAPPINGS[key].includes(code)
-    })
+      return ICON_MAPPINGS[key].includes(code);
+    });
   },
 };
 
@@ -1218,32 +1752,32 @@ function buildWrapper(skycons) {
 }
 
 var SkyconComponent = {
-render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('canvas',{attrs:{"width":_vm.width,"height":_vm.height}})},
+render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('canvas',{attrs:{"width":_vm.width,"height":_vm.height,"data-condition":_vm.condition}})},
 staticRenderFns: [],
   props: {
     // Weather condition
     condition: {
       type: String,
-      required: true,
+      required: true
     },
 
     // Icon size
     size: {
       type: [Number, String],
-      default: 64,
+      default: 64
     },
 
     // Icon color
     color: {
       type: String,
-      default: "black",
+      default: "black"
     },
 
     // Start with paused animation
     paused: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   computed: {
     width: function width() {
@@ -1254,14 +1788,14 @@ staticRenderFns: [],
     },
     icon: function icon() {
       return this.condition.toUpperCase().replace(/[\s.-]/g, "_");
-    },
+    }
   },
   mounted: function mounted() {
     var skycons$1 = new skycons({ color: this.color });
     skycons$1.set(this.$el, skycons[this.icon]);
     if (!this.paused) { skycons$1.play(); }
     this.$emit("load", buildWrapper(skycons$1));
-  },
+  }
 };
 
 var Skycon = SkyconComponent;
@@ -1273,17 +1807,17 @@ render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_
                 height: ((day.height) + "%"),
               })},[_vm._v("\n               \n            ")]),_vm._v(" "),_c('div',{style:({ height: ((day.bottom) + "%") })},[_c('span',[_vm._v(_vm._s(Math.round(day.temperatureMin))+"°")])])])])}),0)]],2)],2)},
 staticRenderFns: [],
-  name: "vue-weather-widget",
+  name: "VueWeatherWidget",
 
   components: {
     Skycon: Skycon,
   },
 
   props: {
-    // use OpenWeatherMap vs DarkSky API?
-    useOpenWeatherMap: {
+    // Pass true to use DarkSky API, otherwise it will use OpenWeatherMap API
+    useDarkSkyApi: {
       type: Boolean,
-      default: true
+      default: false,
     },
 
     // Your Dark Sky / OpenWeatherMap secret key
@@ -1421,10 +1955,9 @@ staticRenderFns: [],
         if (day$1.time <= time) {
           day$1.weekName = "Today";
         } else {
-          day$1.weekName = new Date(day$1.time * 1000).toLocaleDateString(
-            this.language,
-            { weekday: "short" }
-          );
+          day$1.weekName = new Date(day$1.time * 1000).toLocaleDateString(this.language, {
+            weekday: "short",
+          });
         }
         var max = day$1.temperatureMax;
         var min = day$1.temperatureMin;
@@ -1440,17 +1973,16 @@ staticRenderFns: [],
     loadWeather: function loadWeather() {
       var this$1 = this;
 
-      var args = {
+      var fetchWeatherMethod = this.useDarkSkyApi ? utils.fetchWeather : utils.fetchOWMWeather;
+      return fetchWeatherMethod({
         apiKey: this.apiKey,
         lat: this.location.lat,
         lng: this.location.lng,
         units: this.units,
         language: this.language,
-      };
-      var method = this.useOpenWeatherMap ? Utils.fetchOWMWeather : Utils.fetchWeather;
-      return method(args).then(function (data) {
-        var weather = this$1.useOpenWeatherMap ? Utils.mapData(data) : data;
-        this$1.$set(this$1, "weather", weather);
+      }).then(function (data) {
+        console.log(data);
+        this$1.$set(this$1, "weather", data);
       });
     },
 
@@ -1477,6 +2009,7 @@ staticRenderFns: [],
           this$1.$set(this$1, "error", null);
         })
         .catch(function (err) {
+          console.error(err);
           this$1.$set(this$1, "error", "" + err);
         })
         .finally(function () {
@@ -1490,7 +2023,7 @@ staticRenderFns: [],
 
       if (!this.latitude || !this.longitude) {
         if (!this.address) {
-          return Utils.fetchLocationByIP().then(function (data) {
+          return utils.fetchLocationByIP().then(function (data) {
             this$1.$set(this$1, "location", {
               lat: data.latitude,
               lng: data.longitude,
@@ -1498,7 +2031,7 @@ staticRenderFns: [],
             });
           });
         } else {
-          return Utils.geocode(this.address).then(function (data) {
+          return utils.geocode(this.address).then(function (data) {
             this$1.$set(this$1, "location", {
               lat: data.latitude,
               lng: data.longitude,
@@ -1507,24 +2040,16 @@ staticRenderFns: [],
           });
         }
       } else {
-        return Utils.reverseGeocode(this.latitude, this.longitude).then(
-          function (data) {
-            this$1.$set(this$1, "location", {
-              lat: this$1.latitude,
-              lng: this$1.longitude,
-              name: ((data.region) + ", " + (data.country)),
-            });
-          }
-        );
+        return utils.reverseGeocode(this.latitude, this.longitude).then(function (data) {
+          this$1.$set(this$1, "location", {
+            lat: this$1.latitude,
+            lng: this$1.longitude,
+            name: ((data.region) + ", " + (data.country)),
+          });
+        });
       }
     },
   },
 };
 
-var index = {
-  install: function install(Vue) {
-    Vue.component("vue-weather", VueWeatherWidget);
-  },
-};
-
-module.exports = index;
+module.exports = VueWeatherWidget;
