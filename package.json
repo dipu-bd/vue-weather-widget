@@ -1,6 +1,6 @@
 {
   "name": "vue-weather-widget",
-  "version": "3.0.6",
+  "version": "4.0.0",
   "description": "Weather forecast widget for Vuejs using DarkSky api",
   "exportName": "vue-weather-widget",
   "main": "src/index.js",
@@ -20,9 +20,9 @@
     "build:prod": "rollup --environment BUILD:production --config rollup.config.js",
     "build": "npm run lint && npm run build:dev && npm run build:prod",
     "watch": "chokidar  \"*.js\" \"src/**/*\" --initial --command \"npm run build:dev\"",
-    "patch": "npm version patch --no-git-tag-version && git add package*.json && git commit -m \"Update version:patch\" && git push origin master && npm publish",
-    "minor": "npm version minor --no-git-tag-version && git add package*.json && git commit -m \"Update version:minor\" && git push origin master && npm publish",
-    "major": "npm version major --no-git-tag-version && git add package*.json && git commit -m \"Update version:major\" && git push origin master && npm publish"
+    "patch": "npm version patch --no-git-tag-version && git add package.json package-lock.json && git commit -m \"Update version:patch\" && git push && npm publish",
+    "minor": "npm version minor --no-git-tag-version && git add package.json package-lock.json && git commit -m \"Update version:minor\" && git push && npm publish",
+    "major": "npm version major --no-git-tag-version && git add package.json package-lock.json && git commit -m \"Update version:major\" && git push && npm publish"
   },
   "repository": {
     "type": "git",
