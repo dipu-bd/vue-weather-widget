@@ -2,17 +2,17 @@ import Utils from "./utils";
 import { Skycon } from "vue-skycons";
 
 export default {
-  name: "vue-weather-widget",
+  name: "VueWeatherWidget",
 
   components: {
     Skycon,
   },
 
   props: {
-    // use OpenWeatherMap vs Dark Sky API?
-    useOpenWeatherMap: {
+    // Pass true to use DarkSky API, otherwise it will use OpenWeatherMap API
+    useDarkSkyApi: {
       type: Boolean,
-      default: true
+      default: false,
     },
 
     // Your Dark Sky / OpenWeatherMap secret key
@@ -167,10 +167,9 @@ export default {
 
   methods: {
     loadWeather() {
-      const { useOpenWeatherMap } = this
-      const fetchWeatherMethod = useOpenWeatherMap
+      const fetchWeatherMethod = this.useDarkSkyApi
         ? Utils.fetchOWMWeather
-        : Utils.fetchWeather
+        : Utils.fetchWeather;
       return fetchWeatherMethod({
         apiKey: this.apiKey,
         lat: this.location.lat,

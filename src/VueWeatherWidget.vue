@@ -80,7 +80,7 @@
             <span>{{ day.weekName }}</span>
             <span>
               <skycon
-                style="display: block;"
+                style="display: block"
                 :condition="day.icon"
                 size="26"
                 :color="textColor"
