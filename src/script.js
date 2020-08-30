@@ -150,10 +150,9 @@ export default {
         if (day.time <= time) {
           day.weekName = "Today";
         } else {
-          day.weekName = new Date(day.time * 1000).toLocaleDateString(
-            this.language,
-            { weekday: "short" }
-          );
+          day.weekName = new Date(day.time * 1000).toLocaleDateString(this.language, {
+            weekday: "short",
+          });
         }
         const max = day.temperatureMax;
         const min = day.temperatureMin;
@@ -167,9 +166,7 @@ export default {
 
   methods: {
     loadWeather() {
-      const fetchWeatherMethod = this.useDarkSkyApi
-        ? Utils.fetchOWMWeather
-        : Utils.fetchWeather;
+      const fetchWeatherMethod = this.useDarkSkyApi ? Utils.fetchWeather : Utils.fetchOWMWeather;
       return fetchWeatherMethod({
         apiKey: this.apiKey,
         lat: this.location.lat,
@@ -177,6 +174,7 @@ export default {
         units: this.units,
         language: this.language,
       }).then((data) => {
+        console.log(data);
         this.$set(this, "weather", data);
       });
     },
@@ -199,6 +197,7 @@ export default {
           this.$set(this, "error", null);
         })
         .catch((err) => {
+          console.error(err);
           this.$set(this, "error", "" + err);
         })
         .finally(() => {
@@ -227,15 +226,13 @@ export default {
           });
         }
       } else {
-        return Utils.reverseGeocode(this.latitude, this.longitude).then(
-          (data) => {
-            this.$set(this, "location", {
-              lat: this.latitude,
-              lng: this.longitude,
-              name: `${data.region}, ${data.country}`,
-            });
-          }
-        );
+        return Utils.reverseGeocode(this.latitude, this.longitude).then((data) => {
+          this.$set(this, "location", {
+            lat: this.latitude,
+            lng: this.longitude,
+            name: `${data.region}, ${data.country}`,
+          });
+        });
       }
     },
   },

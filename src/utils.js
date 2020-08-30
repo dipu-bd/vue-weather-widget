@@ -22,7 +22,7 @@ const UNIT_MAPPINGS = {
   uk: "metric",
 };
 
-export default {
+const utils = {
   lookupIP() {
     let cache = localStorage[IP_CACHE] || "{}";
     cache = JSON.parse(cache);
@@ -50,8 +50,8 @@ export default {
 
   fetchLocationByIP(ip) {
     if (!ip) {
-      return this.lookupIP().then((data) => {
-        return this.fetchLocationByIP(data["ip"]);
+      return utils.lookupIP().then((data) => {
+        return utils.fetchLocationByIP(data["ip"]);
       });
     }
 
@@ -92,7 +92,7 @@ export default {
   },
 
   reverseGeocode(lat, lng) {
-    return this.geocode(`${lat},${lng}`, true);
+    return utils.geocode(`${lat},${lng}`, true);
   },
 
   fetchWeather(opts) {
@@ -113,6 +113,7 @@ export default {
           `/${opts.lat},${opts.lng}` +
           `?units=${opts.units}&lang=${opts.language}`,
         (err, data) => {
+          console.log(err, data);
           if (err) reject(err);
           else resolve(data);
         }
@@ -137,15 +138,15 @@ export default {
         `&lang=${opts.language}`
     )
       .then((resp) => resp.json())
-      .then(this.mapData);
+      .then(utils.mapData);
   },
 
-  mapData(data = {}) {
+  mapData(data) {
     const { current } = data;
     const { weather } = current;
     const [currentWeather] = weather;
     const { description, icon } = currentWeather;
-    const iconName = this.mapIcon(icon);
+    const iconName = utils.mapIcon(icon);
 
     return {
       currently: Object.assign({}, current, {
@@ -161,7 +162,7 @@ export default {
             temperatureMax: day.temp.max,
             temperatureMin: day.temp.min,
             time: day.dt,
-            icon: this.mapIcon(day.weather[0].icon),
+            icon: utils.mapIcon(day.weather[0].icon),
           };
         }),
       },
@@ -181,3 +182,5 @@ export default {
     });
   },
 };
+
+export default utils;
