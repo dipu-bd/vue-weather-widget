@@ -3,11 +3,12 @@
   "version": "3.0.6",
   "description": "Weather forecast widget for Vuejs using DarkSky api",
   "exportName": "vue-weather-widget",
-  "jsnext:main": "src/index.js",
-  "main": "examples/static/dist/js/vue-weather-widget.js",
+  "main": "src/index.js",
   "module": "examples/static/dist/js/vue-weather-widget.esm.js",
-  "browser": "examples/static/dist/js/vue-weather-widget.min.js",
   "unpkg": "examples/static/dist/js/vue-weather-widget.min.js",
+  "browser": {
+    "VueWeatherWidget": "src/VueWeatherWidget.vue"
+  },
   "files": [
     "src",
     "dist"
@@ -48,7 +49,7 @@
   "homepage": "https://github.com/dipu-bd/vue-weather-widget#readme",
   "dependencies": {
     "jsonp": "^0.2.1",
-    "vue-skycons": "^4.0.0"
+    "vue-skycons": "^4.0.1"
   },
   "devDependencies": {
     "@rollup/plugin-buble": "^0.21.3",

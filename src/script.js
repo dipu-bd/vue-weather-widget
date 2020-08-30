@@ -1,5 +1,5 @@
 import Utils from "./utils";
-import { Skycon } from "vue-skycons";
+import Skycon from "vue-skycons";
 
 export default {
   name: "VueWeatherWidget",
