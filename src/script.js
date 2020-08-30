@@ -132,7 +132,7 @@ export default {
       let globalMinTemp = Infinity;
 
       const time = new Date().getTime() / 1e3;
-      const daily = this.weather.daily.data
+      const daily = this.weather.daily.data;
       for (let i = 0; i < daily.length; i++) {
         const day = daily[i];
         if (day.temperatureMax > globalMaxTemp) {
