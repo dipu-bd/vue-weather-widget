@@ -3,8 +3,7 @@ import css from "rollup-plugin-css-porter";
 import buble from "@rollup/plugin-buble";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
-import strip from "@rollup/plugin-strip";
-import { uglify } from "rollup-plugin-uglify";
+import { terser } from "rollup-plugin-terser";
 
 const production = process.env.BUILD === "production";
 const distDir = "examples/static/dist";
@@ -14,6 +13,7 @@ export default {
   output: {
     file: `${distDir}/js/vue-weather-widget${production ? ".min.js" : ".js"}`,
     name: "VueWeatherWidget",
+    exports: "default",
     format: "cjs", //'umd'
   },
   external: ["vue"],
@@ -29,7 +29,6 @@ export default {
       preferBuiltins: true,
     }),
     commonjs(),
-    production && strip(),
-    production && uglify(),
+    production && terser(),
   ],
 };

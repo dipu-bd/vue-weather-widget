@@ -1,4 +1,4 @@
-import fetchJsonp from "fetch-jsonp";
+import jsonp from "jsonp";
 
 const IP_CACHE = "vww__cache_ip";
 const IP_LOCATION_CACHE = "vww__cache_ip_location";
@@ -81,9 +81,7 @@ export default {
 
     const apiKey = "c3bb8aa0a56b21122dea6a2a8ada70c8";
     const apiType = reversed ? "reverse" : "forward";
-    return fetch(
-      `http://api.positionstack.com/v1/${apiType}?access_key=${apiKey}&query=${query}`
-    )
+    return fetch(`http://api.positionstack.com/v1/${apiType}?access_key=${apiKey}&query=${query}`)
       .then((resp) => resp.json())
       .then((result) => {
         cache[query] = result.data[0];
@@ -104,12 +102,22 @@ export default {
     if (!opts.lat || !opts.lng) {
       throw new Error("Geolocation is required");
     }
-
-    return fetchJsonp(
-      `https://api.darksky.net/forecast/${opts.apiKey}` +
-        `/${opts.lat},${opts.lng}` +
-        `?units=${opts.units}&lang=${opts.language}`
-    ).then((resp) => resp.json());
+    // return fetchJsonp(
+    //   `https://api.darksky.net/forecast/${opts.apiKey}` +
+    //     `/${opts.lat},${opts.lng}` +
+    //     `?units=${opts.units}&lang=${opts.language}`
+    // ).then((resp) => resp.json());
+    return new Promise((resolve, reject) => {
+      jsonp(
+        `https://api.darksky.net/forecast/${opts.apiKey}` +
+          `/${opts.lat},${opts.lng}` +
+          `?units=${opts.units}&lang=${opts.language}`,
+        (err, data) => {
+          if (err) reject(err);
+          else resolve(data);
+        }
+      );
+    });
   },
 
   fetchOWMWeather(opts = {}) {
