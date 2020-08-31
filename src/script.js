@@ -131,7 +131,9 @@ export default {
       let globalMaxTemp = -Infinity;
       let globalMinTemp = Infinity;
 
-      const time = new Date().getTime() / 1e3;
+      const tomorrow = new Date(new Date().toDateString());
+      const today = tomorrow.getTime() / 1e3 + 24 * 3600 - 1;
+
       const daily = this.weather.daily.data;
       for (let i = 0; i < daily.length; i++) {
         const day = daily[i];
@@ -147,7 +149,7 @@ export default {
       const tempRange = globalMaxTemp - globalMinTemp;
       for (let i = 0; i < forecasts.length; ++i) {
         const day = forecasts[i];
-        if (day.time <= time) {
+        if (day.time <= today) {
           day.weekName = "Today";
         } else {
           day.weekName = new Date(day.time * 1000).toLocaleDateString(this.language, {
@@ -174,7 +176,6 @@ export default {
         units: this.units,
         language: this.language,
       }).then((data) => {
-        console.log(data);
         this.$set(this, "weather", data);
       });
     },

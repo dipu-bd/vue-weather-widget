@@ -1935,7 +1935,9 @@ staticRenderFns: [],
       var globalMaxTemp = -Infinity;
       var globalMinTemp = Infinity;
 
-      var time = new Date().getTime() / 1e3;
+      var tomorrow = new Date(new Date().toDateString());
+      var today = tomorrow.getTime() / 1e3 + 24 * 3600 - 1;
+
       var daily = this.weather.daily.data;
       for (var i = 0; i < daily.length; i++) {
         var day = daily[i];
@@ -1951,7 +1953,7 @@ staticRenderFns: [],
       var tempRange = globalMaxTemp - globalMinTemp;
       for (var i$1 = 0; i$1 < forecasts.length; ++i$1) {
         var day$1 = forecasts[i$1];
-        if (day$1.time <= time) {
+        if (day$1.time <= today) {
           day$1.weekName = "Today";
         } else {
           day$1.weekName = new Date(day$1.time * 1000).toLocaleDateString(this.language, {
@@ -1980,7 +1982,6 @@ staticRenderFns: [],
         units: this.units,
         language: this.language,
       }).then(function (data) {
-        console.log(data);
         this$1.$set(this$1, "weather", data);
       });
     },
