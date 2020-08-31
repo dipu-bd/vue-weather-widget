@@ -18,6 +18,7 @@ const ICON_MAPPINGS = {
 };
 
 const UNIT_MAPPINGS = {
+  auto: "standard",
   us: "imperial",
   uk: "metric",
 };
@@ -122,13 +123,13 @@ const utils = {
   },
 
   fetchOWMWeather(opts = {}) {
-    opts.units = opts.units || "us";
+    opts.units = opts.units || "auto";
     opts.language = opts.language || "en";
     if (!opts.lat || !opts.lng) {
       throw new Error("Geolocation is required");
     }
 
-    const units = UNIT_MAPPINGS[opts.units];
+    const units = UNIT_MAPPINGS[opts.units] || "standard";
 
     return fetch(
       `https://api.openweathermap.org/data/2.5/onecall?appid=${opts.apiKey}` +
