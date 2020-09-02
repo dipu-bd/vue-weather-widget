@@ -99,7 +99,7 @@ possible to create a DarkSky API key, it is recommended to use OpenWeatherMap. h
 | Props             | Type                | Default  | Description                                                                                                        |
 | ----------------- | ------------------- | -------- | ------------------------------------------------------------------------------------------------------------------ |
 | api-key           | String (_required_) | -        | Your OpenWeatherMap or Dark Sky API key                                                                            |
-| use-dark-sky-api  | Boolean             | `true`   | Use DarkSky API instead of OpenWeatherMap                                                                          |
+| use-dark-sky-api  | Boolean             | `false`  | Use DarkSky API instead of OpenWeatherMap                                                                          |
 | address           | String              | current  | An address of a location (By default, it will be use user's IP to find current location)                           |
 | latitude          | String              | current  | The latitude of a location (By default, it will be use user's IP to find current location)                         |
 | longitude         | String              | current  | The longitude of a location (By default, it will be use user's IP to find current location)                        |
