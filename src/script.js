@@ -80,6 +80,12 @@ export default {
       type: String,
       default: "#333",
     },
+
+    // Your positionstack api key for geocoding
+    positionstackApi: {
+      type: String,
+      default: "c3bb8aa0a56b21122dea6a2a8ada70c8",
+    },
   },
 
   data() {
@@ -218,7 +224,7 @@ export default {
             });
           });
         } else {
-          return Utils.geocode(this.address).then((data) => {
+          return Utils.geocode(this.positionstackApi, this.address).then((data) => {
             this.$set(this, "location", {
               lat: data.latitude,
               lng: data.longitude,
@@ -227,13 +233,15 @@ export default {
           });
         }
       } else {
-        return Utils.reverseGeocode(this.latitude, this.longitude).then((data) => {
-          this.$set(this, "location", {
-            lat: this.latitude,
-            lng: this.longitude,
-            name: `${data.region}, ${data.country}`,
-          });
-        });
+        return Utils.reverseGeocode(this.positionstackApi, this.latitude, this.longitude).then(
+          (data) => {
+            this.$set(this, "location", {
+              lat: this.latitude,
+              lng: this.longitude,
+              name: `${data.region}, ${data.country}`,
+            });
+          }
+        );
       }
     },
   },

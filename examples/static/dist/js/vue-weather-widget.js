@@ -734,7 +734,7 @@ var utils = {
     // latitude, longitude, city, country.name
   },
 
-  geocode: function geocode(query, reversed) {
+  geocode: function geocode(apiKey, query, reversed) {
     if ( reversed === void 0 ) reversed = false;
 
     var cache = localStorage[GEOCODE_CACHE] || "{}";
@@ -743,11 +743,14 @@ var utils = {
       return Promise.resolve(cache[query]);
     }
 
-    var apiKey = "c3bb8aa0a56b21122dea6a2a8ada70c8";
+    apiKey = apiKey || "c3bb8aa0a56b21122dea6a2a8ada70c8";
     var apiType = reversed ? "reverse" : "forward";
-    return fetch(("http://api.positionstack.com/v1/" + apiType + "?access_key=" + apiKey + "&query=" + query))
+    return fetch(("//api.positionstack.com/v1/" + apiType + "?access_key=" + apiKey + "&query=" + query))
       .then(function (resp) { return resp.json(); })
       .then(function (result) {
+        if (result.error) {
+          throw new Error("(api.positionstack.com) " + result.error.message);
+        }
         cache[query] = result.data[0];
         localStorage[GEOCODE_CACHE] = JSON.stringify(cache);
         return cache[query];
@@ -755,8 +758,8 @@ var utils = {
     // latitude, longitude, region, country
   },
 
-  reverseGeocode: function reverseGeocode(lat, lng) {
-    return utils.geocode((lat + "," + lng), true);
+  reverseGeocode: function reverseGeocode(apiKey, lat, lng) {
+    return utils.geocode(apiKey, (lat + "," + lng), true);
   },
 
   fetchWeather: function fetchWeather(opts) {
@@ -777,9 +780,9 @@ var utils = {
           "/" + (opts.lat) + "," + (opts.lng) +
           "?units=" + (opts.units) + "&lang=" + (opts.language),
         function (err, data) {
-          console.log(err, data);
           if (err) { reject(err); }
           else { resolve(data); }
+          console.error(err, data);
         }
       );
     });
@@ -1884,6 +1887,12 @@ staticRenderFns: [],
       type: String,
       default: "#333",
     },
+
+    // Your positionstack api key for geocoding
+    positionstackApi: {
+      type: String,
+      default: "c3bb8aa0a56b21122dea6a2a8ada70c8",
+    },
   },
 
   data: function data() {
@@ -2031,7 +2040,7 @@ staticRenderFns: [],
             });
           });
         } else {
-          return utils.geocode(this.address).then(function (data) {
+          return utils.geocode(this.positionstackApi, this.address).then(function (data) {
             this$1.$set(this$1, "location", {
               lat: data.latitude,
               lng: data.longitude,
@@ -2040,13 +2049,15 @@ staticRenderFns: [],
           });
         }
       } else {
-        return utils.reverseGeocode(this.latitude, this.longitude).then(function (data) {
-          this$1.$set(this$1, "location", {
-            lat: this$1.latitude,
-            lng: this$1.longitude,
-            name: ((data.region) + ", " + (data.country)),
-          });
-        });
+        return utils.reverseGeocode(this.positionstackApi, this.latitude, this.longitude).then(
+          function (data) {
+            this$1.$set(this$1, "location", {
+              lat: this$1.latitude,
+              lng: this$1.longitude,
+              name: ((data.region) + ", " + (data.country)),
+            });
+          }
+        );
       }
     },
   },

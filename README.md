@@ -96,20 +96,21 @@ possible to create a DarkSky API key, it is recommended to use OpenWeatherMap. h
 
 ## Props
 
-| Props             | Type                | Default  | Description                                                                                                        |
-| ----------------- | ------------------- | -------- | ------------------------------------------------------------------------------------------------------------------ |
-| api-key           | String (_required_) | -        | Your OpenWeatherMap or Dark Sky API key                                                                            |
-| use-dark-sky-api  | Boolean             | `false`  | Use DarkSky API instead of OpenWeatherMap                                                                          |
-| address           | String              | current  | An address of a location (By default, it will be use user's IP to find current location)                           |
-| latitude          | String              | current  | The latitude of a location (By default, it will be use user's IP to find current location)                         |
-| longitude         | String              | current  | The longitude of a location (By default, it will be use user's IP to find current location)                        |
-| language          | String              | `"en"`   | A list of supported languages are given below.                                                                     |
-| units             | String              | `"us"`   | A list of supported units are given below.                                                                         |
-| hide-header       | Boolean             | `false`  | Whether to show or hide the title bar.                                                                             |
-| update-interval   | Number              | `null`   | Interval in _milliseconds_ to update weather data periodically. Seting it to `0` or `null` to disables autoupdate. |
-| disable-animation | Boolean             | `false`  | Use static icons when enabled.                                                                                     |
-| bar-color         | String              | `"#444"` | Color of the Temparature bar.                                                                                      |
-| text-color        | String              | `"#333"` | Color of the text.                                                                                                 |
+| Props             | Type                | Default                              | Description                                                                                                    |
+| ----------------- | ------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| api-key           | String (_required_) | -                                    | Your OpenWeatherMap or Dark Sky API key                                                                        |
+| use-dark-sky-api  | Boolean             | `false`                              | Use DarkSky API instead of OpenWeatherMap                                                                      |
+| address           | String              | current                              | An address of a location (By default, it will use IP to find address)                                          |
+| latitude          | String              | current                              | The latitude of a location (By default, it will use IP to find location)                                       |
+| longitude         | String              | current                              | The longitude of a location (By default, it will use IP to find location)                                      |
+| language          | String              | `"en"`                               | A list of supported languages are given below.                                                                 |
+| units             | String              | `"us"`                               | A list of supported units are given below.                                                                     |
+| hide-header       | Boolean             | `false`                              | Whether to show or hide the title bar.                                                                         |
+| update-interval   | Number              | `null`                               | Interval in _milliseconds_ to update weather data periodically. Set it to `0` or `null` to disable autoupdate. |
+| disable-animation | Boolean             | `false`                              | Use static icons when enabled.                                                                                 |
+| bar-color         | String              | `"#444"`                             | Color of the Temparature bar.                                                                                  |
+| text-color        | String              | `"#333"`                             | Color of the text.                                                                                             |
+| positionstack-api | String              | `"c3bb8aa0a56b21122dea6a2a8ada70c8"` | (optional) You positionstack api key for geocoding.                                                            |
 
 ## Slots
 

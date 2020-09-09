@@ -73,18 +73,21 @@ const utils = {
     // latitude, longitude, city, country.name
   },
 
-  geocode(query, reversed = false) {
+  geocode(apiKey, query, reversed = false) {
     let cache = localStorage[GEOCODE_CACHE] || "{}";
     cache = JSON.parse(cache);
     if (cache[query]) {
       return Promise.resolve(cache[query]);
     }
 
-    const apiKey = "c3bb8aa0a56b21122dea6a2a8ada70c8";
+    apiKey = apiKey || "c3bb8aa0a56b21122dea6a2a8ada70c8";
     const apiType = reversed ? "reverse" : "forward";
-    return fetch(`http://api.positionstack.com/v1/${apiType}?access_key=${apiKey}&query=${query}`)
+    return fetch(`//api.positionstack.com/v1/${apiType}?access_key=${apiKey}&query=${query}`)
       .then((resp) => resp.json())
       .then((result) => {
+        if (result.error) {
+          throw new Error("(api.positionstack.com) " + result.error.message);
+        }
         cache[query] = result.data[0];
         localStorage[GEOCODE_CACHE] = JSON.stringify(cache);
         return cache[query];
@@ -92,8 +95,8 @@ const utils = {
     // latitude, longitude, region, country
   },
 
-  reverseGeocode(lat, lng) {
-    return utils.geocode(`${lat},${lng}`, true);
+  reverseGeocode(apiKey, lat, lng) {
+    return utils.geocode(apiKey, `${lat},${lng}`, true);
   },
 
   fetchWeather(opts) {
@@ -114,9 +117,9 @@ const utils = {
           `/${opts.lat},${opts.lng}` +
           `?units=${opts.units}&lang=${opts.language}`,
         (err, data) => {
-          console.log(err, data);
           if (err) reject(err);
           else resolve(data);
+          console.error(err, data);
         }
       );
     });
