@@ -49,10 +49,10 @@ const utils = {
       });
   },
 
-  fetchLocationByIP(ip) {
+  fetchLocationByIP(apiKey, ip) {
     if (!ip) {
       return utils.lookupIP().then((data) => {
-        return utils.fetchLocationByIP(data["ip"]);
+        return utils.fetchLocationByIP(apiKey, data["ip"]);
       });
     }
 
@@ -62,7 +62,7 @@ const utils = {
       return cache[ip];
     }
 
-    const apiKey = "f8n4kqe8pv4kii";
+    apiKey = apiKey || "f8n4kqe8pv4kii";
     return fetch(`https://api.ipregistry.co/${ip}?key=${apiKey}`)
       .then((resp) => resp.json())
       .then((result) => {
@@ -119,7 +119,6 @@ const utils = {
         (err, data) => {
           if (err) reject(err);
           else resolve(data);
-          console.error(err, data);
         }
       );
     });

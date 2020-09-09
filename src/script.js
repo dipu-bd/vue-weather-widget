@@ -86,6 +86,12 @@ export default {
       type: String,
       default: "c3bb8aa0a56b21122dea6a2a8ada70c8",
     },
+
+    // Your ipregistry key to get location from ip address
+    ipregistryKey: {
+      type: String,
+      default: "f8n4kqe8pv4kii",
+    },
   },
 
   data() {
@@ -204,7 +210,6 @@ export default {
           this.$set(this, "error", null);
         })
         .catch((err) => {
-          console.error(err);
           this.$set(this, "error", "" + err);
         })
         .finally(() => {
@@ -216,7 +221,7 @@ export default {
     processLocation() {
       if (!this.latitude || !this.longitude) {
         if (!this.address) {
-          return Utils.fetchLocationByIP().then((data) => {
+          return Utils.fetchLocationByIP(this.ipregistryKey).then((data) => {
             this.$set(this, "location", {
               lat: data.latitude,
               lng: data.longitude,

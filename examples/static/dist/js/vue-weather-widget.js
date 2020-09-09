@@ -710,10 +710,10 @@ var utils = {
       });
   },
 
-  fetchLocationByIP: function fetchLocationByIP(ip) {
+  fetchLocationByIP: function fetchLocationByIP(apiKey, ip) {
     if (!ip) {
       return utils.lookupIP().then(function (data) {
-        return utils.fetchLocationByIP(data["ip"]);
+        return utils.fetchLocationByIP(apiKey, data["ip"]);
       });
     }
 
@@ -723,7 +723,7 @@ var utils = {
       return cache[ip];
     }
 
-    var apiKey = "f8n4kqe8pv4kii";
+    apiKey = apiKey || "f8n4kqe8pv4kii";
     return fetch(("https://api.ipregistry.co/" + ip + "?key=" + apiKey))
       .then(function (resp) { return resp.json(); })
       .then(function (result) {
@@ -782,7 +782,6 @@ var utils = {
         function (err, data) {
           if (err) { reject(err); }
           else { resolve(data); }
-          console.error(err, data);
         }
       );
     });
@@ -1893,6 +1892,12 @@ staticRenderFns: [],
       type: String,
       default: "c3bb8aa0a56b21122dea6a2a8ada70c8",
     },
+
+    // Your ipregistry key to get location from ip address
+    ipregistryKey: {
+      type: String,
+      default: "f8n4kqe8pv4kii",
+    },
   },
 
   data: function data() {
@@ -2018,7 +2023,6 @@ staticRenderFns: [],
           this$1.$set(this$1, "error", null);
         })
         .catch(function (err) {
-          console.error(err);
           this$1.$set(this$1, "error", "" + err);
         })
         .finally(function () {
@@ -2032,7 +2036,7 @@ staticRenderFns: [],
 
       if (!this.latitude || !this.longitude) {
         if (!this.address) {
-          return utils.fetchLocationByIP().then(function (data) {
+          return utils.fetchLocationByIP(this.ipregistryKey).then(function (data) {
             this$1.$set(this$1, "location", {
               lat: data.latitude,
               lng: data.longitude,
