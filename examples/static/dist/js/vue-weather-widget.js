@@ -2,14 +2,14 @@
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var browser = {exports: {}};
+
+var debug$1 = {exports: {}};
 
 /**
  * Helpers.
  */
+
 var s = 1000;
 var m = s * 60;
 var h = m * 60;
@@ -159,7 +159,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-var debug = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /**
  * This is the common logic for both the Node.js and web browser
  * implementations of `debug()`.
@@ -363,7 +363,7 @@ function coerce(val) {
   if (val instanceof Error) { return val.stack || val.message; }
   return val;
 }
-});
+}(debug$1, debug$1.exports));
 
 /**
  * This is the web browser implementation of `debug()`.
@@ -371,8 +371,8 @@ function coerce(val) {
  * Expose `debug()` as the module.
  */
 
-var browser = createCommonjsModule(function (module, exports) {
-exports = module.exports = debug;
+(function (module, exports) {
+exports = module.exports = debug$1.exports;
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -551,13 +551,13 @@ function localstorage() {
     return window.localStorage;
   } catch (e) {}
 }
-});
+}(browser, browser.exports));
 
 /**
  * Module dependencies
  */
 
-var debug$1 = browser('jsonp');
+var debug = browser.exports('jsonp');
 
 /**
  * Module exports.
@@ -632,7 +632,7 @@ function jsonp(url, opts, fn){
   }
 
   window[id] = function(data){
-    debug$1('jsonp got', data);
+    debug('jsonp got', data);
     cleanup();
     if (fn) { fn(null, data); }
   };
@@ -641,7 +641,7 @@ function jsonp(url, opts, fn){
   url += (~url.indexOf('?') ? '&' : '?') + param + '=' + enc(id);
   url = url.replace('?&', '?');
 
-  debug$1('jsonp req "%s"', url);
+  debug('jsonp req "%s"', url);
 
   // create script
   script = document.createElement('script');
