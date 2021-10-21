@@ -40,15 +40,15 @@ export default {
 
 <style>
 .container {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Helvetica, Arial, sans-serif;
   color: #2c3e50;
+  height: 95vh;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 95vh;
+  min-height: 500px;
 }
 
 h1 {

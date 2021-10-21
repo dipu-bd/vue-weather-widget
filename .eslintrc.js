@@ -1,13 +1,12 @@
 module.exports = {
-  root: true,
   env: {
-    node: true,
+    es2021: true,
   },
-  extends: ["plugin:vue/essential", "eslint:recommended"],
+  extends: ["eslint:recommended", "plugin:vue/essential"],
   parserOptions: {
-    parser: "babel-eslint",
+    ecmaVersion: 8,
+    sourceType: "module",
   },
-  rules: {
-    "no-self-assign": 0,
-  },
+  plugins: ["vue"],
+  rules: {},
 };

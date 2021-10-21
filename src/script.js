@@ -21,10 +21,10 @@ export default {
       required: true,
     },
 
-    // Address to lookup location.
-    address: {
-      type: String,
-    },
+    // // Address to lookup location.
+    // address: {
+    //   type: String,
+    // },
 
     // The latitude of a location (in decimal degrees).
     // Positive is north, negative is south.
@@ -81,11 +81,11 @@ export default {
       default: "#333",
     },
 
-    // Your positionstack api key for geocoding
-    positionstackApi: {
-      type: String,
-      default: "c3bb8aa0a56b21122dea6a2a8ada70c8",
-    },
+    // // Your positionstack api key for geocoding
+    // positionstackApi: {
+    //   type: String,
+    //   default: "7f9c71310f410847fceb9537a83f3882",
+    // },
 
     // Your ipregistry key to get location from ip address
     ipregistryKey: {
@@ -99,14 +99,14 @@ export default {
       loading: true,
       weather: null,
       error: null,
-      location: {},
+      //location: {},
       timeout: null,
     };
   },
 
   watch: {
     apiKey: "hydrate",
-    address: "hydrate",
+    // address: "hydrate",
     latitude: "hydrate",
     longitude: "hydrate",
     language: "hydrate",
@@ -183,8 +183,8 @@ export default {
       const fetchWeatherMethod = this.useDarkSkyApi ? Utils.fetchWeather : Utils.fetchOWMWeather;
       return fetchWeatherMethod({
         apiKey: this.apiKey,
-        lat: this.location.lat,
-        lng: this.location.lng,
+        lat: this.latitude,
+        lng: this.longitude,
         units: this.units,
         language: this.language,
       }).then((data) => {
@@ -220,33 +220,34 @@ export default {
 
     processLocation() {
       if (!this.latitude || !this.longitude) {
-        if (!this.address) {
-          return Utils.fetchLocationByIP(this.ipregistryKey).then((data) => {
-            this.$set(this, "location", {
-              lat: data.latitude,
-              lng: data.longitude,
-              name: `${data.city}, ${data.country.name}`,
-            });
-          });
-        } else {
-          return Utils.geocode(this.positionstackApi, this.address).then((data) => {
-            this.$set(this, "location", {
-              lat: data.latitude,
-              lng: data.longitude,
-              name: `${data.region}, ${data.country}`,
-            });
-          });
-        }
+        throw new Error("VueWeatherWidget: Latitude or longitude is required");
+        // if (!this.address) {
+        //   return Utils.fetchLocationByIP(this.ipregistryKey).then((data) => {
+        //     this.$set(this, "location", {
+        //       lat: data.latitude,
+        //       lng: data.longitude,
+        //       name: `${data.city}, ${data.country.name}`,
+        //     });
+        //   });
+        // } else {
+        //   return Utils.geocode(this.positionstackApi, this.address).then((data) => {
+        //     this.$set(this, "location", {
+        //       lat: data.latitude,
+        //       lng: data.longitude,
+        //       name: `${data.region}, ${data.country}`,
+        //     });
+        //   });
+        // }
       } else {
-        return Utils.reverseGeocode(this.positionstackApi, this.latitude, this.longitude).then(
-          (data) => {
-            this.$set(this, "location", {
-              lat: this.latitude,
-              lng: this.longitude,
-              name: `${data.region}, ${data.country}`,
-            });
-          }
-        );
+        // return Utils.reverseGeocode(this.positionstackApi, this.latitude, this.longitude).then(
+        //   (data) => {
+        //     this.$set(this, "location", {
+        //       lat: this.latitude,
+        //       lng: this.longitude,
+        //       name: `${data.region}, ${data.country}`,
+        //     });
+        //   }
+        // );
       }
     },
   },

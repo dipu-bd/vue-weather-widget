@@ -1,41 +1,24 @@
 <template>
   <div class="vww__widget" :style="{ color: textColor }">
     <slot name="header">
-      <div
-        class="vww__header"
-        :style="{ borderColor: barColor }"
-        v-if="!hideHeader"
-      >
-        <slot name="title">
-          <span class="vww__title">
-            {{ `Weather for ${location.name}` }}
-          </span>
-        </slot>
+      <div class="vww__header" :style="{ borderColor: barColor }" v-if="!hideHeader">
+        <span class="vww__title">
+          <slot name="title">Weather</slot>
+        </span>
       </div>
     </slot>
 
     <div class="vww__content">
       <div class="vww__loading" v-if="loading">
         <slot name="loading">
-          <skycon
-            condition="partly-cloudy-day"
-            :color="textColor"
-            :paused="disableAnimation"
-          />
+          <skycon condition="partly-cloudy-day" :color="textColor" :paused="disableAnimation" />
           <span class="vww__title">Loading...</span>
         </slot>
       </div>
 
-      <div
-        class="vww__error"
-        v-else-if="error || !weather || !currently || !daily"
-      >
+      <div class="vww__error" v-else-if="error || !weather || !currently || !daily">
         <slot name="error">
-          <skycon
-            condition="rain"
-            :color="textColor"
-            :paused="disableAnimation"
-          />
+          <skycon condition="rain" :color="textColor" :paused="disableAnimation" />
           <span class="vww__title">{{ error || "Something went wrong!" }}</span>
         </slot>
       </div>

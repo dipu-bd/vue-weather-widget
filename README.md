@@ -6,7 +6,7 @@
 [![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/vue-weather-widget?color=red)](https://raw.githubusercontent.com/dipu-bd/vue-weather-widget/master/package.json)
 [![NPM license](https://img.shields.io/npm/l/vue-weather-widget?color=blueviolet)](https://raw.githubusercontent.com/dipu-bd/vue-weather-widget/master/LICENSE)
 
-Weather widget inspired by [forecast embeds](https://blog.darksky.net/forecast-embeds/) and powered by [darksky api](https://darksky.net/dev).
+Weather widget inspired by [forecast embeds](https://blog.darksky.net/forecast-embeds/) and powered by [OpenWeatherMap](https://openweathermap.org/) and [DarkSky](https://darksky.net/dev) API.
 
 ## Demo
 
@@ -31,16 +31,30 @@ yarn add vue-weather-widget
 ## API Keys
 
 This component works with both the DarkSky API, and the OpenWeatherMap API. Since it is no longer
-possible to create a DarkSky API key, it is recommended to use OpenWeatherMap. https://openweathermap.org/appid
+possible to create a DarkSky API key, it is recommended to use OpenWeatherMap.
+
+> Generate new API key from https://openweathermap.org/appid
 
 ## Usage
 
-### Vue
-
 ```html
 <template>
-  <vue-weather api-key="<your-open-weather-map-api-key>" units="uk" />
-  <vue-weather api-key="<your-dark-sky-api-key>" use-dark-sky-api units="uk" />
+  <!-- Open Weather Map -->
+  <vue-weather
+    api-key="<your-open-weather-map-api-key>"
+    units="uk"
+    latitude="24.8864"
+    longitude="91.8807"
+  />
+
+  <!-- Dark Sky API -->
+  <vue-weather
+    use-dark-sky-api
+    api-key="<your-dark-sky-api-key>"
+    units="uk"
+    latitude="24.8864"
+    longitude="91.8807"
+  />
 </template>
 
 <script>
@@ -54,64 +68,24 @@ possible to create a DarkSky API key, it is recommended to use OpenWeatherMap. h
 </script>
 ```
 
-### Browser
-
-```html
-<!-- Requirements -->
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"
-></script>
-<script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.js"
-></script>
-
-<!-- vue-weather-widget -->
-<script type="text/javascript" src="vue-weather-widget.js"></script>
-<link href="vue-weather-widget.css" rel="stylesheet" />
-
-<!-- Vue app -->
-<div id="app">
-  <weather
-    api-key="<your-api-key>"
-    latitude="24.886436"
-    longitude="91.880722"
-    language="en"
-    units="uk"
-  >
-  </weather>
-</div>
-
-<script>
-  new Vue({
-    el: "#app",
-    components: {
-      weather: VueWeatherWidget,
-    },
-  });
-</script>
-```
-
 ## Props
 
-| Props             | Type                | Default                              | Description                                                                                                    |
-| ----------------- | ------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
-| api-key           | String (_required_) | -                                    | Your OpenWeatherMap or Dark Sky API key                                                                        |
-| use-dark-sky-api  | Boolean             | `false`                              | Use DarkSky API instead of OpenWeatherMap                                                                      |
-| address           | String              | current                              | An address of a location (By default, it will use IP to find address)                                          |
-| latitude          | String              | current                              | The latitude of a location (By default, it will use IP to find location)                                       |
-| longitude         | String              | current                              | The longitude of a location (By default, it will use IP to find location)                                      |
-| language          | String              | `"en"`                               | A list of supported languages are given below.                                                                 |
-| units             | String              | `"us"`                               | A list of supported units are given below.                                                                     |
-| hide-header       | Boolean             | `false`                              | Whether to show or hide the title bar.                                                                         |
-| update-interval   | Number              | `null`                               | Interval in _milliseconds_ to update weather data periodically. Set it to `0` or `null` to disable autoupdate. |
-| disable-animation | Boolean             | `false`                              | Use static icons when enabled.                                                                                 |
-| bar-color         | String              | `"#444"`                             | Color of the Temparature bar.                                                                                  |
-| text-color        | String              | `"#333"`                             | Color of the text.                                                                                             |
-| positionstack-api | String              | `"c3bb8aa0a56b21122dea6a2a8ada70c8"` | You positionstack api key for geocoding. (Required when using https)                                           |
-| ipregistry-key    | String              | `"f8n4kqe8pv4kii"`                   | Your ipregistry key to get current location from IP address                                                    |
+| Props             | Type                | Default            | Description                                                                                                    |
+| ----------------- | ------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --- |
+| api-key           | String (_required_) | -                  | Your OpenWeatherMap or Dark Sky API key                                                                        |
+| use-dark-sky-api  | Boolean             | `false`            | Use DarkSky API instead of OpenWeatherMap                                                                      |
+| latitude          | String              | current            | The latitude of a location (By default, it will use IP to find location)                                       |
+| longitude         | String              | current            | The longitude of a location (By default, it will use IP to find location)                                      |
+| language          | String              | `"en"`             | A list of supported languages are given below.                                                                 |
+| units             | String              | `"us"`             | A list of supported units are given below.                                                                     |
+| hide-header       | Boolean             | `false`            | Whether to show or hide the title bar.                                                                         |
+| update-interval   | Number              | `null`             | Interval in _milliseconds_ to update weather data periodically. Set it to `0` or `null` to disable autoupdate. |
+| disable-animation | Boolean             | `false`            | Use static icons when enabled.                                                                                 |
+| bar-color         | String              | `"#444"`           | Color of the Temparature bar.                                                                                  |
+| text-color        | String              | `"#333"`           | Color of the text.                                                                                             |
+| ipregistry-key    | String              | `"f8n4kqe8pv4kii"` | Your ipregistry key to get current location from IP address                                                    |
+| <!--              | address             | String             | current                                                                                                        | An address of a location (By default, it will use IP to find address) | --> |
+| <!--              | positionstack-api   | String             | `"7f9c71310f410847fceb9537a83f3882"`                                                                           | You positionstack api key for geocoding. (Required when using https)  | --> |
 
 ## Slots
 
