@@ -19,7 +19,7 @@ jobs:
 
       - name: Build and Lint
         run: |
-          npm ci
+          npm i
           npm run lint
 
       - name: Recreating gh-pages
