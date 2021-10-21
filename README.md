@@ -5,6 +5,7 @@
 [![npm download per month](https://img.shields.io/npm/dm/vue-weather-widget)](http://npmjs.com/package/vue-weather-widget)
 [![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/vue-weather-widget?color=red)](https://raw.githubusercontent.com/dipu-bd/vue-weather-widget/master/package.json)
 [![NPM license](https://img.shields.io/npm/l/vue-weather-widget?color=blueviolet)](https://raw.githubusercontent.com/dipu-bd/vue-weather-widget/master/LICENSE)
+[![Build](https://github.com/dipu-bd/vue-weather-widget/actions/workflows/publish-gh-pages.yml/badge.svg)](https://github.com/dipu-bd/vue-weather-widget/actions/workflows/publish-gh-pages.yml)
 
 Weather widget inspired by [forecast embeds](https://blog.darksky.net/forecast-embeds/) and powered by [OpenWeatherMap](https://openweathermap.org/) and [DarkSky](https://darksky.net/dev) API.
 
