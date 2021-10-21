@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  gh-pages:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,6 +21,14 @@ jobs:
         run: |
           npm ci
           npm run lint
+
+  gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
 
       - name: Recreating gh-pages
         run: |
@@ -42,4 +50,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           force: true
-          directory: examples/static
+          directory: examples/vue/dist
