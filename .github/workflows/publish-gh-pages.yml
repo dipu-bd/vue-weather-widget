@@ -26,6 +26,7 @@ jobs:
         run: |
           cd examples/vue
           npm i
+          npm audit fix
           npm run build
           cd dist
           cp -r ../../../.git .
