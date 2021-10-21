@@ -24,7 +24,7 @@ const UNIT_MAPPINGS = {
 };
 
 const utils = {
-  lookupIP() {
+  lookupIP: () => {
     let cache = localStorage[IP_CACHE] || "{}";
     cache = JSON.parse(cache);
     if (cache.ip) {
@@ -49,7 +49,7 @@ const utils = {
       });
   },
 
-  fetchLocationByIP(apiKey, ip) {
+  fetchLocationByIP: (apiKey, ip) => {
     if (!ip) {
       return utils.lookupIP().then((data) => {
         return utils.fetchLocationByIP(apiKey, data["ip"]);
@@ -73,7 +73,7 @@ const utils = {
     // latitude, longitude, city, country.name
   },
 
-  geocode(apiKey, query, reversed = false) {
+  geocode: (apiKey, query, reversed = false) => {
     let cache = localStorage[GEOCODE_CACHE] || "{}";
     cache = JSON.parse(cache);
     if (cache[query]) {
@@ -95,11 +95,11 @@ const utils = {
     // latitude, longitude, region, country
   },
 
-  reverseGeocode(apiKey, lat, lng) {
+  reverseGeocode: (apiKey, lat, lng) => {
     return utils.geocode(apiKey, `${lat},${lng}`, true);
   },
 
-  fetchWeather(opts) {
+  fetchWeather: (opts) => {
     opts = opts || {};
     opts.units = opts.units || "us";
     opts.language = opts.language || "en";
@@ -124,7 +124,7 @@ const utils = {
     });
   },
 
-  fetchOWMWeather(opts = {}) {
+  fetchOWMWeather: (opts = {}) => {
     opts.units = opts.units || "auto";
     opts.language = opts.language || "en";
     if (!opts.lat || !opts.lng) {
@@ -144,7 +144,7 @@ const utils = {
       .then(utils.mapData);
   },
 
-  mapData(data) {
+  mapData: (data) => {
     const { current } = data;
     const { weather } = current;
     const [currentWeather] = weather;
@@ -179,7 +179,7 @@ const utils = {
     };
   },
 
-  mapIcon(code) {
+  mapIcon: (code) => {
     return Object.keys(ICON_MAPPINGS).find((key) => {
       return ICON_MAPPINGS[key].includes(code);
     });
