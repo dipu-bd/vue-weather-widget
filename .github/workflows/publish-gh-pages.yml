@@ -16,23 +16,26 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-  
-      - name: Build examples/dist
+
+      - name: Build and Lint
         run: |
           npm ci
-          npm run build
-      
+          npm run lint
+
       - name: Recreating gh-pages
         run: |
-          cd examples/static
-          cp -r ../../.git .
+          cd examples/vue
+          npm i
+          npm run build
+          cd dist
+          cp -r ../../../.git .
           git config --local user.email "dipu.sudipta@gmail.com"
           git config --local user.name "dipu-bd"
           git branch -D gh-pages || true
           git checkout -b gh-pages
           git add --all
           git commit -m "[GHA] Update gh-pages"
-        
+
       - name: Publish changes
         uses: ad-m/github-push-action@master
         with:
@@ -40,4 +43,3 @@ jobs:
           branch: gh-pages
           force: true
           directory: examples/static
- 
