@@ -11,8 +11,5 @@ module.exports = {
     ecmaFeatures: {
       globalReturn: false,
     },
-    babelOptions: {
-      configFile: "babel.config.js",
-    },
   },
 };
