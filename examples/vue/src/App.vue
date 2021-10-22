@@ -4,22 +4,26 @@
     <vue-weather
       api-key="45aee2ef715cfa91ed7957e8cfd37a70"
       units="uk"
-      :latitude="lat"
-      :longitude="long"
       language="en"
-    />
+      :latitude="dhaka.lat"
+      :longitude="dhaka.lng"
+    >
+      <span slot="title">Weather for {{ dhaka.name }}</span>
+    </vue-weather>
 
     <hr />
 
     <h1>From Dark Sky Api</h1>
     <vue-weather
+      use-dark-sky-api
       api-key="e20753dfcaae902ab091fbb4925d432a"
       units="uk"
-      :latitude="lat"
-      :longitude="long"
       language="en"
-      use-dark-sky-api
-    />
+      :latitude="sylhet.lat"
+      :longitude="sylhet.lng"
+    >
+      <span slot="title">Weather for {{ sylhet.name }}</span>
+    </vue-weather>
   </section>
 </template>
 
@@ -32,8 +36,16 @@ export default {
     VueWeather,
   },
   data: () => ({
-    lat: "24.886436",
-    long: "91.880722",
+    dhaka: {
+      name: "Dhaka, Bangladesh",
+      lat: 23.8103,
+      lng: 90.4125,
+    },
+    sylhet: {
+      name: "Sylhet, Bangladesh",
+      lat: 24.8949,
+      lng: 91.8687,
+    },
   }),
 };
 </script>
@@ -48,7 +60,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 500px;
+  min-height: 700px;
 }
 
 h1 {
