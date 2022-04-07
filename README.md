@@ -85,8 +85,9 @@ possible to create a DarkSky API key, it is recommended to use OpenWeatherMap.
 | bar-color         | String              | `"#444"`           | Color of the Temparature bar.                                                                                  |
 | text-color        | String              | `"#333"`           | Color of the text.                                                                                             |
 | ipregistry-key    | String              | `"f8n4kqe8pv4kii"` | Your ipregistry key to get current location from IP address                                                    |
-| <!--              | address             | String             | current                                                                                                        | An address of a location (By default, it will use IP to find address) | --> |
-| <!--              | positionstack-api   | String             | `"7f9c71310f410847fceb9537a83f3882"`                                                                           | You positionstack api key for geocoding. (Required when using https)  | --> |
+
+<!--              | address             | String             | current                                                                                                        | An address of a location (By default, it will use IP to find address) | --> |
+<!--              | positionstack-api   | String             | `"7f9c71310f410847fceb9537a83f3882"`                                                                           | You positionstack api key for geocoding. (Required when using https)  | --> |
 
 ## Slots
 
