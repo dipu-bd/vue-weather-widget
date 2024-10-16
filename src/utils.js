@@ -134,7 +134,7 @@ const utils = {
     const units = UNIT_MAPPINGS[opts.units] || "standard";
 
     return fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?appid=${opts.apiKey}` +
+      `https://api.openweathermap.org/data/3.0/onecall?appid=${opts.apiKey}` +
         `&lat=${opts.lat}` +
         `&lon=${opts.lng}` +
         `&units=${units}` +
