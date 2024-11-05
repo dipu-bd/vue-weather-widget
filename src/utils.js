@@ -126,6 +126,7 @@ const utils = {
 
   fetchOWMWeather: (opts = {}) => {
     opts.units = opts.units || "auto";
+    opts.version = opts.version || "3.0";
     opts.language = opts.language || "en";
     if (!opts.lat || !opts.lng) {
       throw new Error("Geolocation is required");
@@ -134,7 +135,7 @@ const utils = {
     const units = UNIT_MAPPINGS[opts.units] || "standard";
 
     return fetch(
-      `https://api.openweathermap.org/data/3.0/onecall?appid=${opts.apiKey}` +
+      `https://api.openweathermap.org/data/${opts.version}/onecall?appid=${opts.apiKey}` +
         `&lat=${opts.lat}` +
         `&lon=${opts.lng}` +
         `&units=${units}` +

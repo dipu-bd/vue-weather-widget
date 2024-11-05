@@ -29,13 +29,13 @@ export default {
     // The latitude of a location (in decimal degrees).
     // Positive is north, negative is south.
     latitude: {
-      type: String,
+      type: String | Number,
     },
 
     // The longitude of a location (in decimal degrees).
     // Positive is east, negative is west.
     longitude: {
-      type: String,
+      type: String | Number,
     },
 
     // Return summary properties in the desired language.
@@ -179,17 +179,16 @@ export default {
   },
 
   methods: {
-    loadWeather() {
+    async loadWeather() {
       const fetchWeatherMethod = this.useDarkSkyApi ? Utils.fetchWeather : Utils.fetchOWMWeather;
-      return fetchWeatherMethod({
+      const data = await fetchWeatherMethod({
         apiKey: this.apiKey,
         lat: this.latitude,
         lng: this.longitude,
         units: this.units,
         language: this.language,
-      }).then((data) => {
-        this.$set(this, "weather", data);
       });
+      this.$set(this, "weather", data);
     },
 
     autoupdate() {
