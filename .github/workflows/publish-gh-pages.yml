@@ -19,13 +19,13 @@ jobs:
 
       - name: Build and Lint
         run: |
-          npm ci
+          npm i
           npm run lint
 
       - name: Recreating gh-pages
         run: |
           cd examples/vue
-          npm ci
+          npm i
           npm run build
           cd dist
           cp -r ../../../.git .
