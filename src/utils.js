@@ -62,7 +62,6 @@ const utils = {
       return cache[ip];
     }
 
-    apiKey = apiKey || "f8n4kqe8pv4kii";
     return fetch(`https://api.ipregistry.co/${ip}?key=${apiKey}`)
       .then((resp) => resp.json())
       .then((result) => {
